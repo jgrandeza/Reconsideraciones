@@ -1,0 +1,584 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+	<!--begin::Head-->
+	<head>
+    <base href="">
+    <title>Sistema de Reconsideraciones - SIS</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="Sistema de Reconsideraciones - SIS" />
+    <meta name="keywords" content="Sistema de Reconsideraciones - SIS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Sistema de Reconsideraciones - SIS" />
+    <meta property="og:url" content="https://www.gob.pe/sis" />
+    <meta property="og:site_name" content="SIS" />
+    <link rel="canonical" href="https://www.gob.pe/sis" />
+    <link rel="shortcut icon" href="~/favicon2.ico" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Vendor Stylesheets(used by this page)-->
+		<link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Vendor Stylesheets-->
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
+		<link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+	<!--end::Global Stylesheets Bundle-->
+	<link href="~/css/site.css" rel="stylesheet" type="text/css" />
+	<link href="~/css/waitMe.css" rel="stylesheet" type="text/css" />
+	<link href="~/css/toastr.css" rel="stylesheet" type="text/css" />
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body  id="kt_body" class="print-content-only header-extended header-fixed header-tablet-and-mobile-fixed">
+		<!--begin::Theme mode setup on page load-->
+		<script>if ( document.documentElement ) { const defaultThemeMode = "system"; const name = document.body.getAttribute("data-kt-name"); let themeMode = localStorage.getItem("kt_" + ( name !== null ? name + "_" : "" ) + "theme_mode_value"); if ( themeMode === null ) { if ( defaultThemeMode === "system" ) { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } else { themeMode = defaultThemeMode; } } document.documentElement.setAttribute("data-theme", themeMode); }</script>
+		<!--end::Theme mode setup on page load-->
+		<!--begin::Root-->
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="page d-flex flex-row flex-column-fluid">
+				<!--begin::Wrapper-->
+				<div class="wrapper d-flex flex-column flex-row-fluid"  style="padding-top: 0px !important;" id="kt_wrapper">
+					<!--begin::Container-->
+					<div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+						<!--begin::Post-->
+						<div class="content flex-row-fluid" id="kt_content">
+							<!-- begin::Invoice 1-->
+							<div class="card">
+								<!-- begin::Body-->
+								<div class="card-body py-20">
+									<!-- begin::Wrapper-->
+									<div class="mw-lg-950px mx-auto w-100">
+										<!-- begin::Header-->
+										<div class="d-flex justify-content-between flex-column flex-sm-row mb-10">
+											<h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">SUPERVICIÓN DE ATENCIONES</h4>
+											<!--end::Logo-->
+											<div class="text-sm-end">
+												<a href="#" class="d-flex align-items-center">
+													<img alt="Logo" src="~/Img/LogoSIS.png" class="h-35px h-lg-40px" />
+												</a>
+											</div>
+										</div>
+										<!--end::Header-->
+										<div class="row fw-semibold fs-4 mb-3 text-dark00">
+												<div class="col-sm-12 text-center">
+													<p class="fw-semibold pe-5"> PERIODO MES DE PRODUCCION: -  PERIODO CERRADO  </p>
+												</div>
+											<div class="col-sm-12 text-center">
+												<p class="fw-semibold pe-5"> UDR:  </p>
+											</div>
+										</div>
+
+										<div class="row fw-semibold fs-6 mb-3 text-dark00">
+											<div class="col-sm-12 text-left">
+											<p class="fw-semibold pe-5"> BENEFICIARIO(A):  
+											@{
+												if (ViewBag.Tipo==1){
+																		<span style="color:red"> ATENCION OBSERVADA   <i style="font-size: 25px; color:red" class="fas fa-circle"></i> </span>
+												}else{
+																		<span style="color:green"> ATENCION VALIDA   <i style="font-size: 25px; color:green" class="fas fa-circle"></i> </span>
+													}
+											}
+											
+											</p>
+											</div>
+										</div>
+
+									<div class="card shadow-sm">
+										<div class="card-header" style="background-color:#264a74">
+											<h3 class="card-title" style="color:white">DATOS GENERALES</h3>
+										</div>
+										<div class="card-body">
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7 text-gray-800">ORIGEN: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">HIST. CLINICA: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA DE AFILIAION:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">REFERIDO: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">EDAD: </p>
+												</div>							  
+												<div class="col-sm-4">			  
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA DE INGRESO:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">CONTRA REF.: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">SEXO: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA DE ALTA:</p>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">SERVICIO: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA DE NACIMIENTO: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA DIGITACION:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA FALLECIMIENTO: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA ATENCION:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">CATEGORIA: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">TIPO DE PAGO: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FEC. CORTE ADM:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">RESPONSABLE: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">INGRESADO POR: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">MODALIDAD:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">TIPO PROFESIONAL: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">COB EXTRAORDINARIA: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">COMPONENTE:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">TIPO ATENCION: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">CARTA GARANTIA: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">GESTANTE:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA PARTO: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">MONTO: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">ARTICULO:</p>
+												</div>
+											</div>											
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">CAPITA: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FORMATO REVISADO: </p>
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA ACTUALIZACION:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-8">
+												</div>
+												<div class="col-sm-4">
+													<p class="fw-semibold pe-6 fs-7  text-gray-800">FECHA REVISION:</p>
+												</div>
+											</div>
+											<hr />
+											<div class="row">
+												<div class="col-sm-12">
+													<p class="fw-semibold pe-6 fs-5  text-dark00">OBSERVACION:</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12">
+											    <table class="table align-middle border rounded table-row-dashed fs-6 g-5 display responsive" id="tblRecEESS" style="font-size: 10px !important">
+														<thead class="text-center" style="background-color: #0272A3; border-width: 2px; color: white; vertical-align: middle; ">
+															<tr>
+																<th style="text-align:center"><span>TIPO</span></th>
+																<th style="text-align:center">COST.SERVICIO</th>
+																<th style="text-align:center">COST.MED</th>
+																<th style="text-align:center">COST.INS</th>
+																<th style="text-align:center">COST.PROC</th>
+																<th style="text-align:center">COST.TOTAL</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
+												</div>
+											</div>
+
+
+										</div>
+									</div>
+									<div class="card shadow-sm mt-10">
+										<div class="card-body">
+
+											<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+												<li class="nav-item">
+													<a class="nav-link active" data-bs-toggle="tab" href="#Tab"><i class="fas fa-clinic-medical fs-4 me-2"></i>OBSERVACIONES TOTALES</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" data-bs-toggle="tab" href="#Tab1"><i class="fas fa-parking fs-4 me-2"></i> OBSERVACIONES PARCIALES</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" data-bs-toggle="tab" href="#Tab2"><i class="fas fa-file-medical fs-4 me-2"></i> DIAGNOSTICOS</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" data-bs-toggle="tab" href="#Tab3"><i class="fas fa-capsules fs-4 me-2"></i> MEDICAMENTOS</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" data-bs-toggle="tab" href="#Tab4"><i class="fas fa-crutch fs-4 me-2"></i> PROCEDIMIENTOS</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" data-bs-toggle="tab" href="#Tab5"><i class="fas fa-vials fs-4 me-2"></i> INSUMOS</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" data-bs-toggle="tab" href="#Tab6"><i class="fas fa-baby fs-4 me-2"></i> SERVICIO MATERNO</a>
+												</li>
+											</ul>
+
+											<div class="tab-content" id="myTabContent">
+												<div class="tab-pane fade show active" id="Tab" role="tabpanel">
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="table-responsive">
+																<div id="tabla_ObsTotal"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="tab-pane fade" id="Tab1" role="tabpanel">
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="table-responsive">
+																<div id="tabla_ObsParcial"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="tab-pane fade" id="Tab2" role="tabpanel">
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="table-responsive">
+																<div id="tabla_dx"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="tab-pane fade" id="Tab3" role="tabpanel">
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="table-responsive">
+																<div id="tabla_Medica"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="tab-pane fade" id="Tab4" role="tabpanel">
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="table-responsive">
+																<div id="tabla_Procedimientos"></div>
+															</div>
+														</div>
+													</div>
+
+												</div>
+												<div class="tab-pane fade" id="Tab5" role="tabpanel">
+
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="table-responsive">
+																<div id="tabla_Insumos"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="tab-pane fade" id="Tab6" role="tabpanel">
+													<div id="tabla_Infantil"></div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+										<!-- begin::Footer-->
+										<div class="d-flex flex-stack flex-wrap mt-5 pt-13">
+											<!-- begin::Actions-->
+											<div class="my-1 me-5" style="text-align:right">
+												<!-- begin::Pint-->
+												<button type="button" class="btn btn-success my-1 me-12" onclick="window.print();"> <i style="font-size: 25px;" class="fas fa-print"></i> Imprimir</button>
+												<!-- end::Pint-->
+												<!-- begin::Download-->
+											   <button type="button" class="btn btn-danger my-1"><i style="font-size: 25px;" class="fas fa-file-pdf"></i>Descargar PDF</button>
+												<!-- end::Download-->
+											</div>
+											<!-- end::Actions-->
+										</div>
+										<!-- end::Footer-->
+									</div>
+									<!-- end::Wrapper-->
+								</div>
+								<!-- end::Body-->
+							</div>
+							<!-- end::Invoice 1-->
+						</div>
+						<!--end::Post-->
+					</div>
+					<!--end::Container-->
+					<!--begin::Footer-->
+					<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+					<!--begin::Container-->
+					<div class="container-xxl d-flex flex-column flex-md-row align-items-center justify-content-between">
+						<!--begin::Copyright-->
+						<div class="text-dark order-2 order-md-1">
+							<span class="text-muted fw-semibold me-1">2022©</span>
+							<a href="https://www.gob.pe/sis" target="_blank" class="text-gray-800 text-hover-primary">Seguro Integral de Salud</a>
+						</div>
+						<!--end::Copyright-->
+						<!--begin::Menu-->
+						<ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+							<li class="menu-item">
+								<a href="#" target="_blank" class="menu-link px-2">Oficina de Tecnologia de Información</a>
+							</li>
+						</ul>
+						<!--end::Menu-->
+					</div>
+					<!--end::Container-->
+					</div>
+					<!--end::Footer-->
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+		<!--end::Root-->
+
+		<!--begin::Javascript-->
+		<script>var hostUrl = "~/assets/";</script>
+		<!--begin::Global Javascript Bundle(used by all pages)-->
+		<script src="~/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="~/assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Vendors Javascript(used by this page)-->
+		<script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<!--end::Vendors Javascript-->
+		<!--begin::Custom Javascript(used by this page)-->
+		<script src="~/assets/js/widgets.bundle.js"></script>
+		<script src="~/assets/js/custom/widgets.js"></script>
+		<script src="~/assets/js/custom/apps/chat/chat.js"></script>
+		<script src="~/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+		<script src="~/assets/js/custom/utilities/modals/create-campaign.js"></script>
+		<script src="~/assets/js/custom/utilities/modals/create-app.js"></script>
+		<script src="~/assets/js/custom/utilities/modals/users-search.js"></script>
+		<!--end::Custom Javascript-->
+
+	<script src="~/js/waitMe.js"></script>
+	<script src="~/js/toastr.min.js"></script>
+	<script src="~/js/funciones_custom.js"></script>
+	<script src="~/js/site.js"></script>
+	<script src="~/js/jquery.form.min.js"></script>
+	<script src="~/js/jquery.validate.js"></script>
+	<script src="~/js/JqueryLenguaje.js"></script>
+		<!--end::Javascript-->
+	<script>
+		setTimeout(function () {
+			Cargar_ObserTotal();
+			Cargar_ObserParcial();
+			Cargar_Diagnosticos();
+			Cargar_Medicamentos();
+			Cargar_Procedimientos();
+			Cargar_Insumos();
+			//Cargar_Infantil();
+		}, 500);
+
+		
+	function Cargar_ObserTotal() {
+			CargarWaitMe();
+			let id = 1;
+			$("#tabla_ObsTotal").load("@Url.Content("~/VisorFUA/ObserTotalFUAV")", { id: id }, function () {
+				if ($("#ObserTotal_cant").length == 1) {
+					$('#tblObserTotal').DataTable({
+						destroy: true,
+						"ordering": false,
+						responsive: true,
+						"lengthChange": false,
+						"searching": true,
+						"language": languaje_spanol
+					});
+					TerminarWaitMe();
+				} else {
+					TerminarWaitMe();
+				}
+			});
+		}
+
+		function Cargar_ObserParcial() {
+			CargarWaitMe();
+			let id = 1;
+			$("#tabla_ObsParcial").load("@Url.Content("~/VisorFUA/ObserParcialFUAV")", { id: id }, function () {
+				if ($("#ObserParcial_cant").length == 1) {
+					$('#tblObserParcial').DataTable({
+						destroy: true,
+						"ordering": false,
+						responsive: true,
+						"lengthChange": false,
+						"searching": true,
+						"language": languaje_spanol
+					});
+					TerminarWaitMe();
+				} else {
+					TerminarWaitMe();
+				}
+			});
+		}
+
+	function Cargar_Diagnosticos() {
+			CargarWaitMe();
+			let id = 1;
+			$("#tabla_dx").load("@Url.Content("~/VisorFUA/DiagnosticosFUAV")", { id: id }, function () {
+				if ($("#Diagnosticos_cant").length == 1) {
+					$('#tblDiagnosticos').DataTable({
+						destroy: true,
+						"ordering": false,
+						responsive: true,
+						"lengthChange": false,
+						"searching": true,
+						"language": languaje_spanol
+					});
+					TerminarWaitMe();
+				} else {
+					TerminarWaitMe();
+				}
+			});
+		}
+
+	function Cargar_Medicamentos() {
+        CargarWaitMe();
+        let id = 1;
+        $("#tabla_Medica").load("@Url.Content("~/VisorFUA/MedicamentosFUAV")", { id: id }, function () {
+            if ($("#Medicamentos_cant").length == 1) {
+                $('#tblMedicamentos').DataTable({
+                    destroy: true,
+                    "ordering": false,
+                    responsive: true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "language": languaje_spanol
+                });
+                TerminarWaitMe();
+            }else{
+                TerminarWaitMe();
+            }
+            });
+    }
+
+	function Cargar_Procedimientos() {
+			CargarWaitMe();
+			let id = 1;
+			$("#tabla_Procedimientos").load("@Url.Content("~/VisorFUA/ProcedimientosFUAV")", { id: id }, function () {
+				if ($("#Procedimientos_cant").length == 1) {
+					$('#tblProcedimientos').DataTable({
+						destroy: true,
+						"ordering": false,
+						responsive: true,
+						"lengthChange": false,
+						"searching": true,
+						"language": languaje_spanol
+					});
+					TerminarWaitMe();
+				} else {
+					TerminarWaitMe();
+				}
+			});
+		}
+
+	function Cargar_Insumos() {
+			CargarWaitMe();
+			let id = 1;
+			$("#tabla_Insumos").load("@Url.Content("~/VisorFUA/InsumosFUAV")", { id: id }, function () {
+				if ($("#Insumos_cant").length == 1) {
+					$('#tblInsumos').DataTable({
+						destroy: true,
+						"ordering": false,
+						responsive: true,
+						"lengthChange": false,
+						"searching": true,
+						"language": languaje_spanol
+					});
+					TerminarWaitMe();
+				} else {
+					TerminarWaitMe();
+				}
+			});
+		}
+	
+		function Cargar_Infantil() {
+			CargarWaitMe();
+			let id = 1;
+			$("#tabla_Infantil").load("@Url.Content("~/VisorFUA/MaternoInfantilFUAV")", { id: id }, function () {
+				if ($("#Infantil_cant").length == 1) {
+					$('#tblInfantil').DataTable({
+						destroy: true,
+						"ordering": false,
+						responsive: true,
+						"lengthChange": false,
+						"searching": true,
+						"language": languaje_spanol
+					});
+					TerminarWaitMe();
+				} else {
+					TerminarWaitMe();
+				}
+			});
+		}
+
+	</script>
+	</body>
+	<!--end::Body-->
+
+</html>

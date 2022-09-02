@@ -1,0 +1,165 @@
+﻿
+<div class="modal fade" id="mdl_AccionProcedimientosFUAV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_AccionProcedimientosFUAVlabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mdl_AccionProcedimientosFUAVlabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="txtId">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <div class="form-label fw-bolder fs-4">
+                                Código
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="txtCodProcedimiento" />
+                                <button type="button" class="btn btn-primary input-group-text" id="btnConsultarProced">
+                                    <span class="indicator-label">
+                                        <i class="fas fa-search fs-4"></i> Consultar
+                                    </span>
+                                    <span class="indicator-progress">
+                                        Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Descripción</label>
+                            <input type="text" class="form-control form-control-solid " id="txtDesProcedimiento" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Grupo:</label>
+                            <input type="text" class="form-control form-control-solid " id="txtGrupoProc" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">SubGrupo</label>
+                            <input type="text" class="form-control form-control-solid " id="txtSubGrupoProc" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Prescrita</label>
+                            <input type="text" class="form-control form-control-solid " id="txtPrescritaProc" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Ejecutada</label>
+                            <input type="text" class="form-control form-control-solid " id="txtEjecutadoProc" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Precio (S/.)</label>
+                            <input type="text" class="form-control form-control-solid " id="txtPrecioProc" />
+                        </div>
+                    </div>
+                      <div class="col-md-3">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Resultado</label>
+                            <input type="text" class="form-control form-control-solid " id="txtResultadoProc" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4" data-select2-id="cbxDiagnosticoProc">
+                            <label for="cbxDiagnosticoProc" class="form-label text-wrap fw-bolder fs-4">Diagnostico</label>
+                            <select aria-label="Seleccionar" id="cbxDiagnosticoProc" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                <option selected disabled value="">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    @if (ViewBag.Tipo == "1")
+                    {
+                        <button type="button" onclick="Registrar_TramoCV();" class="btn btn-success">
+                            <i class="fas fa-save fs-4 me-2"></i>
+                            Guardar
+                        </button>
+                    }
+                    else if (ViewBag.Tipo == "2")
+                    {
+                        <button type="button" onclick="Modificar_TramoCV();" class="btn btn-warning">
+                            <i class="fas fa-edit fs-4 me-2"></i>
+                            Actualizar
+                        </button>
+                    }
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fas fa-times fs-4 me-2"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>$(".date").daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 1901,
+        maxYear: parseInt(moment().format("YYYY"), 10) + 1,
+        "locale": {
+            "format": "DD/MM/YYYY",
+            "separator": " - ",
+            "applyLabel": "Aceptar",
+            "cancelLabel": "Cancelar",
+            "fromLabel": "From",
+            "toLabel": "To",
+            "customRangeLabel": "Custom",
+            "weekLabel": "W",
+            "daysOfWeek": [
+                "Do",
+                "Lu",
+                "Ma",
+                "Mi",
+                "Ju",
+                "Vi",
+                "Sa"
+            ],
+            "monthNames": [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Setiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ],
+            "firstDay": 1
+        },
+    });</script>

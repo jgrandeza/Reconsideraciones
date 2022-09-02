@@ -1,0 +1,375 @@
+﻿
+
+<h1 class="display-6 mt-5 mb-8" style="text-align:center">BÚSQUEDA DE RECONSIDERACIONES A SOLICITAR</h1>
+
+
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container-xxl">
+
+        <div class="card" style="background-color:#73B8C0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
+                        <!--begin::Order details-->
+                        <div class="card card-flush py-4 flex-row-fluid">
+                            <!--begin::Card body-->
+                            <div class="card-body pt-0">
+                                    <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                        <thead class="fw-bold text-black">
+                                            <tr>
+                                                <th class="fw-bold text-center">DISA</th>
+                                                <th class="fw-bold text-center">UNIDAD EJECUTORA</th>
+                                                <th class="fw-bold text-center"> ESTABLECIMIENTO</th>
+                                            </tr>
+                                        </thead>
+                                        <!--begin::Table body-->
+                                        <tbody class="fw-semibold text-gray-600">
+                                            <!--begin::Date-->
+                                            <tr>
+                                                <td class="fw-bold text-center">@ViewBag.DescDisa</td>
+                                                <td class="fw-bold text-center">@ViewBag.DescUE</td>
+                                                <td class="fw-bold text-center">@ViewBag.DesEESS</td>
+                                            </tr>
+
+                                            <!--end::Date-->
+                                        </tbody>
+                                        <!--end::Table body-->
+                                    </table>
+                            </div>
+                            <!--end::Card body-->
+                        </div>
+                        <!--end::Order details-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card shadow-sm mt-5">
+            <div style="background: #f5f5f1" class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible">
+                <h3 class="card-title">FILTROS GENERALES</h3>
+                <div class="card-toolbar rotate-0">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+                            <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="black"></path>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div id="kt_docs_card_collapsible" class="collapse show">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-2" data-select2-id="cbxPeriodo">
+                                <label for="cbxPeriodo" class="form-label text-wrap fw-bolder fs-4">Periodo</label>
+                                <select aria-label="Seleccionar" id="cbxPeriodo" onchange="CargarRangoPeriodoRec()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                        @{ if (ViewBag.RecPeriodo != null)
+                                            {
+                                                foreach (var item in ViewBag.RecPeriodo)
+                                                {
+                                                                                          <option value="@item.PERIODO">@item.PERIODO</option>
+                                                }
+                                            } 
+                                         }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2">
+                                <label for="txtCronograma" class="form-label text-wrap fw-bolder fs-4">Cronograma de Registro de Solicitud</label>
+                                <input type="text" class="form-control form-control-solid" id="txtCronograma" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2">
+                                <label for="txtPeriodoAte" class="form-label text-wrap fw-bolder fs-4">Periodo de Producción de Atenciones</label>
+                                <input type="text" class="form-control form-control-solid" id="txtPeriodoAte" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-3">
+                            <div class="mb-2" data-select2-id="cbxPeriodoProd">
+                                <label for="cbxPeriodoProd" class="form-label text-wrap fw-bolder fs-4">Periodo Producción</label>
+                                <select aria-label="Seleccionar" id="cbxPeriodoProd" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-2" data-select2-id="cbxTipoRec">
+                                <label for="cbxTipoRec" class="form-label text-wrap fw-bolder fs-4">Tipo de Observación</label>
+                                <select aria-label="Seleccionar" id="cbxTipoRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                             @{ if (ViewBag.TipoObservacion != null)
+                                            {
+                                                foreach (var item in ViewBag.TipoObservacion)
+                                                {
+                                                                                          <option value="@item.ID">@item.DESCRIPCION</option>
+                                                }
+                                            } 
+                                         }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-2" data-select2-id="cbxEstadoRec">
+                                <label for="cbxEstadoRec" class="form-label text-wrap fw-bolder fs-4">Estado de Reconsideración</label>
+                                <select aria-label="Seleccionar" id="cbxEstadoRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                         @{ if (ViewBag.EstadosRecon != null)
+                                            {
+                                                foreach (var item in ViewBag.EstadosRecon)
+                                                {
+                                                                                          <option value="@item.ID">@item.DESCRIPCION</option>
+                                                }
+                                            } 
+                                         }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-2" data-select2-id="cbxTarifarioRec">
+                                <label for="cbxTarifarioRec" class="form-label text-wrap fw-bolder fs-4">Tarifario</label>
+                                <select aria-label="Seleccionar" id="cbxTarifarioRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                        @{ if (ViewBag.TipoTarifario != null)
+                                            {
+                                                foreach (var item in ViewBag.TipoTarifario)
+                                                {
+                                                                                          <option value="@item.ID">@item.DESCRIPCION</option>
+                                                }
+                                            } 
+                                         }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5 mb-5">
+                        <div class="col-md-12">
+                            <div class="form-check form-switch form-check-custom form-check-solid">
+                                <input class="form-check-input" type="checkbox" value="" id="rbtnFiltroFUA" />
+                                <label class="form-check-label" for="rbtnFiltroFUA">
+                                    Busqueda por FUA
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modalFiltroFUA"></div>
+                    <div class="row mt-2">
+                        <div class="col-md-12 d-grid gap-2">
+                            <button type="button" onclick="CargarParametros(1,0);" href="javascript:void(0);" id="btnConsultar" class="btn btn-primary">
+                                <i class="fas fa-search fs-4 me-2"></i>
+                                Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div class="card shadow-sm mt-5">
+            <div style="background: #f5f5f1" class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible">
+                <h3 class="card-title">FILTROS AVANZADOS</h3>
+                <div class="card-toolbar rotate-0">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+                            <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="black"></path>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div id="kt_docs_card_collapsible" class="collapse hide">
+                <div class="card-body">
+                    <div class="row mt-2">
+                        <div class="col-md-12 d-grid gap-2">
+                            <button type="button" onclick="" id="btnConsultar" class="btn btn-primary">
+                                <i class="fas fa-search fs-4 me-2"></i>
+                                Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+        <div class="card shadow-sm mt-5">
+            <div style="background: #f5f5f1" class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible2">
+                <h3 class="card-title">RESULTADOS</h3>
+                <div class="card-toolbar rotate-0">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+                            <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="black"></path>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div id="kt_docs_card_collapsible2" class="collapse show">
+                <div class="card-body">
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+
+                            <div class="table-responsive">
+                                <div class="mt-4" id="tabla_p">
+
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--end::Container-->
+</div>
+<script>
+  //$(".table").DataTable({ "language": languaje_spanol, "info": false, "lengthChange": false, "searching":true });
+    setTimeout(function () {
+        //CargarParametros();
+    }, 1000);
+    function CargarParametros(vfiltro,vfua) {
+        CargarWaitMe();
+        let prd =$("#cbxPeriodo").val();
+               console.log(prd);
+        if (prd == "" || prd == null) {
+
+            NotificacionToastr('error', 'Debe ingresar el Periodo para inciar la busqueda', 'Oops...');
+            $("#cbxPeriodo").focus();
+            TerminarWaitMe();
+        } else {
+            $("#tabla_p").load("@Url.Content("~/SolicitudReconsideracion/GetReconsideracionesEESSV")", { periodo: prd, filtro: vfiltro, fua: vfua }, function() {
+
+                if ($("#RecEESS_cant").length == 1) {
+                    $('#tblRecEESS').DataTable({
+                        destroy: true,
+                        "ordering": true,
+                        responsive: true,
+                        "lengthChange": false,
+                        "searching": true,
+                        "language": languaje_spanol
+                    });
+                    TerminarWaitMe();
+                } else {
+                    TerminarWaitMe();
+                }
+            });
+        }
+    }
+    $("#rbtnFiltroFUA").change(function () {
+        if (this.checked) {
+            Visualizar_Filtro_FUA();
+        } else {
+        }
+    });
+   function Visualizar_Filtro_FUA() {
+        $.get("@Url.Content("~/SolicitudReconsideracion/FiltroFuaReconsEESSV")")
+        .done(function (response) {
+            $('#modalFiltroFUA').html(response);
+            $('#mdl_FiltroFuaReconsEESSV').modal("show");
+        });
+    }
+    function Visualizar_FUA(id) {
+      
+        $(".content-custom").load("@Url.Content("~/FUA/Index")", { id: id})
+    }
+   function CargarRangoPeriodoRec() {
+       let cV_PERIODO =$("#cbxPeriodo").val();
+       
+       var valores = {V_PERIODO: cV_PERIODO};
+                  $.get("@Url.Content("~/SolicitudReconsideracion/CargarRangoPeriodoRec")", valores )
+        .done(function (response) {            
+            if (response.isSuccess != false) {  
+                let data = response.result;
+                console.log(data);
+                $('#txtCronograma').val(`${data.rcrO_FECHAINICIO.substring(0,10)} al ${data.rcrO_FECHAFIN.substring(0,10)}`);
+                $('#txtPeriodoAte').val(data.rcrO_TEXTO); 
+                
+                var data2 = response.result2;
+                console.log(data2);
+                Limpiar_PeriProd();
+                data2.forEach((element, index) => {
+                     // create the option
+                    var opt = $("<option>").val(element.periodo).text(element.periodo);
+                    //append option to the select element
+                    $("#cbxPeriodoProd").append(opt);
+                })
+
+            }
+            else {
+                NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
+            }
+        });      
+    }
+
+    function Limpiar_PeriProd(){
+        $('option', '#cbxPeriodoProd').remove();
+            $("#cbxPeriodoProd").append('<option selected disabled value="">Seleccionar</option>');
+    }
+
+    function Solicitar_Reconsideracion(e,id) {
+        e.preventDefault();
+        Swal.fire({
+            html: `SOLICITAR RECONSIDERACION?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, Solicitar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Registrar_SolicRecon(id)
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+    function Registrar_SolicRecon(id) {
+        let valores_Aprob = [];
+        valores_Aprob[0] = id;
+
+        var formData = new FormData();
+        formData.append("id", valores_Aprob[0]);
+
+        CargarWaitMe();
+        $.ajax({
+            url: '@Url.Action("RegistrarSolicitud", "SolicitudReconsideracion")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            type: 'POST',
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                    Visualizar_FUA(id);
+                    TerminarWaitMe();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                    TerminarWaitMe();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
+    }
+
+</script>

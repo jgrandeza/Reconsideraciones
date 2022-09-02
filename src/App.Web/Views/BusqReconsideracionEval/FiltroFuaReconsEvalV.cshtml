@@ -1,0 +1,85 @@
+﻿
+<div class="modal fade" id="mdl_FiltroFuaReconsEvalV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_FiltroFuaReconsEvalVlabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mdl_FiltroFuaReconsEvalVlabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 mt-5 mb-5">
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" value="" id="rbtnFormato" />
+                            <label class="form-check-label" id="lblFormatoFUA" for="rbtnFormato">
+                                ANTIGUO FORMATO
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label for="txtIPRESS" class="form-label text-wrap fw-bolder fs-4">Identificador</label>
+                            <input type="text" class="form-control form-control-solid" id="txtIPRESS" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label for="txtLote" class="form-label text-wrap fw-bolder fs-4">Lote</label>
+                            <input type="text" class="form-control form-control-solid" id="txtLote" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label for="txtFUA" class="form-label text-wrap fw-bolder fs-4">#</label>
+                            <input type="text" class="form-control form-control-solid" id="txtFUA" disabled />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" onclick="Confirmar_StatusEjecFinan(event);" class="btn btn-primary">
+                    <i class="fas fa-search fs-4 me-2"></i>
+                    Buscar
+                </button>
+
+                <button type="button" class="btn btn-danger" onclick="CerrarModalFiltroFUA(event);">
+                    <i class="fas fa-times fs-4 me-2"></i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>$("#rbtnFormato").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#lblFormatoFUA").html("NUEVO FORMATO");
+        } else {
+            //I'm not checked
+            $("#lblFormatoFUA").html("ANTIGUO FORMATO");
+        }
+    });
+
+    function CerrarModalFiltroFUA() {
+        $('#mdl_FiltroFuaReconsEvalV').modal("hide");
+        $('#rbtnFiltroFUA').prop('checked', false);
+    }</script>

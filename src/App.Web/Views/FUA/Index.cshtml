@@ -1,0 +1,353 @@
+﻿
+
+<h1 class="display-6 mt-5 mb-8" style="text-align:center">@ViewBag.Titulo</h1>
+
+
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container-xxl">
+        <input type="hidden" id="Ate_Idnumreg" value="@ViewBag.ATE_IDNUMREG" />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="background-color:#73B8C0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="fs-4 fw-bolder" style="color:white; text-align:center; font-size:14px !important">
+                                Periodo de Registro de Reconcideración: @ViewBag.PeriodoRec
+                                </p>
+                            </div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card" style="background-color: #0272A3">
+                    <div class="card-body">
+                        <div class="row" style="text-align:center">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-warning btn-md" onclick="cargarModalRegistroCorredorVial(1)">
+                                    <i class="fas fa-arrow-left  fs-4 me-2"></i>
+                                    Atras
+                                </button>
+                                <button type="button" class="btn btn-dark btn-md" onclick="Conf_Guardar(event)">
+                                    <i class="fas fa-save fs-4 me-2"></i>
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger btn-md" onclick="Conf_Validacion(event)">
+                                    <i class="fas fa-list-ol fs-4 me-2"></i>
+                                    Validar Cambios
+                                </button>
+                                <button type="button" class="btn btn-success btn-md" onclick="cargarModalRegistroCorredorVial(1)">
+                                    <i class="fas fa-upload fs-4 me-2"></i>
+                                    Registar Sustento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+            <div class="card mt-5 mb-5 mb-xl-10" id="kt_profile_details_view">
+                <!--begin::Card body-->
+                <div class="card-body p-9">
+
+                    <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#Tab1"><i class="fas fa-clinic-medical fs-4 me-2"></i> INFORMACIÓN GENERAL</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#Tab2"><i class="fas fa-file-medical fs-4 me-2"></i> DIAGNOSTICOS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#Tab3"><i class="fas fa-capsules fs-4 me-2"></i> MEDICAMENTOS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#Tab4"><i class="fas fa-crutch fs-4 me-2"></i> PROCEDIMIENTOS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#Tab5"><i class="fas fa-vials fs-4 me-2"></i> INSUMOS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#Tab6"><i class="fas fa-baby fs-4 me-2"></i> SERVICIO MATERNO</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="Tab1" role="tabpanel">
+                            <div id="divInfGeneralFUA"></div>
+                        </div>
+                        <div class="tab-pane fade" id="Tab2" role="tabpanel">
+                           <div class="row mb-5">
+                               <div class="col-sm-12" style="text-align:left">
+                                   <button type="button" onclick="CargarModalDiagnostico(1,0)" class="btn btn-dark">
+                                       <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                                   </button>
+                               </div>
+                           </div>
+                            <div id="modalDiagnostico"></div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                     <div class="table-responsive">
+                                        <div id="tabla_dx"></div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Tab3" role="tabpanel">
+
+                           <div class="row mb-5">
+                               <div class="col-sm-12" style="text-align:left">
+                                   <button type="button" onclick="CargarModalMedicamentos(1,0)" class="btn btn-dark">
+                                       <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                                   </button>
+                               </div>
+                           </div>
+                            <div id="modalMedicamentos"></div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                     <div class="table-responsive">
+                                        <div id="tabla_Medica"></div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Tab4" role="tabpanel">
+                           <div class="row mb-5">
+                               <div class="col-sm-12" style="text-align:left">
+                                   <button type="button" onclick="CargarModalProcedimientos(1,0)" class="btn btn-dark">
+                                       <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                                   </button>
+                               </div>
+                           </div>
+                            <div id="modalProcedimientos"></div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                     <div class="table-responsive">
+                                        <div id="tabla_Procedimientos"></div>
+                                     </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="Tab5" role="tabpanel">
+
+                            <div class="row mb-5">
+                               <div class="col-sm-12" style="text-align:left">
+                                   <button type="button" onclick="CargarModalInsumos(1,0)" class="btn btn-dark">
+                                       <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                                   </button>
+                               </div>
+                           </div>
+                            <div id="modalInsumos"></div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                     <div class="table-responsive">
+                                        <div id="tabla_Insumos"></div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Tab6" role="tabpanel">
+                            <div id="tabla_Infantil"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            </div>
+            <!--end::Container-->
+        </div>
+<script>
+    setTimeout(function () {
+        CargarWaitMe();
+            Cargar_Info_General();
+            Cargar_Diagnosticos();
+            Cargar_Medicamentos();
+            Cargar_Procedimientos();
+            Cargar_Insumos();
+            Cargar_Infantil();
+        TerminarWaitMe();
+    }, 500);
+
+    function Cargar_Info_General() {
+        let id = $("#Ate_Idnumreg").val();
+      $.get("@Url.Content("~/FUA/InfGeneralFUAV")", { id: id })
+        .done(function (response) {
+            $('#divInfGeneralFUA').html(response);            
+            $('.select').select2();
+        });
+    }
+    function Cargar_Diagnosticos() {
+        CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        $("#tabla_dx").load("@Url.Content("~/FUA/DiagnosticosFUAV")", { id: id }, function () {
+            if ($("#Diagnosticos_cant").length == 1) {
+                $('#tblDiagnosticos').DataTable({
+                    destroy: true,
+                    "ordering": false,
+                    responsive: true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "language": languaje_spanol
+                });
+                TerminarWaitMe();
+            }else{
+                TerminarWaitMe();
+            }
+            });
+    }
+    function CargarModalDiagnostico(tipo,id) {
+        $.get("@Url.Content("~/FUA/AccionDiagnosticoFUAV")", { tipo: tipo, id: id })
+        .done(function (response) {
+            $('#modalDiagnostico').html(response);
+            $('#mdl_AccionDiagnosticoFUAV').modal("show");
+        });
+    }
+    function Cargar_Medicamentos() {
+        CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        $("#tabla_Medica").load("@Url.Content("~/FUA/MedicamentosFUAV")", { id: id }, function () {
+            if ($("#Medicamentos_cant").length == 1) {
+                $('#tblMedicamentos').DataTable({
+                    destroy: true,
+                    "ordering": false,
+                    responsive: true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "language": languaje_spanol
+                });
+                TerminarWaitMe();
+            }else{
+                TerminarWaitMe();
+            }
+            });
+    }
+    function CargarModalMedicamentos(tipo,id) {
+        $.get("@Url.Content("~/FUA/AccionMedicamentosFUAV")", { tipo: tipo, id: id })
+        .done(function (response) {
+            $('#modalMedicamentos').html(response);
+            $('#mdl_AccionMedicamentosFUAV').modal("show");
+        });
+    }
+    function Cargar_Procedimientos() {
+        CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+       $("#tabla_Procedimientos").load("@Url.Content("~/FUA/ProcedimientosFUAV")", { id: id }, function () {
+            if ($("#Procedimientos_cant").length == 1) {
+                $('#tblProcedimientos').DataTable({
+                    destroy: true,
+                    "ordering": false,
+                    responsive: true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "language": languaje_spanol
+                });
+                TerminarWaitMe();
+            }else{
+                TerminarWaitMe();
+            }
+            });
+    }
+    function CargarModalProcedimientos(tipo,id) {
+        $.get("@Url.Content("~/FUA/AccionProcedimientosFUAV")", { tipo: tipo, id: id })
+        .done(function (response) {
+            $('#modalProcedimientos').html(response);
+            $('#mdl_AccionProcedimientosFUAV').modal("show");
+        });
+    }
+   function Cargar_Insumos() {
+        CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+       $("#tabla_Insumos").load("@Url.Content("~/FUA/InsumosFUAV")", { id: id }, function () {
+            if ($("#Insumos_cant").length == 1) {
+                $('#tblInsumos').DataTable({
+                    destroy: true,
+                    "ordering": false,
+                    responsive: true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "language": languaje_spanol
+                });
+                TerminarWaitMe();
+            }else{
+                TerminarWaitMe();
+            }
+            });
+   }
+    function CargarModalInsumos(tipo,id) {
+        $.get("@Url.Content("~/FUA/AccionInsumosFUAV")", { tipo: tipo, id: id })
+        .done(function (response) {
+            $('#modalInsumos').html(response);
+            $('#mdl_AccionInsumosFUAV').modal("show");
+        });
+    }
+   function Cargar_Infantil() {
+        CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+       $("#tabla_Infantil").load("@Url.Content("~/FUA/MaternoInfantilFUAV")", { id: id }, function () {
+            if ($("#Infantil_cant").length == 1) {
+                $('#tblInfantil').DataTable({
+                    destroy: true,
+                    "ordering": false,
+                    responsive: true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "language": languaje_spanol
+                });
+                TerminarWaitMe();
+            }else{
+                TerminarWaitMe();
+            }
+            });
+    }
+
+    function Conf_Validacion(e) {
+        e.preventDefault();
+        Swal.fire({
+            html: '<p style="color: red;">No se podra revertir la validacion</p>',
+            title: `VALIDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, Validar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //Visualizar_FUA(id);
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+    
+    function Conf_Guardar(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: `GUARDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, registrar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //Visualizar_FUA(id);
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+</script>

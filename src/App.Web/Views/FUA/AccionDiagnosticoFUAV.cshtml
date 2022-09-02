@@ -1,0 +1,260 @@
+﻿
+<div class="modal fade" id="mdl_AccionDiagnosticoFUAV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_AccionDiagnosticoFUAVlabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mdl_AccionDiagnosticoFUAVlabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="txtId">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <div class="form-label fw-bolder fs-4">
+                                Código
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="txtCodDiagnostico" />
+                                <button type="button" class="btn btn-primary input-group-text" id="btnConsultarDX">
+                                    <span class="indicator-label">
+                                        <i class="fas fa-search fs-4"></i> Consultar
+                                    </span>
+                                    <span class="indicator-progress">
+                                        Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Descripción</label>
+                            <input type="text" class="form-control form-control-solid " id="txtDesDiagnostico" disabled/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4" data-select2-id="cbxIngEgre">
+                            <label for="cbxIngEgre" class="form-label text-wrap fw-bolder fs-4">Ingreso/Egreso</label>
+                            <select aria-label="Seleccionar" id="cbxIngEgre" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                <option selected disabled value="">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4" data-select2-id="cbxTipoDx">
+                            <label for="cbxTipoDx" class="form-label text-wrap fw-bolder fs-4">Tipo DX</label>
+                            <select aria-label="Seleccionar" id="cbxTipoDx" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                <option selected disabled value="">Seleccionar</option>                               
+                                    @{ if (ViewBag.ListTipoDX != null)
+                                    {
+                                        foreach (var item in ViewBag.ListTipoDX)
+                                        {
+                                            <option value="@item.TDA_TIPODIA">@item.TDA_CDESCRIPCION</option>
+                                        }
+                                    } 
+                                 }
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    @if (ViewBag.Tipo == "1")
+                    {
+                        <button type="button" onclick="Registrar_TramoCV();" class="btn btn-success">
+                            <i class="fas fa-save fs-4 me-2"></i>
+                            Guardar
+                        </button>
+                    }
+                    else if (ViewBag.Tipo == "2")
+                    {
+                        <button type="button" onclick="Modificar_TramoCV();" class="btn btn-warning">
+                            <i class="fas fa-edit fs-4 me-2"></i>
+                            Actualizar
+                        </button>
+                    }
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fas fa-times fs-4 me-2"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+<script>
+    $(".date").daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 1901,
+        maxYear: parseInt(moment().format("YYYY"), 10) + 1,
+        "locale": {
+            "format": "DD/MM/YYYY",
+            "separator": " - ",
+            "applyLabel": "Aceptar",
+            "cancelLabel": "Cancelar",
+            "fromLabel": "From",
+            "toLabel": "To",
+            "customRangeLabel": "Custom",
+            "weekLabel": "W",
+            "daysOfWeek": [
+                "Do",
+                "Lu",
+                "Ma",
+                "Mi",
+                "Ju",
+                "Vi",
+                "Sa"
+            ],
+            "monthNames": [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Setiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ],
+            "firstDay": 1
+        },
+    });
+
+    $("#rbtnEstado").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#lblEstado").html("Activo");
+        } else {
+            //I'm not checked
+            $("#lblEstado").html("Inactivo");
+        }
+    });
+
+    function Registrar_TramoCV() {
+
+        check = $("#rbtnEstado").is(":checked");
+
+        var formData = new FormData();
+
+        formData.append("iD_CORREDOR_VIAL", $('#cbxTramoCV').val());
+        formData.append("cNOMBRE", $('#txtDescTramo').val());
+        formData.append("cKM_INICIO", $('#txtKmInicial').val());
+        formData.append("cKM_FIN", $('#txtKmFinal').val());
+        formData.append("cDESCRIPCION_INICIO", $('#txtDescInicial').val());
+        formData.append("cDESCRIPCION_FIN", $('#txtDescFinal').val());
+        formData.append("cNUMERO_PROGRESIVA", $('#txtProgresiva').val());
+        formData.append("cESTADO", check);
+
+
+        CargarWaitMe();
+        $.ajax({
+            url: "@Url.Content("~/TramoCV/RegistrarTramo")",
+            type: "POST",
+            enctype: 'multipart/form-data',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+
+            error: function (e) {
+                NotificacionToastr('error', `Error al conectarse?`, 'ALERTA');
+                TerminarWaitMe();
+                console.log("ERROR : ", e.responseText);
+            }
+
+        }).done(function (response) {
+
+            if (response.isSuccess == true) {
+                NotificacionToastr('success', `${response.message}`, 'Felicidades...');
+                $('#mdl_AccionTramoCVV').modal("hide");
+                 CargarParametros();
+            } else {
+                NotificacionToastr('error', `${response.message}`, 'Oops...');
+            }
+
+        }).fail(function () {
+            NotificacionToastr('error', `${response.message}`, 'Oops...');
+        }).always(function () {
+            TerminarWaitMe();
+        });
+    }
+
+
+
+    function Modificar_TramoCV() {
+
+           check = $("#rbtnEstado").is(":checked");
+
+            var formData = new FormData();
+        formData.append("iD_TRAMO", $('#txtId').val());
+        formData.append("cNOMBRE", $('#txtDescTramo').val());
+        formData.append("cKM_INICIO", $('#txtKmInicial').val());
+        formData.append("cKM_FIN", $('#txtKmFinal').val());
+        formData.append("cDESCRIPCION_INICIO", $('#txtDescInicial').val());
+        formData.append("cDESCRIPCION_FIN", $('#txtDescFinal').val());
+        formData.append("cNUMERO_PROGRESIVA", $('#txtProgresiva').val());
+        formData.append("cESTADO", check);
+
+            CargarWaitMe();
+        return $.ajax({
+            url: "@Url.Content("~/TramoCV/ModificarTramo")",
+            type: "POST",
+            enctype: 'multipart/form-data',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+
+            error: function (e) {
+                NotificacionToastr('error', `Error al conectarse?`, 'Oops...');
+                TerminarWaitMe();
+                console.log("ERROR : ", e.responseText);
+            }
+
+        }).done(function (response) {
+
+            if (response.isSuccess == true) {
+               $('#mdl_AccionTramoCVV').modal("hide");
+                 CargarParametros();
+                NotificacionToastr('success', `${response.message}`, 'Felicidades...');
+            } else {
+                NotificacionToastr('error', `${response.message}`, 'Oops...');
+            }
+
+        })
+        .fail(function () {
+            NotificacionToastr('error', `${response.message}`, 'Oops...');
+        })
+        .always(function () {
+            TerminarWaitMe();
+        });
+
+    }
+</script>

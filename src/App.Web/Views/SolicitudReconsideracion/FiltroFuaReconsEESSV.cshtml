@@ -1,0 +1,90 @@
+﻿
+<div class="modal fade" id="mdl_FiltroFuaReconsEESSV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_FiltroFuaReconsEESSVlabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mdl_FiltroFuaReconsEESSVlabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"  onclick="CerrarModalFiltroFUA(event);"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 mt-5 mb-5">
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" value="" id="rbtnFormato" />
+                            <label class="form-check-label" id="lblFormatoFUA" for="rbtnFormato">
+                                ANTIGUO FORMATO
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label for="txtFUA" id="lblFUA" class="form-label text-wrap fw-bolder fs-4">DISA - LOTE - NUMERO</label>
+                            <input type="text" class="form-control " id="txtFUA"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" onclick="BusquedaXFua(2);" class="btn btn-primary">
+                    <i class="fas fa-search fs-4 me-2"></i>
+                    Buscar
+                </button>
+
+                <button type="button" class="btn btn-danger"  onclick="CerrarModalFiltroFUA(event);">
+                    <i class="fas fa-times fs-4 me-2"></i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+ Inputmask({
+    "mask" : "999-99-99999999"
+}).mask("#txtFUA");
+
+    $("#rbtnFormato").change(function () {
+           var selector = document.getElementById("txtFUA");
+
+        if (this.checked) {
+            //I am checked
+            $("#lblFormatoFUA").html("NUEVO FORMATO");
+             $("#lblFUA").html("RENIPRESS - LOTE - NUMERO");
+             var im = new Inputmask("999999-99-99999999");
+            im.mask(selector);
+        } else {
+            //I'm not checked
+            $("#lblFormatoFUA").html("ANTIGUO FORMATO");           
+            $("#lblFUA").html("DISA - LOTE - NUMERO");       
+            var im = new Inputmask("999-99-99999999");
+            im.mask(selector);
+        }
+    });
+
+    function CerrarModalFiltroFUA() {
+        $('#mdl_FiltroFuaReconsEESSV').modal("hide");
+        $('#rbtnFiltroFUA').prop('checked', false);
+    }
+        function BusquedaXFua(filtro) {
+            let dato =  $("#txtFUA").val();           
+            CargarParametros(filtro, dato);
+            CerrarModalFiltroFUA();
+        }
+
+</script>

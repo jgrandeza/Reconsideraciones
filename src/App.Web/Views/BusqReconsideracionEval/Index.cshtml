@@ -1,0 +1,260 @@
+﻿
+
+<h1 class="display-6 mt-5 mb-8" style="text-align:center">@ViewBag.Titulo</h1>
+
+
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container-xxl">
+
+        <div class="card shadow-sm mt-5">
+            <div style="background: #f5f5f1" class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible">
+                <h3 class="card-title">FILTROS GENERALES</h3>
+                <div class="card-toolbar rotate-0">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+                            <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="black"></path>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div id="kt_docs_card_collapsible" class="collapse show">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxDISA">
+                                <label for="cbxDISA" class="form-label text-wrap fw-bolder fs-4">DISA:</label>
+                                <select aria-label="Seleccionar" id="cbxDISA" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-4" data-select2-id="cbxUE">
+                                <label for="cbxUE" class="form-label text-wrap fw-bolder fs-4">UND. EJEC.:</label>
+                                <select aria-label="Seleccionar" id="cbxUE" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-4" data-select2-id="cbxEESS">
+                                <label for="cbxEESS" class="form-label text-wrap fw-bolder fs-4">EESS:</label>
+                                <select aria-label="Seleccionar" id="cbxEESS" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-2">
+                            <div class="mb-4" data-select2-id="cbxPeriodo">
+                                <label for="cbxPeriodo" class="form-label text-wrap fw-bolder fs-4">Periodo</label>
+                                <select aria-label="Seleccionar" id="cbxPeriodo" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-4" data-select2-id="cbxMes">
+                                <label for="cbxMes" class="form-label text-wrap fw-bolder fs-4">Mes</label>
+                                <select aria-label="Seleccionar" id="cbxMes" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtCronograma" class="form-label text-wrap fw-bolder fs-4">Cronograma de Registro de Solicitud</label>
+                                <input type="text" class="form-control form-control-solid" id="txtCronograma" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtPeriodoAte" class="form-label text-wrap fw-bolder fs-4">Periodo de Producción de Atenciones</label>
+                                <input type="text" class="form-control form-control-solid" id="txtPeriodoAte" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxTipoRec">
+                                <label for="cbxTipoRec" class="form-label text-wrap fw-bolder fs-4">Tipo de Observación</label>
+                                <select aria-label="Seleccionar" id="cbxTipoRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxEstadoRec">
+                                <label for="cbxEstadoRec" class="form-label text-wrap fw-bolder fs-4">Estado de Reconsideración</label>
+                                <select aria-label="Seleccionar" id="cbxEstadoRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxTarifarioRec">
+                                <label for="cbxTarifarioRec" class="form-label text-wrap fw-bolder fs-4">Tarifario</label>
+                                <select aria-label="Seleccionar" id="cbxTarifarioRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxTipoSupervicionRec">
+                                <label for="cbxTipoSupervicionRec" class="form-label text-wrap fw-bolder fs-4">Tipo Supervición</label>
+                                <select aria-label="Seleccionar" id="cbxTipoSupervicionRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxTipoRecons">
+                                <label for="cbxTipoRecons" class="form-label text-wrap fw-bolder fs-4">Tipo de Reconsideración</label>
+                                <select aria-label="Seleccionar" id="cbxTipoRecons" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxEstadoReviRec">
+                                <label for="cbxEstadoReviRec" class="form-label text-wrap fw-bolder fs-4">Estado de la Revisión</label>
+                                <select aria-label="Seleccionar" id="cbxEstadoReviRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxRMRec">
+                                <label for="cbxRMRec" class="form-label text-wrap fw-bolder fs-4">RM:</label>
+                                <select aria-label="Seleccionar" id="cbxRMRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxCodObsRec">
+                                <label for="cbxCodObsRec" class="form-label text-wrap fw-bolder fs-4">Codigo Observación</label>
+                                <select aria-label="Seleccionar" id="cbxCodObsRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxDetCodObsRec">
+                                <label for="cbxDetCodObsRec" class="form-label text-wrap fw-bolder fs-4">Detalle Codigo Observación</label>
+                                <select aria-label="Seleccionar" id="cbxDetCodObsRec" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 mb-5">
+                        <div class="col-md-12">
+                            <div class="form-check form-switch form-check-custom form-check-solid">
+                                <input class="form-check-input" type="checkbox" value="" id="rbtnFiltroFUA" />
+                                <label class="form-check-label" for="rbtnFiltroFUA">
+                                    Busqueda por FUA
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modalFiltroFUA"></div>
+                    <div class="row mt-2">
+                        <div class="col-md-12 d-grid gap-2">
+                            <button type="button"  onclick="Visualizar_FUA(1);" href="javascript:void(0);" id="btnConsultar" class="btn btn-primary">
+                                <i class="fas fa-search fs-4 me-2"></i>
+                                Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mt-5">
+            <div style="background: #f5f5f1" class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible2">
+                <h3 class="card-title">RESULTADOS</h3>
+                <div class="card-toolbar rotate-0">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+                            <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="black"></path>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div id="kt_docs_card_collapsible2" class="collapse show">
+                <div class="card-body">
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+
+                            <div class="table-responsive">
+                                <div class="mt-4" id="tabla_p">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--end::Container-->
+</div>
+<script>
+    setTimeout(function () {
+        CargarParametros();
+    }, 500);
+    function CargarParametros() {
+        CargarWaitMe();
+            $("#tabla_p").load("@Url.Content("~/BusqReconsideracionEval/GetReconsideracionesEvalV")", function () {
+            if ($("#RecEval_cant").length == 1) {
+                $('#tblRecEval').DataTable({
+                    destroy: true,
+                    "ordering": false,
+                    responsive: true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "language": languaje_spanol
+                });
+                TerminarWaitMe();
+            }else{
+                TerminarWaitMe();
+            }
+            });
+    }
+    $("#rbtnFiltroFUA").change(function () {
+        if (this.checked) {
+            Visualizar_Filtro_FUA();
+        } else {
+        }
+    });
+   function Visualizar_Filtro_FUA() {
+        $.get("@Url.Content("~/BusqReconsideracionEval/FiltroFuaReconsEvalV")")
+        .done(function (response) {
+            $('#modalFiltroFUA').html(response);
+            $('#mdl_FiltroFuaReconsEvalV').modal("show");
+        });
+    }
+        function Visualizar_FUA(id) {
+
+        $(".content-custom").load("@Url.Content("~/FUA/Index")", { id: id})
+    }
+
+</script>
