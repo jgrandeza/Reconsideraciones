@@ -10,6 +10,14 @@ namespace App.ViewModels.SELReconsideraciones
     public class SELReconsideraciones
     {
     }
+    public class UPDAtencionesDiaDto
+    {
+        public string V_ADIA_CDX { get; set; }
+        public string V_ADIA_CODDIA { get; set; }
+        public string V_ADIA_TIPODIA { get; set; }
+        public string V_ADIA_IDUSUARIOACT { get; set; }
+        public string N_ADIA_IDNUMREG { get; set; }
+    }
     public class getAtencionRecxID
     {
         public decimal ATE_IDNUMREG { get; set; }
