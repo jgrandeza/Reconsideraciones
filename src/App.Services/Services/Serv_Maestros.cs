@@ -26,6 +26,29 @@ namespace App.Services.Services
             _SchemaOracle = schemaOracle.Value;
         }
 
+        public async Task<GetDiagnosticoPorID> ListarDiagnosticoPorId(string V_C10_CODDIA)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("V_C10_CODDIA", V_C10_CODDIA, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_CIE10";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryAsync<GetDiagnosticoPorID>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result.First();
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
         public async Task<IEnumerable<getServicios>> ListarServicios()
         {
             try

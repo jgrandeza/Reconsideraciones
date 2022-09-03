@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using App.Data;
 using App.Services.IServices;
 using App.ViewModels;
+using App.ViewModels.SELReconsideraciones;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,12 +21,14 @@ namespace App.Web.Controllers
         private readonly IAuxiliares _Auxiliares;
         private readonly IMaestros _Maestros;
         private readonly ISELReconsideraciones _SELReconsideraciones;
-        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros, ISELReconsideraciones sELReconsideraciones)
+        private readonly IUPDReconsideraciones _uPDReconsideraciones;
+        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros, ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones)
         {
             _dbContext = dbContext;
             _Auxiliares = auxiliares;
             _Maestros = maestros;
             _SELReconsideraciones = sELReconsideraciones;
+            _uPDReconsideraciones = uPDReconsideraciones;   
         }
         public IActionResult Index(int id)
         {
@@ -127,7 +130,7 @@ namespace App.Web.Controllers
             }
             var result = await _Auxiliares.ListarTipoDiagnostico();
             ViewBag.ListTipoDX = result;
-
+            ViewBag.vbId = id;
             return PartialView();
         }
 
@@ -210,6 +213,51 @@ namespace App.Web.Controllers
         {
 
             return PartialView();
+        }
+
+        public async Task<IActionResult> ListarDiagnosticoPorId(string V_C10_CODDIA)
+        {
+            try
+            {
+                var result = await _Maestros.ListarDiagnosticoPorId(V_C10_CODDIA);
+
+                if (result != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ActualizarAtencionDia(UPDAtencionesDiaDto model)
+        {
+            try
+            {
+                var result = await _uPDReconsideraciones.ActualizarAtencionesDia(model);
+
+                if (result == true)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = "Datos actualizado." });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+            }
+
         }
     }
 }

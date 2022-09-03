@@ -11,5 +11,8 @@ namespace App.Services.IServices
     {
         Task<IEnumerable<getServicios>> ListarServicios();
 
+        //LISTAR DIAGNOSTICOS POR ID
+        Task<GetDiagnosticoPorID> ListarDiagnosticoPorId(string V_C10_CODDIA);
+
     }
 }

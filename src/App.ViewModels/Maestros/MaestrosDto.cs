@@ -33,4 +33,14 @@ namespace App.ViewModels.Maestros
 		public string? SER_EQUIVALENTE { get; set; }
 		public decimal? SER_IDSERVICIOS { get; set; }
 	}
+
+    public class GetDiagnosticoPorID
+    {
+		public string? C10_CODDIA { get; set; }
+		public string? C10_NOMBRE { get; set; }
+		public string? C10_EXCLUIDO { get; set; }
+		public string C10_ESTADO { get; set; }
+		public string C10_PEAS { get; set; }
+
+	}
 }
