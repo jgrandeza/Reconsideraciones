@@ -26,19 +26,68 @@ namespace App.Services.Services
             _SchemaOracle = schemaOracle.Value;
         }
 
-        public async Task<IEnumerable<getServicios>> ListarServicios()
+        public async Task<getEESSxID> ListarEESSxID(string V_EESS)
         {
             try
             {
 
                 var conn = new OracleConnection(_connectionString);
                 var dyParam = new OracleDynamicParameters();
+                dyParam.Add("V_EESS", V_EESS, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.REC_ATE_EESS_CONSULTA_EESS";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryFirstAsync<getEESSxID>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public async Task<getPersonalSaludxID> ListarPersSaluxID(string V_DNI)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("V_DNI", V_DNI, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_PERSONALSALUDXID";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryFirstAsync<getPersonalSaludxID>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public async Task<getServicios> ListarServicios( String V_IDSERVICIO)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("V_IDSERVICIO", V_IDSERVICIO, OracleMappingType.Varchar2, ParameterDirection.Input);
                 dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_SERVICOS";
                 //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
 
-                var result = await SqlMapper.QueryAsync<getServicios>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                var result = await SqlMapper.QueryFirstAsync<getServicios>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
 
                 return result;
             }

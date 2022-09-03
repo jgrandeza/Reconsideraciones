@@ -18,5 +18,6 @@ namespace App.Services.IServices
         Task<IEnumerable<getTipoDiagnostico>> ListarTipoDiagnostico();
         Task<IEnumerable<getTipoModalidadAte>> ListarTipoModalidadAte(string V_TIPOMODALIDAD);
         Task<IEnumerable<getOrigenPersonal>> ListarOrigenPersonal(string V_CODIGO);
+        Task<IEnumerable<getTipoPersonal>> ListarTipoPersonal();
     }
 }

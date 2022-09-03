@@ -84,5 +84,18 @@ namespace App.ViewModels.Auxiliares
         public int OPE_IDORIGENPERSONAL { get; set; }
         public string? OPE_DESCRIPCION { get; set; }
     }
+    public class getTipoPersonal
+    {
+        public string? TPS_IDTIPOPERSALUD { get; set; }
+        public int? TPS_IDCODIGO { get; set; }
+        public string? TPS_DESCRIPCION { get; set; }
+        public string? TPS_ESPROFESIONAL { get; set; }
+        public string? TPS_ABREVIA { get; set; }
+        public string? TPS_ESTADO { get; set; }
+        public int? TPS_IDESCRITORIO { get; set; }
+        public int? TPS_ID { get; set; }
+        public string? TPS_COLEGIATURA { get; set; }
+
+    }
 
 }
