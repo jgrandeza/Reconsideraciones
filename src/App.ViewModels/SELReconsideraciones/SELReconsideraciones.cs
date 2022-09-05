@@ -393,8 +393,8 @@ namespace App.ViewModels.SELReconsideraciones
         public string? INS_NOMBRE { get; set; }
         public decimal? INS_COSTO { get; set; }
         public string? INS_UNIDAD { get; set; }
-        public decimal? INS_PRESEN { get; set; }
-        public decimal? INS_CONCEN { get; set; }
+        public string? INS_PRESEN { get; set; }
+        public string? INS_CONCEN { get; set; }
 
     }
 
