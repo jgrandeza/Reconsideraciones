@@ -63,14 +63,20 @@ namespace App.Web.Controllers
                 var TipoAtenc = await _Auxiliares.ListarTipoAtencion();
                 ViewBag.ListTipoAtenc = TipoAtenc;
 
-                var Servicios = await _Maestros.ListarServicios();
-                ViewBag.ListServicios = Servicios;
-
                 var LugarAte = await _Auxiliares.ListarLugarAtencion();
                 ViewBag.ListLugarAte = LugarAte;
 
                 var CondMaterna = await _Auxiliares.ListarCondicionMaterna();
                 ViewBag.ListCondiMaterna = CondMaterna;
+
+                var ModalidadAte = await _Auxiliares.ListarTipoModalidadAte("1");
+                ViewBag.ListModalidadAte = ModalidadAte;
+
+                var OrigenPersona = await _Auxiliares.ListarOrigenPersonal("1");
+                ViewBag.ListOrigenPersona = OrigenPersona;
+
+                var TipoPersonal = await _Auxiliares.ListarTipoPersonal();
+                ViewBag.ListTipoPersonal = TipoPersonal;
 
 
             }
@@ -109,6 +115,79 @@ namespace App.Web.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EESSxID(string id)
+        {
+            try
+            {
+                var result = await _Maestros.ListarEESSxID(id);
+
+
+                if (result != null)
+                {
+                    return new JsonResult(new Response { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new Response { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> ServicioxID(string id)
+        {
+            try
+            {
+                var result = await _Maestros.ListarServicios(id);
+
+
+                if (result != null)
+                {
+                    return new JsonResult(new Response { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new Response { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> PersonalSaludxID(string id)
+        {
+            try
+            {
+                var result = await _Maestros.ListarPersSaluxID(id);
+
+
+                if (result != null)
+                {
+                    return new JsonResult(new Response { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new Response { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
         public async Task<IActionResult> DiagnosticosFUAV(int id)
         {
             var result = await _SELReconsideraciones.ListarIAtencionDIAxID(id);
@@ -128,6 +207,7 @@ namespace App.Web.Controllers
                 ViewBag.Tipo = tipo;
                 ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL DIAGNOSTICO";
             }
+
             var result = await _Auxiliares.ListarTipoDiagnostico();
             ViewBag.ListTipoDX = result;
             ViewBag.vbId = id;
@@ -256,6 +336,28 @@ namespace App.Web.Controllers
             catch (Exception ex)
             {
                 return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+            }
+
+        }
+
+        public async Task<IActionResult> ListarAtencionDIAPorId(int id)
+        {
+            try
+            {
+                var result = await _SELReconsideraciones.ListarAtencionDIA_Edit(id);
+
+                if (result != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false });
             }
 
         }

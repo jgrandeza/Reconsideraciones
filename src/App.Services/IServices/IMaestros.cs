@@ -9,9 +9,12 @@ namespace App.Services.IServices
 {
     public interface IMaestros
     {
-        Task<IEnumerable<getServicios>> ListarServicios();
+        Task<getServicios> ListarServicios( string V_IDSERVICIO);
 
-        //LISTAR DIAGNOSTICOS POR ID
+       Task<getEESSxID> ListarEESSxID(string V_EESS);
+
+        Task<getPersonalSaludxID> ListarPersSaluxID(string V_DNI);
+
         Task<GetDiagnosticoPorID> ListarDiagnosticoPorId(string V_C10_CODDIA);
 
     }

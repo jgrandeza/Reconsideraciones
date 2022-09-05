@@ -15,5 +15,7 @@ namespace App.Services.IServices
         Task<IEnumerable<getAtencionesMEDxID>> ListarIAtencionMEDxID(int Id);
         Task<IEnumerable<getAtencionesAPOxID>> ListarIAtencionAPOxID(int Id);
         Task<IEnumerable<getAtencionesINSxID>> ListarIAtencionINSxID(int Id);
+
+        Task<getAtencionesDIA_Edit> ListarAtencionDIA_Edit(int Id);
     }
 }

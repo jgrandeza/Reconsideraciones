@@ -53,8 +53,8 @@
                             <label for="cbxIngEgre" class="form-label text-wrap fw-bolder fs-4">Ingreso/Egreso</label>
                             <select aria-label="Seleccionar" id="cbxIngEgre" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
                                 <option selected disabled value="">Seleccionar</option>
-                                <option value="I">Ingreso</option>
-                                <option value="E">Egreso</option>
+                                <option value="I">INGRESO</option>
+                                <option value="E">EGRESO</option>
                             </select>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                                     {
                                         foreach (var item in ViewBag.ListTipoDX)
                                         {
-                                                                                                                                                                                <option value="@item.TDA_TIPODIA">@item.TDA_CDESCRIPCION</option>
+                                          <option value="@item.TDA_TIPODIA">@item.TDA_CDESCRIPCION</option>
                                         }
                                     } 
                                  }
@@ -107,7 +107,8 @@
 </div>
 
 <script>
-   
+    setTimeout(() => { GetAtencionDIAPorId(); }, 600);
+
     $('#txtCodDiagnostico').keypress(function (event) {
         var keycode = event.keyCode || event.which;
         if (keycode == '13') {
@@ -129,6 +130,27 @@
                     let { result } = response;
                     console.log(result);
                     $('#txtDesDiagnostico').val(result.c10_NOMBRE);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+
+    function GetAtencionDIAPorId() {
+        let id = $('#txtId').val();
+        CargarWaitMe();
+        $.get('@Url.Content("~/FUA/ListarAtencionDIAPorId")', { id: id })
+            .done(function (response) {
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    console.log(result);
+                    $('#txtCodDiagnostico').val(result.adiA_CODDIA);
+                    $('#cbxIngEgre').val(result.adiA_CDX);
+                    $('#cbxTipoDx').val(result.adiA_TIPODIA);
+                    GetDiagnosticoPorId();
                 }
                 else {
                     NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
@@ -161,7 +183,7 @@
             let url_upd = "@Url.Action("ActualizarAtencionDia","FUA")";
             AccionAjaxAtencion(url_upd, array_data);
         }
-        
+
     }
 
     function AccionAjaxAtencion(url, array_data){

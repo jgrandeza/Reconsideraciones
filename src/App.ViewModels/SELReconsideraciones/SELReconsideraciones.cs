@@ -397,5 +397,18 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? INS_CONCEN { get; set; }
 
     }
+
+    public class getAtencionesDIA_Edit
+    {
+
+        public decimal? ADIA_NUMREGATE { get; set; }
+        public decimal? ADIA_IDNUMREG { get; set; }
+        public decimal? ADIA_INRODIA { get; set; }
+        public string? ADIA_CDX { get; set; }
+        public string? ADIA_CODDIA { get; set; }
+        public string? ADIA_TIPODIA { get; set; }
+
+    }
+
 }
 
