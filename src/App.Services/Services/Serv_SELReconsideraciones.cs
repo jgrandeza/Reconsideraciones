@@ -146,5 +146,29 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+
+        public async Task<getAtencionesDIA_Edit> ListarAtencionDIA_Edit(int Id)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ADIA_IDNUMREG", Id, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_IATENCIONDIA_REC_ID";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<getAtencionesDIA_Edit>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
     }
 }

@@ -10,6 +10,14 @@ namespace App.ViewModels.SELReconsideraciones
     public class SELReconsideraciones
     {
     }
+    public class UPDAtencionesDiaDto
+    {
+        public string V_ADIA_CDX { get; set; }
+        public string V_ADIA_CODDIA { get; set; }
+        public string V_ADIA_TIPODIA { get; set; }
+        public string V_ADIA_IDUSUARIOACT { get; set; }
+        public string N_ADIA_IDNUMREG { get; set; }
+    }
     public class getAtencionRecxID
     {
         public decimal ATE_IDNUMREG { get; set; }
@@ -389,5 +397,18 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? INS_CONCEN { get; set; }
 
     }
+
+    public class getAtencionesDIA_Edit
+    {
+
+        public decimal? ADIA_NUMREGATE { get; set; }
+        public decimal? ADIA_IDNUMREG { get; set; }
+        public decimal? ADIA_INRODIA { get; set; }
+        public string? ADIA_CDX { get; set; }
+        public string? ADIA_CODDIA { get; set; }
+        public string? ADIA_TIPODIA { get; set; }
+
+    }
+
 }
 

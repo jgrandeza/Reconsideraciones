@@ -703,6 +703,7 @@
 
                 $("#txtFUA").val(data.atE_DISA +"-"+ data.atE_LOTE +"-"+ data.atE_NUMREGATE );
                 $("#txtIPRESS").val(data.atE_IDEESS);
+
                 CONS_IPRESS();
 
 
@@ -748,12 +749,7 @@
                 CargarServicio(data.atE_IDSERVICIO);
                 $("#txtEESSRef").val(data.atE_IDEESSREFIRIO);
 
-                CargarEESS(data.atE_IDEESSREFIRIO);
-                setTimeout(() => {
-                    $("#txtDescEESSRef").val(result_ess);
-                    result_ess = "";
-                }, 200);
-
+                EESSRefe();
 
                 $("#txtNumRef").val(data.atE_NROHOJAREFERENCIA);
                 $("#txtFechIngresoAte").val(data.atE_FECINGHOSP);
@@ -762,11 +758,7 @@
                 $("#txtFechAltaAte").val(data.atE_FECALTAHOSP);
 
                 $("#txtEESSContraRef").val(data.atE_IDEESSCONTRAREFIERE);
-                CargarEESS(data.atE_IDEESSCONTRAREFIERE);
-                setTimeout(() => {
-                    $("#txtDescEESSContraRef").val(result_ess);
-                    result_ess = "";
-                }, 200);
+                EESSContrRefe();
 
                 $("#txtNumContraRef").val(data.atE_NUMHOJACONTRAREFIERE);
 
@@ -795,40 +787,41 @@
             TerminarWaitMe();
         });
     }
-    function CONS_IPRESS() {
+
+    async function CONS_IPRESS() {
         let eess = $("#txtIPRESS").val();
-        CargarEESS(eess);
-        setTimeout(() => {
-            $("#txtEESS").val(result_ess);
-            $("#txtCategoria").val(abrvcat);
-            $("#txtUEFUA").val(desejec);
-            result_ess = "";
-            abrvcat = "";
-            desejec = "";
-        }, 200);
+        try {
+            const { result } = await CargarEESS(eess)
+            console.log(result);
+            $("#txtEESS").val(result.nombre);
+            $("#txtCategoria").val(result.abrvcat);
+            $("#txtUEFUA").val(result.desejec);
+        } catch(err) {
+            console.log(err);
+        }
     }
-    function EESSRefe() {
+    async function EESSRefe() {
         let eess = $("#txtEESSRef").val();
-        CargarEESS(eess);
-        setTimeout(() => {
-            $("#txtDescEESSRef").val(result_ess);
-            result_ess = "";
-        }, 200);
+        try {
+            const { result } = await CargarEESS(eess)
+            console.log(result);
+            $("#txtDescEESSRef").val(result.nombre);
+        } catch (err) {
+            console.log(err);
+        }
     }
-    function EESSContrRefe() {
+    async function EESSContrRefe() {
         let eess = $("#txtEESSContraRef").val();
-        CargarEESS(eess);
-        setTimeout(() => {
-            $("#txtDescEESSContraRef").val(result_ess);
-            result_ess = "";
-        }, 200);
+        try {
+            const { result } = await CargarEESS(eess)
+            console.log(result);
+            $("#txtDescEESSContraRef").val(result.nombre);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    var result_ess = "";
-    var abrvcat = "";
-    var desejec = "";
-
-    function CargarEESS(eess) {
+    async function CargarEESS(eess) {
         if (eess == "" || eess === null) {
             return false;
         }
@@ -837,7 +830,7 @@
         var formData = new FormData();
         formData.append("id", id);
 
-        $.ajax({
+        return $.ajax({
             url: '@Url.Action("EESSxID", "FUA")',
             type: "POST",
             enctype: 'multipart/form-data',
@@ -846,28 +839,13 @@
             contentType: false,
             cache: false,
             timeout: 600000,
+            async: true,
 
             error: function (e) {
                 NotificacionToastr('error', `Error al conectarse?`, 'ALERTA');
                 //TerminarWaitMe();
                 console.log("ERROR : ", e.responseText);
             }
-
-        }).done(function (response) {
-            var data = response.result;
-            console.log(data);
-            if (response.isSuccess == true) {
-
-                result_ess = data.nombre;
-                abrvcat = data.abrvcat;
-                desejec = data.desejec;
-            } else {
-                NotificacionToastr('error', `Error al conectarse?`, 'ALERTA');
-            }
-
-        }).fail(function () {
-
-        }).always(function () {
 
         });
     }

@@ -11,8 +11,11 @@ namespace App.Services.IServices
     {
         Task<getServicios> ListarServicios( string V_IDSERVICIO);
 
-        Task<getEESSxID> ListarEESSxID(string V_EESS);
+       Task<getEESSxID> ListarEESSxID(string V_EESS);
 
         Task<getPersonalSaludxID> ListarPersSaluxID(string V_DNI);
+
+        Task<GetDiagnosticoPorID> ListarDiagnosticoPorId(string V_C10_CODDIA);
+
     }
 }
