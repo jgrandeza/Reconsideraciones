@@ -4,6 +4,7 @@
     <thead class="text-center" style="background-color: #0272A3; border-width: 2px; color: white; vertical-align: middle; ">
         <tr>
             <th style="text-align:center"><span>ACCIÓN</span></th>
+            <th style="text-align:center">Nº</th>
             <th style="text-align:center">CODIGO</th>
             <th style="text-align:center">DESCRIPCIÓN</th>
             <th style="text-align:center">INGRESO/EGRESO</th>
@@ -18,17 +19,18 @@
                 var i = 1;
                 foreach (var item in Model)
                 {
-                    <tr id="Diagnosticos_cant">
-                        <td style="text-align: center">
-                            <a onclick="CargarModalDiagnostico(2,@item.ADIA_IDNUMREG);" href="javascript:void(0);"><i style="font-size: 20px; color: #c64821;" title="Editar Tramo" class="fas fa-edit" aria-hidden="true"></i></a>
+                <tr id="Diagnosticos_cant">
+                    <td style="text-align: center">
+                        <a onclick="CargarModalDiagnostico(2,@item.ADIA_IDNUMREG);" href="javascript:void(0);"><i style="font-size: 20px; color: #c64821;" title="Editar Tramo" class="fas fa-edit" aria-hidden="true"></i></a>
 
-                        </td>
-                        <td style="text-align: center">@item.ADIA_CODDIA</td>
-                        <td style="text-align: justify">@item.C10_NOMBRE</td>
-                        <td style="text-align: center">@item.DESC_CDX</td>
-                        <td style="text-align: center">@item.DESC_TIPODIA</td>
+                    </td>
+                    <td style="text-align: center">@item.ADIA_INRODIA</td>
+                    <td style="text-align: center">@item.ADIA_CODDIA</td>
+                    <td style="text-align: justify">@item.C10_NOMBRE</td>
+                    <td style="text-align: center">@item.DESC_CDX</td>
+                    <td style="text-align: center">@item.DESC_TIPODIA</td>
 
-                    </tr>
+                </tr>
                     i = i + 1;
                 }
             }

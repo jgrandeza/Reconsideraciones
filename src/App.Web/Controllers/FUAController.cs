@@ -217,11 +217,10 @@ namespace App.Web.Controllers
         public async Task<IActionResult> MedicamentosFUAV(int id)
         {
             var result = await _SELReconsideraciones.ListarIAtencionMEDxID(id);
-
             return PartialView(result);
         }
 
-        public IActionResult AccionMedicamentosFUAV(string tipo, int id)
+        public async Task<IActionResult> AccionMedicamentosFUAV(string tipo, int id, int idate)
         {
             if (Convert.ToInt32(tipo) == 1)
             {
@@ -233,9 +232,15 @@ namespace App.Web.Controllers
                 ViewBag.Tipo = tipo;
                 ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL MEDICAMENTO";
             }
-
+            await ListDiag(idate);
 
             return PartialView();
+        }
+
+        private async Task ListDiag(int idate)
+        {
+            var dx = await _SELReconsideraciones.ListarIAtencionDIAxID(idate);
+            ViewBag.ListDX = dx;
         }
 
         public async Task<IActionResult> ProcedimientosFUAV(int id)
@@ -246,7 +251,7 @@ namespace App.Web.Controllers
             return PartialView(result);
         }
 
-        public IActionResult AccionProcedimientosFUAV(string tipo, int id)
+        public async Task<IActionResult> AccionProcedimientosFUAV(string tipo, int id, int idate)
         {
             if (Convert.ToInt32(tipo) == 1)
             {
@@ -258,7 +263,7 @@ namespace App.Web.Controllers
                 ViewBag.Tipo = tipo;
                 ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL PROCEDIMIENTO";
             }
-
+            await ListDiag(idate);
 
             return PartialView();
         }
@@ -270,7 +275,7 @@ namespace App.Web.Controllers
 
             return PartialView(result);
         }
-        public IActionResult AccionInsumosFUAV(string tipo, int id)
+        public async Task<IActionResult> AccionInsumosFUAV(string tipo, int id, int idate)
         {
             if (Convert.ToInt32(tipo) == 1)
             {
@@ -283,6 +288,7 @@ namespace App.Web.Controllers
                 ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL INSUMO";
             }
 
+            await ListDiag(idate);
 
             return PartialView();
         }

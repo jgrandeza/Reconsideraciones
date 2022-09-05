@@ -227,8 +227,9 @@
             }
             });
     }
-    function CargarModalMedicamentos(tipo,id) {
-        $.get("@Url.Content("~/FUA/AccionMedicamentosFUAV")", { tipo: tipo, id: id })
+    function CargarModalMedicamentos(tipo, id) {
+        let idate = $("#Ate_Idnumreg").val();
+        $.get("@Url.Content("~/FUA/AccionMedicamentosFUAV")", { tipo: tipo, id: id, idate: idate })
         .done(function (response) {
             $('#modalMedicamentos').html(response);
             $('#mdl_AccionMedicamentosFUAV').modal("show");
@@ -253,8 +254,9 @@
             }
             });
     }
-    function CargarModalProcedimientos(tipo,id) {
-        $.get("@Url.Content("~/FUA/AccionProcedimientosFUAV")", { tipo: tipo, id: id })
+    function CargarModalProcedimientos(tipo, id) {
+        let idate = $("#Ate_Idnumreg").val();
+        $.get("@Url.Content("~/FUA/AccionProcedimientosFUAV")", { tipo: tipo, id: id, idate:idate })
         .done(function (response) {
             $('#modalProcedimientos').html(response);
             $('#mdl_AccionProcedimientosFUAV').modal("show");
@@ -279,8 +281,9 @@
             }
             });
    }
-    function CargarModalInsumos(tipo,id) {
-        $.get("@Url.Content("~/FUA/AccionInsumosFUAV")", { tipo: tipo, id: id })
+    function CargarModalInsumos(tipo, id) {
+        let idate = $("#Ate_Idnumreg").val();
+        $.get("@Url.Content("~/FUA/AccionInsumosFUAV")", { tipo: tipo, id: id, idate:idate })
         .done(function (response) {
             $('#modalInsumos').html(response);
             $('#mdl_AccionInsumosFUAV').modal("show");
