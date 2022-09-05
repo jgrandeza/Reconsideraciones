@@ -108,6 +108,14 @@
                             <label for="cbxDiagnostico" class="form-label text-wrap fw-bolder fs-4">Diagnostico</label>
                             <select aria-label="Seleccionar" id="cbxDiagnostico" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
                                 <option selected disabled value="">Seleccionar</option>
+                                @{ if (ViewBag.ListDX != null)
+                                    {
+                                        foreach (var item in ViewBag.ListDX)
+                                        {
+                                            <option value="@item.ADIA_INRODIA">@item.C10_NOMBRE</option>
+                                        }
+                                    }
+                                }                                
                             </select>
                         </div>
                     </div>
