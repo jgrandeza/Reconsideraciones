@@ -410,5 +410,32 @@ namespace App.ViewModels.SELReconsideraciones
 
     }
 
+    public class getAtencionesAPO_Edit
+    {
+        public decimal? AAPO_NUMREGATE { get; set; }
+        public decimal? AAPO_IDNUMREG { get; set; }
+        public string? AAPO_CODAPO { get; set; }
+        public decimal? AAPO_INRODIA { get; set; }
+        public decimal? AAPO_ICANTPROCED { get; set; }
+        public decimal? AAPO_ICANTEJECUTADA { get; set; }
+        public decimal? AAPO_ITICKET { get; set; }
+        public decimal? AAPO_NPO { get; set; }
+        public decimal? AAPO_NCOSTOAPLICADO { get; set; }
+
+    }
+    public class getAtencionesINS_Edit
+    {
+        public decimal? AINS_NUMREGATE { get; set; }
+        public decimal? AINS_IDNUMREG { get; set; }
+        public decimal? AINS_INRODIA { get; set; }
+        public string? AINS_CODINS { get; set; }
+        public string? AINS_CCARACT { get; set; }
+        public decimal? AINS_ICANTPRESCRITA { get; set; }
+        public decimal? AINS_ICANTENTREGADA { get; set; }
+        public decimal? AINS_ITICKET { get; set; }
+        public decimal? AINS_NPO { get; set; }
+        public decimal? AINS_NCOSTOAPLICADO { get; set; }
+    }
+
 }
 

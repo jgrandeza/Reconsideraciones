@@ -76,4 +76,17 @@ namespace App.ViewModels.Maestros
 		public string C10_PEAS { get; set; }
 
 	}
+	public class GetApoDiagPorID
+    {
+        public int APO_CODAPO { get; set; }
+        public string? APO_NOMBRE { get; set; }
+        public string? APO_CODGRU { get; set; }
+        public string? TAPO_NOMBRE { get; set; }
+        public string? APO_CODSUB { get; set; }
+        public string? SUB_NOMBRE { get; set; }
+        public int? APO_ID { get; set; }
+        public decimal? APO_COSTO { get; set; }
+        public int? APO_ESTADO { get; set; }
+
+    }
 }
