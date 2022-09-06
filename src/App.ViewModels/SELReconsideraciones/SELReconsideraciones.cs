@@ -410,5 +410,32 @@ namespace App.ViewModels.SELReconsideraciones
 
     }
 
+    public class GetAtencionMedicaRecon
+    {
+
+        public decimal? AMED_NUMREGATE { get; set; }
+        public decimal? AMED_IDNUMREG { get; set; }
+        public string? AMED_CODMED { get; set; }
+        public decimal? AMED_INRODIA { get; set; }
+        public decimal? AMED_ICANTPRESCRITA { get; set; }
+        public decimal? AMED_ICANTENTREGADA { get; set; }
+
+        public decimal? AMED_ITICKET { get; set; }
+        public decimal? AMED_NPO { get; set; }
+        public decimal? AMED_NCOSTOAPLICADO { get; set; }
+
+    }
+    public class GetMedicamentosxMED_CODMED
+    {
+
+        public string? MED_CODMED { get; set; }
+        public string? MED_NOMBRE { get; set; }
+        public string? MED_PRESEN { get; set; }
+        public string? MED_CONCEN { get; set; }
+        public int? MED_COSTO { get; set; }
+        public string? MED_PETIT { get; set; }
+
+
+    }
 }
 

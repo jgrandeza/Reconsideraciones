@@ -170,5 +170,52 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+
+        public async Task<GetAtencionMedicaRecon> ListarAtencionMedEditxID(int Id)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_AMED_IDNUMREG", Id, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_IATENCIONMED_REC_ID";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<GetAtencionMedicaRecon>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        //PR_REC_SEL_MEDICAMENTOS
+        public async Task<GetMedicamentosxMED_CODMED> ListarMedicamentoxMED_CODMED(string MED_CODMED)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_MED_CODMED", MED_CODMED, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_MEDICAMENTOS";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<GetMedicamentosxMED_CODMED>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

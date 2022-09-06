@@ -222,6 +222,15 @@ namespace App.Web.Controllers
 
         public async Task<IActionResult> AccionMedicamentosFUAV(string tipo, int id, int idate)
         {
+            GetAtencionMedicaRecon rpt = null;
+
+            if (id != 0)
+            {
+                rpt = await _SELReconsideraciones.ListarAtencionMedEditxID(id);
+                var medic = await _SELReconsideraciones.ListarMedicamentoxMED_CODMED(rpt.AMED_CODMED);
+
+            }
+            ViewBag.vb_id_med = id;
             if (Convert.ToInt32(tipo) == 1)
             {
                 ViewBag.Tipo = tipo;
@@ -234,7 +243,7 @@ namespace App.Web.Controllers
             }
             await ListDiag(idate);
 
-            return PartialView();
+            return PartialView(rpt);
         }
 
         private async Task ListDiag(int idate)
