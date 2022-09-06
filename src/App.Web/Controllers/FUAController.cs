@@ -264,7 +264,7 @@ namespace App.Web.Controllers
                 ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL PROCEDIMIENTO";
             }
             await ListDiag(idate);
-
+            ViewBag.vbId = id;
             return PartialView();
         }
 
@@ -289,7 +289,7 @@ namespace App.Web.Controllers
             }
 
             await ListDiag(idate);
-
+            ViewBag.vbId = id;
             return PartialView();
         }
 
@@ -351,6 +351,69 @@ namespace App.Web.Controllers
             try
             {
                 var result = await _SELReconsideraciones.ListarAtencionDIA_Edit(id);
+
+                if (result != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+
+        }
+        public async Task<IActionResult> ListarAtencionAPOPorId(int id)
+        {
+            try
+            {
+                var result = await _SELReconsideraciones.ListarAtencionAPO_Edit(id);
+
+                if (result != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+
+        }
+        public async Task<IActionResult> ListarAtencionINSPorId(int id)
+        {
+            try
+            {
+                var result = await _SELReconsideraciones.ListarAtencionINS_Edit(id);
+
+                if (result != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+
+        }
+        public async Task<IActionResult> ListarApoDIAGPorId(int id)
+        {
+            try
+            {
+                var result = await _Maestros.ListarApoDiagPorId(id);
 
                 if (result != null)
                 {
