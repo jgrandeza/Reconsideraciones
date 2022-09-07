@@ -26,6 +26,33 @@ namespace App.Services.Services
             _connectionString = configuration.GetConnectionString("DefaultConnection");
             _SchemaOracle = schemaOracle.Value;
         }
+        public async Task<int> InsertarAtenMedicamentoRec(getInsertarAtencionMedicamentoRec model)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_AMED_NUMREGATE", model.N_AMED_NUMREGATE, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("V_AMED_CODMED", model.V_AMED_CODMED!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("N_AMED_INRODIA", model.N_AMED_INRODIA, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("N_AMED_ICANTPRESCRITA", model.N_AMED_ICANTPRESCRITA, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("N_AMED_ICANTENTREGADA", model.N_AMED_ICANTENTREGADA, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("N_AMED_NPO", model.N_AMED_NPO, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("V_AMED_IDUSUARIOCREA", "ADMIN", OracleMappingType.Decimal, ParameterDirection.Input);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_UPD_IATENCIONDIA";
+                var result = await conn.ExecuteAsync(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                //var result = await SqlMapper.ExecuteAsync(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return 1;
+
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
         public async Task<getInsertarAtencionTotal> InsertarAtencionTotal(int Id, string user)
         {
             try
@@ -50,6 +77,8 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+
+        
     }
 
 }

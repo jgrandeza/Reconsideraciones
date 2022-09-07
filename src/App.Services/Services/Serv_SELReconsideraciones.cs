@@ -175,7 +175,6 @@ namespace App.Services.Services
         {
             try
             {
-
                 var conn = new OracleConnection(_connectionString);
                 var dyParam = new OracleDynamicParameters();
                 dyParam.Add("N_AMED_IDNUMREG", Id, OracleMappingType.Decimal, ParameterDirection.Input);
@@ -185,6 +184,30 @@ namespace App.Services.Services
                 //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
 
                 var result = await SqlMapper.QuerySingleAsync<GetAtencionMedicaRecon>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<getAtencionesAPO_Edit> ListarAtencionAPO_Edit(int Id)
+        {
+                try
+                {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+
+                dyParam.Add("N_AAPO_IDNUMREG", Id, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_IATENCIONAPO_REC_ID";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<getAtencionesAPO_Edit>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
@@ -209,6 +232,29 @@ namespace App.Services.Services
                 //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
 
                 var result = await SqlMapper.QuerySingleAsync<GetMedicamentosxMED_CODMED>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<getAtencionesINS_Edit> ListarAtencionINS_Edit(int Id)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_AINS_IDNUMREG", Id, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_IATENCIONINS_REC_ID";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<getAtencionesINS_Edit>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
 
                 return result;
             }

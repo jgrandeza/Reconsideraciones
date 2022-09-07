@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using App.Data;
 using App.Services.IServices;
 using App.ViewModels;
+using App.ViewModels.INSReconsideraciones;
 using App.ViewModels.SELReconsideraciones;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +23,15 @@ namespace App.Web.Controllers
         private readonly IMaestros _Maestros;
         private readonly ISELReconsideraciones _SELReconsideraciones;
         private readonly IUPDReconsideraciones _uPDReconsideraciones;
-        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros, ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones)
+        private readonly IINSReconsideraciones _iNSReconsideraciones;
+        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros, ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones, IINSReconsideraciones iNSReconsideraciones)
         {
             _dbContext = dbContext;
             _Auxiliares = auxiliares;
             _Maestros = maestros;
             _SELReconsideraciones = sELReconsideraciones;
-            _uPDReconsideraciones = uPDReconsideraciones;   
+            _uPDReconsideraciones = uPDReconsideraciones;
+            _iNSReconsideraciones = iNSReconsideraciones;
         }
         public IActionResult Index(int id)
         {
@@ -220,17 +223,50 @@ namespace App.Web.Controllers
             return PartialView(result);
         }
 
+        //MEDICAMENTO AGREGADOS CONTROLADORES
+        public async Task<IActionResult> GetMedicamentoxMED_CODMED(string MED_CODMED)
+        {
+            try
+            {
+                var medic = await _SELReconsideraciones.ListarMedicamentoxMED_CODMED(MED_CODMED);
+                if (medic != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = medic });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        public async Task<IActionResult> InsertarAtenMedicamentoREc(getInsertarAtencionMedicamentoRec MED_CODMED)
+        {
+            try
+            {
+                var medic = await _iNSReconsideraciones.InsertarAtenMedicamentoRec(MED_CODMED);
+                if (medic != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = medic });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        //FIN 
+
         public async Task<IActionResult> AccionMedicamentosFUAV(string tipo, int id, int idate)
         {
-            GetAtencionMedicaRecon rpt = null;
-
-            if (id != 0)
-            {
-                rpt = await _SELReconsideraciones.ListarAtencionMedEditxID(id);
-                var medic = await _SELReconsideraciones.ListarMedicamentoxMED_CODMED(rpt.AMED_CODMED);
-
-            }
-            ViewBag.vb_id_med = id;
+           
             if (Convert.ToInt32(tipo) == 1)
             {
                 ViewBag.Tipo = tipo;
@@ -243,7 +279,7 @@ namespace App.Web.Controllers
             }
             await ListDiag(idate);
 
-            return PartialView(rpt);
+            return PartialView();
         }
 
         private async Task ListDiag(int idate)
@@ -273,7 +309,7 @@ namespace App.Web.Controllers
                 ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL PROCEDIMIENTO";
             }
             await ListDiag(idate);
-
+            ViewBag.vbId = id;
             return PartialView();
         }
 
@@ -298,7 +334,7 @@ namespace App.Web.Controllers
             }
 
             await ListDiag(idate);
-
+            ViewBag.vbId = id;
             return PartialView();
         }
 
@@ -360,6 +396,69 @@ namespace App.Web.Controllers
             try
             {
                 var result = await _SELReconsideraciones.ListarAtencionDIA_Edit(id);
+
+                if (result != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+
+        }
+        public async Task<IActionResult> ListarAtencionAPOPorId(int id)
+        {
+            try
+            {
+                var result = await _SELReconsideraciones.ListarAtencionAPO_Edit(id);
+
+                if (result != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+
+        }
+        public async Task<IActionResult> ListarAtencionINSPorId(int id)
+        {
+            try
+            {
+                var result = await _SELReconsideraciones.ListarAtencionINS_Edit(id);
+
+                if (result != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+
+        }
+        public async Task<IActionResult> ListarApoDIAGPorId(int id)
+        {
+            try
+            {
+                var result = await _Maestros.ListarApoDiagPorId(id);
 
                 if (result != null)
                 {

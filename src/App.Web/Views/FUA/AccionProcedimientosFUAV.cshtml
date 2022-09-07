@@ -17,7 +17,7 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" id="txtId">
+                <input type="hidden" id="txtId" value="@ViewBag.vbId">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-4">
@@ -26,13 +26,8 @@
                             </div>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="txtCodProcedimiento" />
-                                <button type="button" class="btn btn-primary input-group-text" id="btnConsultarProced">
-                                    <span class="indicator-label">
-                                        <i class="fas fa-search fs-4"></i> Consultar
-                                    </span>
-                                    <span class="indicator-progress">
-                                        Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                    </span>
+                                <button type="button" onclick="GetProcedimientoPorId()" class="btn btn-primary input-group-text" id="btnConsultarProced">
+                                        <i class="fas fa-search fs-4"></i>
                                 </button>
                             </div>
 
@@ -97,7 +92,7 @@
                                     {
                                         foreach (var item in ViewBag.ListDX)
                                         {
-                                            <option value="@item.ADIA_INRODIA">@item.C10_NOMBRE</option>
+                                            <option value="@item.ADIA_INRODIA">@item.ADIA_CODDIA - @item.C10_NOMBRE</option>
                                         }
                                     }
                                 }
@@ -131,43 +126,64 @@
         </div>
     </div>
 </div>
-<script>$(".date").daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        minYear: 1901,
-        maxYear: parseInt(moment().format("YYYY"), 10) + 1,
-        "locale": {
-            "format": "DD/MM/YYYY",
-            "separator": " - ",
-            "applyLabel": "Aceptar",
-            "cancelLabel": "Cancelar",
-            "fromLabel": "From",
-            "toLabel": "To",
-            "customRangeLabel": "Custom",
-            "weekLabel": "W",
-            "daysOfWeek": [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
-            ],
-            "monthNames": [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Setiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            "firstDay": 1
-        },
-    });</script>
+<script>
+    setTimeout(() => { GetAtencionAPOPorId(); }, 600);
+
+    $('#txtCodProcedimiento').keypress(function (event) {
+        var keycode = event.keyCode || event.which;
+        if (keycode == '13') {
+            GetProcedimientoPorId();
+        }
+    });
+
+    function GetProcedimientoPorId() {
+        let id = $('#txtCodProcedimiento').val();
+        if (id == '') {
+            NotificacionToastr('error', `Ingrese el codigo de Procedimiento.`, 'Campo requerido');
+            $('#txtCodProcedimiento').focus();
+            return false;
+        }
+        CargarWaitMe();
+        $.get('@Url.Content("~/FUA/ListarApoDIAGPorId")', { id: id })
+            .done(function (response) {
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    console.log(result);
+                    $('#txtDesProcedimiento').val(result.apo_NOMBRE);
+                    $('#txtGrupoProc').val(result.tapO_NOMBRE);
+                    $('#txtSubGrupoProc').val(result.sub_NOMBRE);                    
+                    
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+
+    function GetAtencionAPOPorId() {
+        let id = $('#txtId').val();
+        CargarWaitMe();
+        $.get('@Url.Content("~/FUA/ListarAtencionAPOPorId")', { id: id })
+            .done(function (response) {
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    console.log(result);
+                    $('#txtCodProcedimiento').val(result.aapO_CODAPO);
+                    $('#txtPrescritaProc').val(result.aapO_ICANTPROCED);
+                    $('#txtEjecutadoProc').val(result.aapO_ICANTEJECUTADA);
+                    $('#txtPrecioProc').val(result.aapO_NPO);
+                    $('#cbxDiagnosticoProc').val(result.aapO_INRODIA);
+                    $('#cbxDiagnosticoProc').trigger('change');
+                    GetProcedimientoPorId();
+
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+</script>
