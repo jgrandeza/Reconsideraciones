@@ -8,6 +8,7 @@ using App.ViewModels;
 using App.ViewModels.SELReconsideraciones;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static App.ViewModels.DELReconsideraciones.DELReconsideraciones;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,13 +23,15 @@ namespace App.Web.Controllers
         private readonly IMaestros _Maestros;
         private readonly ISELReconsideraciones _SELReconsideraciones;
         private readonly IUPDReconsideraciones _uPDReconsideraciones;
-        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros, ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones)
+        private readonly IDELReconsideraciones _dELReconsideraciones;
+        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros, ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones, IDELReconsideraciones dELReconsideraciones)
         {
             _dbContext = dbContext;
             _Auxiliares = auxiliares;
             _Maestros = maestros;
             _SELReconsideraciones = sELReconsideraciones;
-            _uPDReconsideraciones = uPDReconsideraciones;   
+            _uPDReconsideraciones = uPDReconsideraciones;
+            _dELReconsideraciones = dELReconsideraciones;
         }
         public IActionResult Index(int id)
         {
@@ -409,11 +412,11 @@ namespace App.Web.Controllers
             }
 
         }
-        public async Task<IActionResult> ListarApoDIAGPorId(int id)
+        public async Task<IActionResult> ListarApoDIAGPorId(int idate, string id)
         {
             try
             {
-                var result = await _Maestros.ListarApoDiagPorId(id);
+                var result = await _Maestros.ListarApoDiagPorId(idate, id);
 
                 if (result != null)
                 {
@@ -427,6 +430,49 @@ namespace App.Web.Controllers
             catch (Exception ex)
             {
                 return new JsonResult(new { IsSuccess = false });
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Eliminar(int tipo, int id)
+        {
+            try
+            {
+                var result = new Mensaje_Del();
+
+                if (tipo==1) //DX
+                {
+                    result = await _dELReconsideraciones.EliminarAtencionDia(id);
+                }
+                else if (tipo == 2) //MED
+                {
+                    result = await _dELReconsideraciones.EliminarAtencionMed(id);
+
+                }
+                else if (tipo == 3) //APO
+                {
+                    result = await _dELReconsideraciones.EliminarAtencionApo(id);
+
+                }
+                else if (tipo == 4) //INS
+                {
+                    result = await _dELReconsideraciones.EliminarAtencionIns(id);
+
+                }
+
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
             }
 
         }

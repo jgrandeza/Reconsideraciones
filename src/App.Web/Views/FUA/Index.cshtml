@@ -163,6 +163,8 @@
             <!--end::Container-->
         </div>
 <script>
+    $('.form-select').select2({
+    });
     setTimeout(function () {
         CargarWaitMe();
             Cargar_Info_General();
@@ -174,11 +176,12 @@
         TerminarWaitMe();
     }, 500);
 
+
     function Cargar_Info_General() {
         let id = $("#Ate_Idnumreg").val();
       $.get("@Url.Content("~/FUA/InfGeneralFUAV")", { id: id })
         .done(function (response) {
-            $('#divInfGeneralFUA').html(response);            
+            $('#divInfGeneralFUA').html(response);
             $('.select').select2();
         });
     }
@@ -260,6 +263,7 @@
         .done(function (response) {
             $('#modalProcedimientos').html(response);
             $('#mdl_AccionProcedimientosFUAV').modal("show");
+            $('.select').select2();
         });
     }
    function Cargar_Insumos() {
@@ -331,7 +335,7 @@
             }
         });
     }
-    
+
     function Conf_Guardar(e) {
         e.preventDefault();
         Swal.fire({
@@ -353,4 +357,60 @@
             }
         });
     }
+
+    function Conf_Eliminar(e,tipo,id) {
+        e.preventDefault();
+        Swal.fire({
+            html: '<p style="color: red;">No se podra revertir la acción</p>',
+            title: `ELIMINAR EL REGISTRO?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, Eliminar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                Eliminar(tipo, id);
+
+                setTimeout(function () {
+                    if (tipo == 1) {
+                        Cargar_Diagnosticos();
+                    } else if (tipo == 2) {
+                        Cargar_Medicamentos();
+                    } else if (tipo == 3) {
+                        Cargar_Procedimientos();
+                    } else if (tipo == 4) {
+                        Cargar_Insumos();
+                    }
+                }, 1000);
+
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+   async function Eliminar(tipo,id) {
+        let array_data = {};
+        array_data.tipo = tipo;
+        array_data.id = id;
+        let url = "@Url.Action("Eliminar", "FUA")";
+        $.post(url, array_data)
+            .done(function (response) {
+                console.log(response);
+                if (response.isSuccess == true) {
+                    
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+            });
+    }
+
 </script>
