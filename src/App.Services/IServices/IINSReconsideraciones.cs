@@ -11,6 +11,7 @@ namespace App.Services.IServices
 {
     public interface IINSReconsideraciones
     {
+        Task<int> InsertarAtenMedicamentoRec(getInsertarAtencionMedicamentoRec model);
         Task<getInsertarAtencionTotal> InsertarAtencionTotal(int Id, string user);
     }
 }

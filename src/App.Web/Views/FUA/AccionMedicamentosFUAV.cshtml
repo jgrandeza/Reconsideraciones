@@ -17,7 +17,7 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" id="txtId">
+                <input type="hidden" id="txtId" >
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-4">
@@ -26,7 +26,7 @@
                             </div>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="txtCodMedicamento" />
-                                <button type="button" class="btn btn-primary input-group-text" id="btnConsultarMed">
+                                <button onclick="GetMedicamentoxMED_CODMED()" type="button" class="btn btn-primary input-group-text" id="btnConsultarMed">
                                     <span class="indicator-label">
                                         <i class="fas fa-search fs-4"></i> Consultar
                                     </span>
@@ -70,13 +70,13 @@
                     <div class="col-md-4">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Fecha</label>
-                            <input type="text" class="form-control form-control-solid " id="txtFechPetitorio"  />
+                            <input type="text" class="form-control form-control-solid date " id="txtFechPetitorio"  />
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Nro Doc.</label>
-                            <input type="text" class="form-control form-control-solid " id="txtNroDocPetitorio"  />
+                            <input type="text" class="form-control " id="txtNroDocPetitorio"  />
                         </div>
                     </div>
                 </div>
@@ -85,13 +85,13 @@
                     <div class="col-md-4">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Prescrita</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPrescrito" />
+                            <input type="text" class="form-control " id="txtPrescrito"  />
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Entregada</label>
-                            <input type="text" class="form-control form-control-solid " id="txtEntregado" />
+                            <input type="text" class="form-control " id="txtEntregado" />
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -112,7 +112,7 @@
                                     {
                                         foreach (var item in ViewBag.ListDX)
                                         {
-                                            <option value="@item.ADIA_INRODIA">@item.C10_NOMBRE</option>
+                                                                                                                                                        <option value="@item.ADIA_INRODIA">@item.C10_NOMBRE</option>
                                         }
                                     }
                                 }                                
@@ -125,7 +125,7 @@
                 <div class="modal-footer">
                     @if (ViewBag.Tipo == "1")
                     {
-                        <button type="button" onclick="Registrar_TramoCV();" class="btn btn-success">
+                        <button type="button" onclick="RegistrarATenMedicamentoRec();" class="btn btn-success">
                             <i class="fas fa-save fs-4 me-2"></i>
                             Guardar
                         </button>
@@ -152,6 +152,7 @@
         singleDatePicker: true,
         showDropdowns: true,
         minYear: 1901,
+        parentEl: "#mdl_AccionMedicamentosFUAV .modal-body",
         maxYear: parseInt(moment().format("YYYY"), 10) + 1,
         "locale": {
             "format": "DD/MM/YYYY",
@@ -188,5 +189,79 @@
             "firstDay": 1
         },
     });
+    $('#txtCodMedicamento').keypress(function (event) {
+        var keycode = event.keyCode || event.which;
+        if (keycode == '13') {
+            GetMedicamentoxMED_CODMED();
+        }
+    });
+    
 
+    async function GetMedicamentoxMED_CODMED(){
+        try {
+            const array_data = {};
+            array_data.MED_CODMED = $('#txtCodMedicamento').val();
+            if(array_data.MED_CODMED == ""){
+                NotificacionToastr('error', `Ingrese el codigo de Medicamento.`, 'Campo requerido');
+                $('#txtCodMedicamento').focus();
+                return false;
+            }
+            CargarWaitMe();
+            const { isSuccess, result } = await getData('@Url.Content("~/FUA/GetMedicamentoxMED_CODMED")', array_data);
+            console.log(isSuccess, result);
+            if(isSuccess){
+                $('#txtDesMedicamento').val(result.meD_NOMBRE);
+                $('#txtFormFarmace').val(result.meD_PRESEN);
+                $('#txtConcentrMed').val(result.meD_CONCEN);
+                $('#txtPetitorio').val(result.meD_PETIT);
+                $('#txtPrecio').val(result.meD_COSTO);
+            }
+            else{
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+            }
+            TerminarWaitMe();
+        } catch (err) {
+            console.log(err);
+            TerminarWaitMe();
+        }
+    }
+
+    async function getData(ajaxurl, data_array) {
+        return $.get(ajaxurl, data_array );
+    };
+
+    async function RegistrarATenMedicamentoRecAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    }
+
+    async function RegistrarATenMedicamentoRec(){
+        try{
+            const array_data = {};
+            array_data.N_AMED_NUMREGATE = $("#Ate_Idnumreg").val();
+            array_data.V_AMED_CODMED = $("#txtCodMedicamento").val();
+            array_data.N_AMED_INRODIA = $("#cbxDiagnostico").val();
+            array_data.N_AMED_ICANTPRESCRITA = $("#txtPrescrito").val();
+            array_data.N_AMED_ICANTENTREGADA = $("#txtEntregado").val();
+            array_data.N_AMED_NPO = $("#txtPrecio").val();
+
+            if (array_data.N_AMED_NUMREGATE == "" || array_data.V_AMED_CODMED == "" || array_data.N_AMED_INRODIA == "" || array_data.N_AMED_ICANTPRESCRITA == "" || array_data.N_AMED_ICANTENTREGADA == "" || array_data.N_AMED_NPO == ""){
+                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
+                $('#txtCodMedicamento').focus();
+                return false;
+            }
+
+            const response = await RegistrarATenMedicamentoRecAjax('@Url.Content("~/FUA/InsertarAtenMedicamentoREc")', array_data);
+            if(response.isSuccess){
+                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
+                $('#mdl_AccionMedicamentosFUAV').modal('hide');
+                $('#modalMedicamentos').html('');
+            }
+            else{
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+            }
+
+        } catch (err) {
+
+        }
+    }
 </script>

@@ -18,6 +18,12 @@ namespace App.Services.IServices
 
         Task<getAtencionesDIA_Edit> ListarAtencionDIA_Edit(int Id);
 
+        //PR_REC_SEL_IATENCIONMED_REC_ID GetAtencionMedicaRecon
+        Task<GetAtencionMedicaRecon> ListarAtencionMedEditxID(int Id);
+
+        //PR_REC_SEL_MEDICAMENTOS GetMedicamentosxMED_CODMED
+        Task<GetMedicamentosxMED_CODMED> ListarMedicamentoxMED_CODMED(string MED_CODMED);
+
         Task<getAtencionesAPO_Edit> ListarAtencionAPO_Edit(int Id);
         Task<getAtencionesINS_Edit> ListarAtencionINS_Edit(int Id);
     }
