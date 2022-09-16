@@ -18,6 +18,7 @@
 
             <div class="modal-body">
                 <input type="hidden" id="txtId" value="@ViewBag.vbId">
+                <input type="hidden" id="txtApoId">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-4">
@@ -25,9 +26,9 @@
                                 Código
                             </div>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="txtCodProcedimiento" />
+                                <input type="text" class="form-control" id="txtCodProcedimiento" required />
                                 <button type="button" onclick="GetProcedimientoPorId()" class="btn btn-primary input-group-text" id="btnConsultarProced">
-                                        <i class="fas fa-search fs-4"></i>
+                                    <i class="fas fa-search fs-4"></i>
                                 </button>
                             </div>
 
@@ -59,25 +60,25 @@
                     <div class="col-md-3">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Prescrita</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPrescritaProc" />
+                            <input type="number" min="0" max="999" maxlength="3" class="form-control " id="txtPrescritaProc" required />
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Ejecutada</label>
-                            <input type="text" class="form-control form-control-solid " id="txtEjecutadoProc" />
+                            <input type="number" min="0" max="999" maxlength="3" class="form-control" id="txtEjecutadoProc" required />
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Precio (S/.)</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPrecioProc" />
+                            <input type="text" class="form-control form-control-solid" disabled id="txtPrecioProc" />
                         </div>
                     </div>
-                      <div class="col-md-3">
+                    <div class="col-md-3">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Resultado</label>
-                            <input type="text" class="form-control form-control-solid " id="txtResultadoProc" />
+                            <input type="text" class="form-control form-control-solid" disabled id="txtResultadoProc" />
                         </div>
                     </div>
                 </div>
@@ -104,14 +105,14 @@
                 <div class="modal-footer">
                     @if (ViewBag.Tipo == "1")
                     {
-                        <button type="button" onclick="Registrar_TramoCV();" class="btn btn-success">
+                        <button type="button" onclick="Conf_GuardarApo(event);" class="btn btn-success">
                             <i class="fas fa-save fs-4 me-2"></i>
                             Guardar
                         </button>
                     }
                     else if (ViewBag.Tipo == "2")
                     {
-                        <button type="button" onclick="Modificar_TramoCV();" class="btn btn-warning">
+                        <button type="button" onclick="" class="btn btn-warning">
                             <i class="fas fa-edit fs-4 me-2"></i>
                             Actualizar
                         </button>
@@ -127,7 +128,6 @@
     </div>
 </div>
 <script>
-    setTimeout(() => { GetAtencionAPOPorId(); }, 600);
 
     $('#txtCodProcedimiento').keypress(function (event) {
         var keycode = event.keyCode || event.which;
@@ -138,28 +138,38 @@
 
     function GetProcedimientoPorId() {
         let id = $('#txtCodProcedimiento').val();
+        let idate = $("#Ate_Idnumreg").val();
         if (id == '') {
             NotificacionToastr('error', `Ingrese el codigo de Procedimiento.`, 'Campo requerido');
             $('#txtCodProcedimiento').focus();
             return false;
         }
         CargarWaitMe();
-        $.get('@Url.Content("~/FUA/ListarApoDIAGPorId")', { id: id })
+        $.get('@Url.Content("~/FUA/ListarApoDIAGPorId")', { idate:idate, id: id })
             .done(function (response) {
                 if (response.isSuccess == true) {
                     let { result } = response;
                     console.log(result);
-                    $('#txtDesProcedimiento').val(result.apo_NOMBRE);
+                    $('#txtDesProcedimiento').val(result.apO_NOMBRE);
                     $('#txtGrupoProc').val(result.tapO_NOMBRE);
-                    $('#txtSubGrupoProc').val(result.sub_NOMBRE);                    
-                    
+                    $('#txtSubGrupoProc').val(result.suB_NOMBRE);
+                    $('#txtPrecioProc').val(result.apO_COSTO);
+                    $('#txtApoId').val(result.apO_ID)
+                    $('#txtPrescritaProc').focus();
                 }
                 else {
-                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                    NotificacionToastr('warning', `El procedimiento ingresado es incorrecto.`, 'Error...');
+                    Limpiar_datos();
+
                 }
                 TerminarWaitMe();
 
             });
+    }
+   function Limpiar_datos(){
+       $('#txtDesProcedimiento').val('');
+       $('#txtGrupoProc').val('');
+       $('#txtSubGrupoProc').val('');
     }
 
     function GetAtencionAPOPorId() {
@@ -185,5 +195,74 @@
                 TerminarWaitMe();
 
             });
+    }
+
+    function Conf_GuardarApo(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: `GUARDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, registrar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+               RegistrarATenProcedimientoRec();
+               
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+    async function RegistrarAteProcRecAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    }
+
+    async function RegistrarATenProcedimientoRec(){
+        try{
+            const array_data = {};
+            array_data.N_AAPO_NUMREGATE = $("#Ate_Idnumreg").val();
+
+            array_data.N_AAPO_CODAPO = $("#txtCodProcedimiento").val();
+            array_data.V_AAPO_INRODIA = $("#cbxDiagnosticoProc").val();
+            array_data.N_AAPO_ICANTPROCED = $("#txtPrescritaProc").val();
+            array_data.N_AAPO_ICANTEJECUTADA = $("#txtEjecutadoProc").val();
+            array_data.N_AAPO_ITICKET = 0;
+            array_data.N_AAPO_NPO = $("#txtPrecioProc").val();
+            array_data.N_AAPO_NCOSTOAPLICADO = $("#txtResultadoProc").val();
+            array_data.N_AAPO_APO_ID = $("#txtApoId").val();
+
+            
+
+            if (array_data.N_AAPO_NUMREGATE == "" || array_data.V_AAPO_INRODIA == "" ||
+                array_data.N_AAPO_ICANTPROCED == "" || array_data.N_AAPO_ICANTEJECUTADA == "" ||
+                array_data.N_AAPO_NPO == "" || array_data.N_AAPO_APO_ID == "") {
+                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
+                $('#txtCodProcedimiento').focus();
+                return false;
+            }
+
+            const response = await RegistrarAteProcRecAjax('@Url.Content("~/FUA/InsertarAtenProcedimientoREc")', array_data);
+            if(response.isSuccess){
+                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
+                $('#mdl_AccionProcedimientosFUAV').modal('hide');
+                $('#modalProcedimientos').html('');
+                setTimeout(function () {
+                    Cargar_Procedimientos();
+                }, 500);
+            }
+            else{
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 </script>

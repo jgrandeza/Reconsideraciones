@@ -26,5 +26,8 @@ namespace App.Services.IServices
 
         Task<getAtencionesAPO_Edit> ListarAtencionAPO_Edit(int Id);
         Task<getAtencionesINS_Edit> ListarAtencionINS_Edit(int Id);
+
+        Task<GetInsumosxId> ListarInsumosId(string V_INS_CODINS);
+
     }
 }

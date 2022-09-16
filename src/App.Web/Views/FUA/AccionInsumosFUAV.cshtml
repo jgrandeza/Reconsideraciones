@@ -26,7 +26,7 @@
                             </div>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="txtCodInsumos" />
-                                <button type="button" class="btn btn-primary input-group-text" id="btnConsultarInsu">
+                                <button type="button" onclick="GetInsumos_Id()" class="btn btn-primary input-group-text" id="btnConsultarInsu">
                                     <span class="indicator-label">
                                         <i class="fas fa-search fs-4"></i> Consultar
                                     </span>
@@ -111,14 +111,14 @@
                 <div class="modal-footer">
                     @if (ViewBag.Tipo == "1")
                     {
-                        <button type="button" onclick="Registrar_TramoCV();" class="btn btn-success">
+                        <button type="button" onclick="Conf_GuardarIns(event);" class="btn btn-success">
                             <i class="fas fa-save fs-4 me-2"></i>
                             Guardar
                         </button>
                     }
                     else if (ViewBag.Tipo == "2")
                     {
-                        <button type="button" onclick="Modificar_TramoCV();" class="btn btn-warning">
+                        <button type="button" onclick="" class="btn btn-warning">
                             <i class="fas fa-edit fs-4 me-2"></i>
                             Actualizar
                         </button>
@@ -173,3 +173,120 @@
             "firstDay": 1
         },
     });</script>
+<script>
+
+    $('#txtCodInsumos').keypress(function (event) {
+        var keycode = event.keyCode || event.which;
+        if (keycode == '13') {
+            GetInsumos_Id();
+        }
+    });
+
+    function Limpiar_Ins(){
+        $('#txtDesInsumos').val('');
+        $('#txtPresentacionIns').val('');
+        $('#txtConcentrIns').val('');
+        $('#txtPrecioIns').val('');  
+    }
+
+    async function GetInsumos_Id(){
+        try {
+            const array_data = {};
+            array_data.V_INS_CODINS = $('#txtCodInsumos').val();
+            if (array_data.V_INS_CODINS == ""){
+                NotificacionToastr('error', `Ingrese el codigo de Insumo.`, 'Campo requerido');
+                $('#txtCodInsumos').focus();
+                return false;
+            }
+            CargarWaitMe();
+            const { isSuccess, result } = await getData('@Url.Content("~/FUA/GetInsumosId")', array_data);
+            console.log(isSuccess, result);
+            if(isSuccess){
+
+                $('#txtDesInsumos').val(result.inS_NOMBRE);
+                $('#txtPresentacionIns').val(result.inS_UNIDAD);
+                $('#txtConcentrIns').val(result.inS_CONCEN);
+                $('#txtPrecioIns').val(result.inS_COSTO);             
+            }
+            else{
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                Limpiar_Ins();
+            }
+            TerminarWaitMe();
+        } catch (err) {
+            console.log(err);
+            TerminarWaitMe();
+        }
+    }
+
+    async function getData(ajaxurl, data_array) {
+        return $.get(ajaxurl, data_array );
+    };
+
+    function Conf_GuardarIns(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: `GUARDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, registrar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                RegistrarATenInsumosRec();
+
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+    async function RegistrarAteInsRecAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    }
+
+    async function RegistrarATenInsumosRec(){
+        try{
+            const array_data = {};
+            array_data.N_AINS_NUMREGATE = $("#Ate_Idnumreg").val();
+
+            array_data.V_AINS_CODINS = $("#txtCodInsumos").val();
+            array_data.N_AINS_INRODIA = $("#cbxDiagnosticoIns").val();
+            array_data.V_AINS_CCARACT = '';
+            array_data.N_AINS_ICANTPRESCRITA = $("#txtPrescritoIns").val();
+            array_data.N_AINS_ICANTENTREGADA = $("#txtEntregadoIns").val();
+            array_data.N_AINS_ITICKET = 0;
+            array_data.N_AINS_NPO = $("#txtPrecioIns").val();
+            array_data.N_AINS_NCOSTOAPLICADO = $("#txtResultadoIns").val();
+
+            if (array_data.N_AINS_NUMREGATE == "" || array_data.V_AINS_CODINS == "" ||
+                array_data.N_AINS_INRODIA == "" || array_data.N_AINS_ICANTPRESCRITA == "" ||
+                array_data.N_AINS_ICANTENTREGADA == "" || array_data.N_AINS_NPO == "") {
+                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
+                $('#txtCodInsumos').focus();
+                return false;
+            }
+
+            const response = await RegistrarAteInsRecAjax('@Url.Content("~/FUA/InsertarAtenInsumosREc")', array_data);
+            if(response.isSuccess){
+                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
+                $('#mdl_AccionInsumosFUAV').modal('hide');
+                $('#modalInsumos').html('');
+                setTimeout(function () {
+                    Cargar_Insumos();
+                }, 500);
+            }
+            else{
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+</script>

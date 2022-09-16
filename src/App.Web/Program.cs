@@ -37,6 +37,8 @@ builder.Services.AddTransient<IResumenRec, Serv_ResumenRec>();
 builder.Services.AddTransient<ISELReconsideraciones, Serv_SELReconsideraciones>();
 builder.Services.AddTransient<IINSReconsideraciones, Serv_INSReconsideraciones>();
 builder.Services.AddTransient<IUPDReconsideraciones, Serv_UPDReconsideraciones>();
+builder.Services.AddTransient<IDELReconsideraciones, Serv_DELReconsideraciones>();
+builder.Services.AddTransient<ISELSiasis, Serv_SELSiasis>();
 
 builder.Services.AddCors(o => o.AddPolicy("AllowAllOrigins", builder =>
 {

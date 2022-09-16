@@ -9,9 +9,15 @@
   <ItemGroup>
     <None Remove="Newtonsoft.Json" />
     <None Remove="Microsoft.AspNetCore.Http.Features" />
+    <None Remove="DELReconsideraciones\" />
+    <None Remove="SELSiasis\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DELReconsideraciones\" />
+    <Folder Include="SELSiasis\" />
   </ItemGroup>
 </Project>

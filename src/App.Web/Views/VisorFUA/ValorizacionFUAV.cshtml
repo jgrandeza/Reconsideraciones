@@ -1,0 +1,45 @@
+﻿@model App.ViewModels.SELSiasis.SELSiasis.getMasterBruto
+
+<table class="table align-middle border rounded table-row-dashed fs-6 g-5 display responsive" id="tblValorizacion" style="font-size: 10px !important">
+    <thead class="text-center" style="background-color: #0272A3; border-width: 2px; color: white; vertical-align: middle; ">
+        <tr>
+            <th style="text-align:center">VALORIZACION</th>
+            <th style="text-align:center">COST.MED</th>
+            <th style="text-align:center">COST.INS</th>
+            <th style="text-align:center">COST.PROC	</th>
+            <th style="text-align:center">COST.TOTAL</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model != null)
+            {
+                <tr>
+                    <td class="text-center">BRUTO</td>
+                    <td class="text-center">@Model.ATE_VALORBRUTOMED</td>
+                    <td class="text-center">@Model.ATE_VALORBRUTOINS</td>
+                    <td class="text-center">@Model.ATE_VALORBRUTOPRO</td>
+                    <td class="text-center">@Model.ATE_VALORBRUTO</td>
+
+                </tr>
+                <tr>
+                    <td class="text-center">NETO</td>
+
+                    <td class="text-center">@ViewBag.Neto.ATE_VALORNETOMED</td>
+                    <td class="text-center">@ViewBag.Neto.ATE_VALORNETOINS</td>
+                    <td class="text-center">@ViewBag.Neto.ATE_VALORNETOPRO</td>
+                    <td class="text-center">@ViewBag.Neto.ATE_VALORNETO</td>
+
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4"><span class="text-danger">No hay registros para mostrar</span></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<script></script>

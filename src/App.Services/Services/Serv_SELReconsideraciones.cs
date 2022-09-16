@@ -263,5 +263,27 @@ namespace App.Services.Services
                 return null;
             }
         }
+
+        public async Task<GetInsumosxId> ListarInsumosId(string V_INS_CODINS)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("V_INS_CODINS", V_INS_CODINS, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_INSUMOS";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<GetInsumosxId>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

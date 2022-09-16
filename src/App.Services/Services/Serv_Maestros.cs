@@ -121,14 +121,15 @@ namespace App.Services.Services
             }
         }
 
-        public async Task<GetApoDiagPorID> ListarApoDiagPorId(int Id)
+        public async Task<GetApoDiagPorID> ListarApoDiagPorId(int IdID_FUA, string V_APO_CODAPO)
         {
             try
             {
 
                 var conn = new OracleConnection(_connectionString);
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("N_APO_CODAPO", Id, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("ID_FUA", IdID_FUA, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("V_APO_CODAPO", V_APO_CODAPO, OracleMappingType.Int32, ParameterDirection.Input);
                 dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_APODIAG";

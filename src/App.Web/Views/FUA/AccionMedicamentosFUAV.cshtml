@@ -195,7 +195,14 @@
             GetMedicamentoxMED_CODMED();
         }
     });
-    
+
+    function Limpiar_Med(){
+        $('#txtDesMedicamento').val('');
+        $('#txtFormFarmace').val('');
+        $('#txtConcentrMed').val('');
+        $('#txtPetitorio').val('');
+        $('#txtPrecio').val('');
+    }
 
     async function GetMedicamentoxMED_CODMED(){
         try {
@@ -218,6 +225,7 @@
             }
             else{
                 NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                Limpiar_Med();
             }
             TerminarWaitMe();
         } catch (err) {
@@ -255,6 +263,9 @@
                 NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
                 $('#mdl_AccionMedicamentosFUAV').modal('hide');
                 $('#modalMedicamentos').html('');
+                setTimeout(function () {
+                        Cargar_Medicamentos();
+                }, 500);
             }
             else{
                 NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');

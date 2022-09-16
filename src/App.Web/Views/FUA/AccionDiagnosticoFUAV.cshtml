@@ -83,14 +83,14 @@
                 <div class="modal-footer">
                     @if (ViewBag.Tipo == "1")
                     {
-                        <button type="button" onclick="Registrar_TramoCV();" class="btn btn-success">
+                        <button type="button" onclick="RegistrarATenMedicamentoRec();" class="btn btn-success">
                             <i class="fas fa-save fs-4 me-2"></i>
                             Guardar
                         </button>
                     }
                     else if (ViewBag.Tipo == "2")
                     {
-                        <button type="button" onclick="ActualizarAtencionDia();" class="btn btn-warning">
+                        <button type="button" onclick="" class="btn btn-warning">
                             <i class="fas fa-edit fs-4 me-2"></i>
                             Actualizar
                         </button>
@@ -107,7 +107,6 @@
 </div>
 
 <script>
-    setTimeout(() => { GetAtencionDIAPorId(); }, 600);
 
     $('#txtCodDiagnostico').keypress(function (event) {
         var keycode = event.keyCode || event.which;
@@ -200,5 +199,41 @@
                     NotificacionToastr('error', `${response.message}`, 'Error...');
                 }
             });
+    }
+
+  async function RegistrarAteDiagRecAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    }
+
+    async function RegistrarATenMedicamentoRec(){
+        try{
+            const array_data = {};
+            array_data.N_ADIA_NUMREGATE = $("#Ate_Idnumreg").val();
+            array_data.V_ADIA_CODDIA = $("#txtCodDiagnostico").val();
+            array_data.V_ADIA_CDX = $("#cbxIngEgre").val();
+            array_data.V_ADIA_TIPODIA = $("#cbxTipoDx").val();
+
+            if (array_data.N_ADIA_NUMREGATE == "" || array_data.V_ADIA_CODDIA == "" || array_data.V_ADIA_CDX == "" || array_data.V_ADIA_TIPODIA == ""){
+                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
+                $('#txtCodDiagnostico').focus();
+                return false;
+            }
+
+            const response = await RegistrarAteDiagRecAjax('@Url.Content("~/FUA/InsertarAtenDiagnosticoREc")', array_data);
+            if(response.isSuccess){
+                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
+                $('#mdl_AccionDiagnosticoFUAV').modal('hide');
+                $('#modalDiagnostico').html('');
+                setTimeout(function () {
+                        Cargar_Diagnosticos();
+                }, 500);
+            }
+            else{
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+            }
+
+        } catch (err) {
+
+        }
     }
 </script>

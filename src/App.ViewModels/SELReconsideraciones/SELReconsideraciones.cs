@@ -465,5 +465,14 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AINS_NCOSTOAPLICADO { get; set; }
     }
 
+    public class GetInsumosxId
+    {
+        public string? INS_CODINS { get; set; }
+        public string? INS_NOMBRE { get; set; }
+        public string? INS_UNIDAD { get; set; }
+        public string? INS_CONCEN { get; set; }
+        public decimal? INS_COSTO { get; set; }
+    }
+
 }
 
