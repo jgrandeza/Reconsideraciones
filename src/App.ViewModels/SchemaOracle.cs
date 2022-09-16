@@ -9,5 +9,6 @@ namespace App.ViewModels
     public class SchemaOracle
     {
         public string reconsideraciones { get; set; }
+        public string SIASIS { get; set; }
     }
 }

@@ -11,6 +11,12 @@ namespace App.Services.IServices
 {
     public interface IINSReconsideraciones
     {
+        Task<Mensaje_Ins> InsertarAtenMedicamentoRec(getInsertarAtencionMedicamentoRec model);
         Task<getInsertarAtencionTotal> InsertarAtencionTotal(int Id, string user);
+        Task<Mensaje_Ins> InsertarAtenDiagnostico(getInsertarAtencionDIA model);
+
+        Task<Mensaje_Ins> InsertarAtenProcedimiento(getInsertarAtencionAPO model);
+        Task<Mensaje_Ins> InsertarAtenInsumos(getInsertarAtencionINS model);
+
     }
 }

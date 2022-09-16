@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<App.Models.CorredorVial>*@
+﻿@model IEnumerable<App.ViewModels.SELSiasis.SELSiasis.getAtencionDIAObs>
 
 <table class="table align-middle border rounded table-row-dashed fs-6 g-5 display responsive" id="tblDiagnosticos" style="font-size: 10px !important">
     <thead class="text-center" style="background-color: #0272A3; border-width: 2px; color: white; vertical-align: middle; ">
@@ -11,15 +11,43 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td style="text-align: center">
-                1
-            </td>
-            <td style="text-align: center">Z718</td>
-            <td style="text-align: center">OTRAS CONSULTAS ESPECIFICADAS</td>
-            <td style="text-align: center">I-DX INGRESO</td>
-            <td style="text-align: center">D-DEFINITIVO</td>
-        </tr>
+        @{
+            if (Model.Count() > 0)
+            {
+                var contador = 0;
+                foreach (var item in Model)
+                {
+                <tr id="DiaObs_cant">
+                    <td class="text-center">
+                        @item.adia_iNroDia
+                    </td>
+                    <td class="text-center">@item.adia_coddia</td>
+                    <td class="text-center">@item.c10_nombre</td>
+                    <td class="text-center">
+                        @if (item.adia_tipodia == 1)
+                            {
+                                <p>I-DX INGRESO</p>
+                            }
+                            else
+                            {
+                                <p>E-DX EGRESO</p>
+                            }
+                      
+
+                    </td>
+                    <td class="text-center">@item.tda_cdescripcion</td>
+
+                </tr>
+                    contador++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8"><span class="text-danger">No hay registros para mostrar</span></td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
 <script>

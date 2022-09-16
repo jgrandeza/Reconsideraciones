@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using App.Data;
 using App.Services.IServices;
 using App.ViewModels;
+using App.ViewModels.INSReconsideraciones;
 using App.ViewModels.SELReconsideraciones;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,9 @@ namespace App.Web.Controllers
         private readonly ISELReconsideraciones _SELReconsideraciones;
         private readonly IUPDReconsideraciones _uPDReconsideraciones;
         private readonly IDELReconsideraciones _dELReconsideraciones;
-        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros, ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones, IDELReconsideraciones dELReconsideraciones)
+        private readonly IINSReconsideraciones _iNSReconsideraciones;
+        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros, ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones, IINSReconsideraciones iNSReconsideraciones, IDELReconsideraciones dELReconsideraciones)
+
         {
             _dbContext = dbContext;
             _Auxiliares = auxiliares;
@@ -32,6 +35,7 @@ namespace App.Web.Controllers
             _SELReconsideraciones = sELReconsideraciones;
             _uPDReconsideraciones = uPDReconsideraciones;
             _dELReconsideraciones = dELReconsideraciones;
+            _iNSReconsideraciones = iNSReconsideraciones;
         }
         public IActionResult Index(int id)
         {
@@ -223,8 +227,51 @@ namespace App.Web.Controllers
             return PartialView(result);
         }
 
+        //MEDICAMENTO AGREGADOS CONTROLADORES
+        public async Task<IActionResult> GetMedicamentoxMED_CODMED(string MED_CODMED)
+        {
+            try
+            {
+                var medic = await _SELReconsideraciones.ListarMedicamentoxMED_CODMED(MED_CODMED);
+                if (medic != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = medic });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        public async Task<IActionResult> InsertarAtenMedicamentoREc(getInsertarAtencionMedicamentoRec MED_CODMED)
+        {
+            try
+            {
+                var result = await _iNSReconsideraciones.InsertarAtenMedicamentoRec(MED_CODMED);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        //FIN 
+
         public async Task<IActionResult> AccionMedicamentosFUAV(string tipo, int id, int idate)
         {
+           
             if (Convert.ToInt32(tipo) == 1)
             {
                 ViewBag.Tipo = tipo;
@@ -473,8 +520,88 @@ namespace App.Web.Controllers
             catch (Exception ex)
             {
                 return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+
             }
 
+        }
+        public async Task<IActionResult> InsertarAtenDiagnosticoREc(getInsertarAtencionDIA datos)
+        {
+            try
+            {
+                var result = await _iNSReconsideraciones.InsertarAtenDiagnostico(datos);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        public async Task<IActionResult> InsertarAtenProcedimientoREc(getInsertarAtencionAPO datos)
+        {
+            try
+            {
+                var result = await _iNSReconsideraciones.InsertarAtenProcedimiento(datos);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        public async Task<IActionResult> InsertarAtenInsumosREc(getInsertarAtencionINS datos)
+        {
+            try
+            {
+                var result = await _iNSReconsideraciones.InsertarAtenInsumos(datos);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        public async Task<IActionResult> GetInsumosId(string V_INS_CODINS)
+        {
+            try
+            {
+                var medic = await _SELReconsideraciones.ListarInsumosId(V_INS_CODINS);
+                if (medic != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = medic });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
         }
     }
 }

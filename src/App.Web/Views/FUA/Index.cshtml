@@ -26,7 +26,7 @@
                     <div class="card-body">
                         <div class="row" style="text-align:center">
                             <div class="col-sm-12">
-                                <button type="button" class="btn btn-warning btn-md" onclick="cargarModalRegistroCorredorVial(1)">
+                                <button type="button" class="btn btn-warning btn-md" onclick="VoverAtras_Reconsideraciones()">
                                     <i class="fas fa-arrow-left  fs-4 me-2"></i>
                                     Atras
                                 </button>
@@ -411,6 +411,14 @@
                     NotificacionToastr('error', `${response.message}`, 'Error...');
                 }
             });
+    }
+
+    function VoverAtras_Reconsideraciones(){
+        ///SolicitudReconsideracion/Index
+        CargarWaitMe();
+        $(".content-custom").load("@Url.Content("~/SolicitudReconsideracion/Index")", () => {
+            TerminarWaitMe();
+        });
     }
 
 </script>
