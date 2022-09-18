@@ -63,8 +63,8 @@
                             <td class="text-center">
                             <a title="Ver FUA" href="../VisorFUA?dt=@item.RREC_IDNUMREG" target="_blank"><i style="font-size: 25px; color: darkslateblue" class="fas fa-file-invoice"></i></a>
                             </td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><b>@( string.Format("{0:C2}", item.RREC_VALOR_BRUTO - item.RREC_VALOR_NETO))</b></td>                            
+                        <td class="text-center"><b>@(string.Format("{0:C2}", item.RREC_VALOR_BRUTO - item.RREC_VALOR_NETO))</b></td>
+                            <td class="text-center"></td>                            
                             <td class="text-center" style="font-size: 10px;"> @(Convert.ToDateTime(item.RREC_FECATENCION).ToShortDateString()) </td>
                             <td class="text-center">
                             <b>

@@ -50,12 +50,12 @@
                                 <input type="text" class="form-control form-control-solid" id="txtPerProduc" disabled />
                             </div>
                         </div>
-                        <div class="col-md-4">
+@*                        <div class="col-md-4">
                             <div class="mb-4">
                                 <label for="txtTipoObser" class="form-label text-wrap fw-bolder fs-4">Observación</label>
                                 <input type="text" class="form-control form-control-solid" id="txtTipoObser" disabled />
                             </div>
-                        </div>
+                        </div>*@
                     </div>
 
                 </div>
@@ -125,7 +125,7 @@
                                     {
                                         foreach (var item in ViewBag.LisComponente)
                                         {
-                                            <option value="@item.COM_IDCOMPONENTE">@item.COM_DESCRIPCION</option>
+                                                            <option value="@item.COM_IDCOMPONENTE">@item.COM_DESCRIPCION</option>
                                         }
                                     } 
                                  }
@@ -159,7 +159,7 @@
                                             {
                                                 foreach (var item in ViewBag.ListTipoDocIdent)
                                                 {
-                                                    <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
+                                                                    <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
                                                 }
                                             } 
                                          }
@@ -238,7 +238,7 @@
                                             {
                                                 foreach (var item in ViewBag.ListGenero)
                                                 {
-                                                    <option value="@item.SEX_IDSEXO">@item.SEX_DESCRIPCION</option>
+                                                                    <option value="@item.SEX_IDSEXO">@item.SEX_DESCRIPCION</option>
                                                 }
                                             } 
                                          }
@@ -279,7 +279,7 @@
                                         {
                                             foreach (var item in ViewBag.ListTipoAtenc)
                                             {
-                                                <option value="@item.TAT_CODATE">@item.TAT_NOMBRE</option>
+                                                                <option value="@item.TAT_CODATE">@item.TAT_NOMBRE</option>
                                             }
                                         }
                                     }
@@ -296,7 +296,7 @@
                                         {
                                             foreach (var item in ViewBag.ListModalidadAte)
                                             {
-                                                <option value="@item.MOD_IDMODALIDAD">@item.MOD_DESCRIPCION</option>
+                                                                <option value="@item.MOD_IDMODALIDAD">@item.MOD_DESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -316,7 +316,7 @@
                                             {
                                                 foreach (var item in ViewBag.ListCondiMaterna)
                                                 {
-                                                    <option value="@item.CDM_IDCONDICION">@item.CDM_NOMBRE</option>
+                                                                    <option value="@item.CDM_IDCONDICION">@item.CDM_NOMBRE</option>
                                                 }
                                             } 
                                          }
@@ -379,7 +379,7 @@
                                         {
                                             foreach (var item in ViewBag.ListLugarAte)
                                             {
-                                                <option value="@item.LUG_IDLUGAR">@item.LUG_DESCRIPCION</option>
+                                                                <option value="@item.LUG_IDLUGAR">@item.LUG_DESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -395,7 +395,7 @@
                                         {
                                             foreach (var item in ViewBag.ListOrigenPersona)
                                             {
-                                                <option value="@item.OPE_IDORIGENPERSONAL">@item.OPE_DESCRIPCION</option>
+                                                                <option value="@item.OPE_IDORIGENPERSONAL">@item.OPE_DESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -554,7 +554,7 @@
                                         {
                                             foreach (var item in ViewBag.ListTipoDocIdent)
                                             {
-                                                <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
+                                                                <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -591,7 +591,7 @@
                                         {
                                             foreach (var item in ViewBag.ListTipoPersonal)
                                             {
-                                                <option value="@item.TPS_IDCODIGO">@item.TPS_DESCRIPCION</option>
+                                                                <option value="@item.TPS_IDCODIGO">@item.TPS_DESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -702,6 +702,11 @@
                 //$("#lblProyecto2").html(data.proNombreProyectoInversion);
 
                 $("#txtFUA").val(data.atE_DISA +"-"+ data.atE_LOTE +"-"+ data.atE_NUMREGATE );
+                $("#txtCostoObservado").val(data.atE_VALOR_BRUTO- data.atE_VALOR_NETO);
+
+                 $("#txtPerProduc").val(data.atE_PERIODO + "-"+ data.atE_MES);
+
+      
                 $("#txtIPRESS").val(data.atE_IDEESS);
 
                 CONS_IPRESS();
