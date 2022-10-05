@@ -97,5 +97,9 @@ namespace App.ViewModels.Auxiliares
         public string? TPS_COLEGIATURA { get; set; }
 
     }
-
+    public class getEspecialidad
+    {
+        public string? ESP_IDESPECIALIDAD { get; set; }
+        public string? ESP_CNOMBRE { get; set; }
+    }
 }

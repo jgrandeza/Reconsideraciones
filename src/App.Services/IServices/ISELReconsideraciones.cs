@@ -29,5 +29,8 @@ namespace App.Services.IServices
 
         Task<GetInsumosxId> ListarInsumosId(string V_INS_CODINS);
 
+        Task<IEnumerable<GetMatriz>> ListarMatriz(int Id);
+
+        Task<GetResumenxID> ResumenRecxID(int N_ATE_IDNUMREG);
     }
 }

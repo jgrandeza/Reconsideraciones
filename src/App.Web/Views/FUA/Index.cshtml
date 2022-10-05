@@ -8,6 +8,8 @@
     <!--begin::Container-->
     <div id="kt_content_container" class="container-xxl">
         <input type="hidden" id="Ate_Idnumreg" value="@ViewBag.ATE_IDNUMREG" />
+        <input type="hidden" id="MatrizCant" value="@ViewBag.Matriz" />
+        <input type="hidden" id="RecEstado" value="@ViewBag.RecEstado" />
         <div class="row">
             <div class="col-md-4">
                 <div class="card" style="background-color:#73B8C0">
@@ -15,9 +17,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <p class="fs-4 fw-bolder" style="color:white; text-align:center; font-size:14px !important">
-                                Periodo de Registro de Reconcideración: @ViewBag.PeriodoRec
+                                    Periodo de Registro de Reconcideración: @ViewBag.PeriodoRec
                                 </p>
-                            </div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -30,18 +33,39 @@
                                     <i class="fas fa-arrow-left  fs-4 me-2"></i>
                                     Atras
                                 </button>
-                                <button type="button" class="btn btn-dark btn-md" onclick="Conf_Guardar(event)">
-                                    <i class="fas fa-save fs-4 me-2"></i>
-                                    Guardar
-                                </button>
-                                <button type="button" class="btn btn-danger btn-md" onclick="Conf_Validacion(event)">
-                                    <i class="fas fa-list-ol fs-4 me-2"></i>
-                                    Validar Cambios
-                                </button>
-                                <button type="button" class="btn btn-success btn-md" onclick="cargarModalRegistroCorredorVial(1)">
-                                    <i class="fas fa-upload fs-4 me-2"></i>
-                                    Registar Sustento
-                                </button>
+                                @{
+                                    if (ViewBag.RecEstado == 6)
+                                    {
+                                        <button type="button" class="btn btn-dark btn-md" onclick="Conf_Guardar(event)">
+                                            <i class="fas fa-save fs-4 me-2"></i>
+                                            Guardar
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
+                                            <i class="fas fa-trash fs-4 me-2"></i>
+                                            Eliminar
+                                        </button>
+
+                                        <button type="button" class="btn btn-info btn-md" onclick="Conf_Validacion(event)">
+                                            <i class="fas fa-list-ol fs-4 me-2"></i>
+                                            Validar Cambios
+                                        </button>
+                                        <button type="button" class="btn btn-success btn-md" onclick="cargarModalRegistroCorredorVial(1)">
+                                            <i class="fas fa-upload fs-4 me-2"></i>
+                                            Registar Sustento
+                                        </button>
+                                    }
+                                    else if (ViewBag.RecEstado == 2)
+                                    {
+                                        <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
+                                            <i class="fas fa-trash fs-4 me-2"></i>
+                                            Eliminar
+                                        </button>
+
+                                    }
+
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -51,144 +75,188 @@
 
 
 
-            <div class="card mt-5 mb-5 mb-xl-10" id="kt_profile_details_view">
-                <!--begin::Card body-->
-                <div class="card-body p-9">
+        <div class="card mt-5 mb-5 mb-xl-10" id="kt_profile_details_view">
+            <!--begin::Card body-->
+            <div class="card-body p-9">
 
-                    <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#Tab1"><i class="fas fa-clinic-medical fs-4 me-2"></i> INFORMACIÓN GENERAL</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#Tab2"><i class="fas fa-file-medical fs-4 me-2"></i> DIAGNOSTICOS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#Tab3"><i class="fas fa-capsules fs-4 me-2"></i> MEDICAMENTOS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#Tab4"><i class="fas fa-crutch fs-4 me-2"></i> PROCEDIMIENTOS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#Tab5"><i class="fas fa-vials fs-4 me-2"></i> INSUMOS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#Tab6"><i class="fas fa-baby fs-4 me-2"></i> SERVICIO MATERNO</a>
-                        </li>
-                    </ul>
+                <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#Tab1"><i class="fas fa-clinic-medical fs-4 me-2"></i> INFORMACIÓN GENERAL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#Tab2"><i class="fas fa-file-medical fs-4 me-2"></i> DIAGNOSTICOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#Tab3"><i class="fas fa-capsules fs-4 me-2"></i> MEDICAMENTOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#Tab4"><i class="fas fa-crutch fs-4 me-2"></i> PROCEDIMIENTOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#Tab5"><i class="fas fa-vials fs-4 me-2"></i> INSUMOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#Tab6"><i class="fas fa-baby fs-4 me-2"></i> SERVICIO MATERNO</a>
+                    </li>
+                </ul>
 
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="Tab1" role="tabpanel">
-                            <div id="divInfGeneralFUA"></div>
-                        </div>
-                        <div class="tab-pane fade" id="Tab2" role="tabpanel">
-                           <div class="row mb-5">
-                               <div class="col-sm-12" style="text-align:left">
-                                   <button type="button" onclick="CargarModalDiagnostico(1,0)" class="btn btn-dark">
-                                       <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
-                                   </button>
-                               </div>
-                           </div>
-                            <div id="modalDiagnostico"></div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                     <div class="table-responsive">
-                                        <div id="tabla_dx"></div>
-                                     </div>
-                                </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="Tab1" role="tabpanel">
+                        <div id="divInfGeneralFUA"></div>
+                        <div id="modalMatriz"></div>
+                    </div>
+                    <div class="tab-pane fade" id="Tab2" role="tabpanel">
+                        <div class="row mb-5">
+                            <div class="col-sm-12" style="text-align:left">
+                                @if (ViewBag.RecEstado == 6)
+                                {
+                                    <button type="button" id="btnDIA" onclick="CargarModalDiagnostico(1,0)" class="btn btn-dark">
+                                        <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                                    </button>
+                                }
+
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="Tab3" role="tabpanel">
-
-                           <div class="row mb-5">
-                               <div class="col-sm-12" style="text-align:left">
-                                   <button type="button" onclick="CargarModalMedicamentos(1,0)" class="btn btn-dark">
-                                       <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
-                                   </button>
-                               </div>
-                           </div>
-                            <div id="modalMedicamentos"></div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                     <div class="table-responsive">
-                                        <div id="tabla_Medica"></div>
-                                     </div>
+                        <div id="modalDiagnostico"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <div id="tabla_dx"></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane fade" id="Tab4" role="tabpanel">
-                           <div class="row mb-5">
-                               <div class="col-sm-12" style="text-align:left">
-                                   <button type="button" onclick="CargarModalProcedimientos(1,0)" class="btn btn-dark">
-                                       <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
-                                   </button>
-                               </div>
-                           </div>
-                            <div id="modalProcedimientos"></div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                     <div class="table-responsive">
-                                        <div id="tabla_Procedimientos"></div>
-                                     </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="Tab5" role="tabpanel">
-
-                            <div class="row mb-5">
-                               <div class="col-sm-12" style="text-align:left">
-                                   <button type="button" onclick="CargarModalInsumos(1,0)" class="btn btn-dark">
-                                       <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
-                                   </button>
-                               </div>
-                           </div>
-                            <div id="modalInsumos"></div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                     <div class="table-responsive">
-                                        <div id="tabla_Insumos"></div>
-                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="Tab6" role="tabpanel">
-                            <div id="tabla_Infantil"></div>
                         </div>
                     </div>
+                    <div class="tab-pane fade" id="Tab3" role="tabpanel">
 
+                        <div class="row mb-5">
+                            <div class="col-sm-12" style="text-align:left">
+                                @if (ViewBag.RecEstado == 6)
+                                {
+                                    <button type="button" id="btnMED" onclick="CargarModalMedicamentos(1,0)" class="btn btn-dark">
+                                        <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                                    </button>
+                                }
+
+                            </div>
+                        </div>
+                        <div id="modalMedicamentos"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <div id="tabla_Medica"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Tab4" role="tabpanel">
+                        <div class="row mb-5">
+                            <div class="col-sm-12" style="text-align:left">
+                                @if (ViewBag.RecEstado == 6)
+                                {
+                                    <button type="button" id="btnAPO" onclick="CargarModalProcedimientos(1,0)" class="btn btn-dark">
+                                        <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                                    </button>
+                                }
+
+                            </div>
+                        </div>
+                        <div id="modalProcedimientos"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <div id="tabla_Procedimientos"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="Tab5" role="tabpanel">
+
+                        <div class="row mb-5">
+                            <div class="col-sm-12" style="text-align:left">
+                                @if (ViewBag.RecEstado == 6)
+                                {
+                                    <button type="button" id="btnINS" onclick="CargarModalInsumos(1,0)" class="btn btn-dark">
+                                        <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                                    </button>
+                                }
+
+                            </div>
+                        </div>
+                        <div id="modalInsumos"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <div id="tabla_Insumos"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Tab6" role="tabpanel">
+                        <div id="tabla_Infantil"></div>
+                    </div>
                 </div>
-            </div>
 
             </div>
+        </div>
+
+    </div>
             <!--end::Container-->
         </div>
 <script>
+
     $('.form-select').select2({
     });
     setTimeout(function () {
         CargarWaitMe();
-            Cargar_Info_General();
-            Cargar_Diagnosticos();
-            Cargar_Medicamentos();
-            Cargar_Procedimientos();
-            Cargar_Insumos();
-            Cargar_Infantil();
+        CargarTodo();
         TerminarWaitMe();
     }, 500);
 
+    async function CargarTodo() {
+        await Cargar_Info_General();
+        await Inabilitar_Todo();
+        await BtnINA_Detalles();
+        let estado = $('#RecEstado').val();
+        let cant = $("#MatrizCant").val();
+        if (cant != 0) {
 
-    function Cargar_Info_General() {
+            await CargarModalValMatriz();
+            if (estado == 6) {
+                await PermitirMatrizEdit();
+            }
+
+        }
+        await Cargar_Diagnosticos();
+        await Cargar_Medicamentos();
+        await Cargar_Procedimientos();
+        await Cargar_Insumos();
+        await Cargar_Infantil();
+    }
+
+    async function Cargar_Info_General() {
+	    CargarWaitMe();
         let id = $("#Ate_Idnumreg").val();
-      $.get("@Url.Content("~/FUA/InfGeneralFUAV")", { id: id })
-        .done(function (response) {
+        try {
+            const response = await $.get("@Url.Content("~/FUA/InfGeneralFUAV")", { id: id});
             $('#divInfGeneralFUA').html(response);
             $('.select').select2();
-        });
+            TerminarWaitMe();
+        } catch {
+            console.log('Error Obs Total');
+            TerminarWaitMe();
+        }
+
     }
-    function Cargar_Diagnosticos() {
-        CargarWaitMe();
+
+    async function Cargar_Diagnosticos() {
+	    CargarWaitMe();
         let id = $("#Ate_Idnumreg").val();
-        $("#tabla_dx").load("@Url.Content("~/FUA/DiagnosticosFUAV")", { id: id }, function () {
+        let est = DIA;
+        try {
+
+            const response = await $.get("@Url.Content("~/FUA/DiagnosticosFUAV")", { id: id, est:est});
+            $('#tabla_dx').html(response);
             if ($("#Diagnosticos_cant").length == 1) {
                 $('#tblDiagnosticos').DataTable({
                     destroy: true,
@@ -199,22 +267,26 @@
                     "language": languaje_spanol
                 });
                 TerminarWaitMe();
-            }else{
+            } else {
                 TerminarWaitMe();
             }
-            });
+
+            TerminarWaitMe();
+
+        } catch {
+            console.log('Error Obs Total');
+            TerminarWaitMe();
+        }
+
     }
-    function CargarModalDiagnostico(tipo,id) {
-        $.get("@Url.Content("~/FUA/AccionDiagnosticoFUAV")", { tipo: tipo, id: id })
-        .done(function (response) {
-            $('#modalDiagnostico').html(response);
-            $('#mdl_AccionDiagnosticoFUAV').modal("show");
-        });
-    }
-    function Cargar_Medicamentos() {
-        CargarWaitMe();
+
+    async function Cargar_Medicamentos() {
+	    CargarWaitMe();
         let id = $("#Ate_Idnumreg").val();
-        $("#tabla_Medica").load("@Url.Content("~/FUA/MedicamentosFUAV")", { id: id }, function () {
+        let est = MED;
+        try {
+            const response = await $.get("@Url.Content("~/FUA/MedicamentosFUAV")", { id: id, est:est});
+            $('#tabla_Medica').html(response);
             if ($("#Medicamentos_cant").length == 1) {
                 $('#tblMedicamentos').DataTable({
                     destroy: true,
@@ -225,23 +297,23 @@
                     "language": languaje_spanol
                 });
                 TerminarWaitMe();
-            }else{
+            } else {
                 TerminarWaitMe();
             }
-            });
+        } catch {
+            console.log('Error Obs Total');
+            TerminarWaitMe();
+        }
+
     }
-    function CargarModalMedicamentos(tipo, id) {
-        let idate = $("#Ate_Idnumreg").val();
-        $.get("@Url.Content("~/FUA/AccionMedicamentosFUAV")", { tipo: tipo, id: id, idate: idate })
-        .done(function (response) {
-            $('#modalMedicamentos').html(response);
-            $('#mdl_AccionMedicamentosFUAV').modal("show");
-        });
-    }
-    function Cargar_Procedimientos() {
-        CargarWaitMe();
+
+    async function Cargar_Procedimientos() {
+	    CargarWaitMe();
         let id = $("#Ate_Idnumreg").val();
-       $("#tabla_Procedimientos").load("@Url.Content("~/FUA/ProcedimientosFUAV")", { id: id }, function () {
+        let est = APO;
+        try {
+            const response = await $.get("@Url.Content("~/FUA/ProcedimientosFUAV")", { id: id, est:est});
+            $('#tabla_Procedimientos').html(response);
             if ($("#Procedimientos_cant").length == 1) {
                 $('#tblProcedimientos').DataTable({
                     destroy: true,
@@ -252,24 +324,23 @@
                     "language": languaje_spanol
                 });
                 TerminarWaitMe();
-            }else{
+            } else {
                 TerminarWaitMe();
             }
-            });
+        } catch {
+            console.log('Error Obs Total');
+            TerminarWaitMe();
+        }
+
     }
-    function CargarModalProcedimientos(tipo, id) {
-        let idate = $("#Ate_Idnumreg").val();
-        $.get("@Url.Content("~/FUA/AccionProcedimientosFUAV")", { tipo: tipo, id: id, idate:idate })
-        .done(function (response) {
-            $('#modalProcedimientos').html(response);
-            $('#mdl_AccionProcedimientosFUAV').modal("show");
-            $('.select').select2();
-        });
-    }
-   function Cargar_Insumos() {
-        CargarWaitMe();
+
+    async function Cargar_Insumos() {
+	    CargarWaitMe();
         let id = $("#Ate_Idnumreg").val();
-       $("#tabla_Insumos").load("@Url.Content("~/FUA/InsumosFUAV")", { id: id }, function () {
+        let est = INS;
+        try {
+            const response = await $.get("@Url.Content("~/FUA/InsumosFUAV")", { id: id, est:est});
+            $('#tabla_Insumos').html(response);
             if ($("#Insumos_cant").length == 1) {
                 $('#tblInsumos').DataTable({
                     destroy: true,
@@ -280,23 +351,23 @@
                     "language": languaje_spanol
                 });
                 TerminarWaitMe();
-            }else{
+            } else {
                 TerminarWaitMe();
             }
-            });
-   }
-    function CargarModalInsumos(tipo, id) {
-        let idate = $("#Ate_Idnumreg").val();
-        $.get("@Url.Content("~/FUA/AccionInsumosFUAV")", { tipo: tipo, id: id, idate:idate })
-        .done(function (response) {
-            $('#modalInsumos').html(response);
-            $('#mdl_AccionInsumosFUAV').modal("show");
-        });
+        } catch {
+            console.log('Error Obs Total');
+            TerminarWaitMe();
+        }
+
     }
-   function Cargar_Infantil() {
-        CargarWaitMe();
+
+    async function Cargar_Infantil() {
+	    CargarWaitMe();
         let id = $("#Ate_Idnumreg").val();
-       $("#tabla_Infantil").load("@Url.Content("~/FUA/MaternoInfantilFUAV")", { id: id }, function () {
+        let est = SMI;
+        try {
+            const response = await $.get("@Url.Content("~/FUA/MaternoInfantilFUAV")", { id: id, est:est});
+            $('#tabla_Infantil').html(response);
             if ($("#Infantil_cant").length == 1) {
                 $('#tblInfantil').DataTable({
                     destroy: true,
@@ -307,11 +378,63 @@
                     "language": languaje_spanol
                 });
                 TerminarWaitMe();
-            }else{
+            } else {
                 TerminarWaitMe();
             }
-            });
+        } catch {
+            console.log('Error Obs Total');
+            TerminarWaitMe();
+        }
+
     }
+
+    function CargarModalDiagnostico(tipo,id) {
+        $.get("@Url.Content("~/FUA/AccionDiagnosticoFUAV")", { tipo: tipo, id: id })
+        .done(function (response) {
+            $('#modalDiagnostico').html(response);
+            $('#mdl_AccionDiagnosticoFUAV').modal("show");
+        });
+    }
+
+    function CargarModalMedicamentos(tipo, id) {
+        let idate = $("#Ate_Idnumreg").val();
+        $.get("@Url.Content("~/FUA/AccionMedicamentosFUAV")", { tipo: tipo, id: id, idate: idate })
+        .done(function (response) {
+            $('#modalMedicamentos').html(response);
+            $('#mdl_AccionMedicamentosFUAV').modal("show");
+        });
+    }
+
+    function CargarModalProcedimientos(tipo, id) {
+        let idate = $("#Ate_Idnumreg").val();
+        $.get("@Url.Content("~/FUA/AccionProcedimientosFUAV")", { tipo: tipo, id: id, idate:idate })
+        .done(function (response) {
+            $('#modalProcedimientos').html(response);
+            $('#mdl_AccionProcedimientosFUAV').modal("show");
+            $('.select').select2();
+        });
+    }
+
+    function CargarModalInsumos(tipo, id) {
+        let idate = $("#Ate_Idnumreg").val();
+        $.get("@Url.Content("~/FUA/AccionInsumosFUAV")", { tipo: tipo, id: id, idate:idate })
+        .done(function (response) {
+            $('#modalInsumos').html(response);
+            $('#mdl_AccionInsumosFUAV').modal("show");
+        });
+    }
+
+    function CargarModalValMatriz() {
+        let idate = $("#Ate_Idnumreg").val();
+
+        //let idate = '631278686'; 
+        $.get("@Url.Content("~/FUA/MatrizValFUAV")", { id: idate })
+        .done(function (response) {
+            $('#modalMatriz').html(response);
+            $('#mdl_MatrizFUAV').modal("show");
+        });
+    }
+
 
     function Conf_Validacion(e) {
         e.preventDefault();
@@ -356,6 +479,45 @@
                 Swal.fire('', '', 'info')
             }
         });
+    }
+
+    function Conf_EliTotal(e) {
+        e.preventDefault();
+        Swal.fire({
+            html: '<p style="color: red;">No se podra revertir.</p>',
+            title: `ELIMINAR LA SOLICITUD DE RECONSIDERACIÓN?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, Eliminar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Eliminar_Total();
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+    async function Eliminar_Total() {
+        let array_data = {};
+        array_data.N_ATE_IDNUMREG = $("#Ate_Idnumreg").val();
+        let url = "@Url.Action("EliminarAtencionTotal", "FUA")";
+        $.post(url, array_data)
+            .done(function (response) {
+                console.log(response);
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                    VoverAtras_Reconsideraciones();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+            });
     }
 
     function Conf_Eliminar(e,tipo,id) {
@@ -404,7 +566,7 @@
             .done(function (response) {
                 console.log(response);
                 if (response.isSuccess == true) {
-                    
+
                     NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
                 }
                 else {
@@ -419,6 +581,253 @@
         $(".content-custom").load("@Url.Content("~/SolicitudReconsideracion/Index")", () => {
             TerminarWaitMe();
         });
+    }
+
+   async function PermitirMatrizAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    }
+
+    async function PermitirMatrizEdit(){
+        try{
+            const array_data = {};
+            array_data.id = $("#Ate_Idnumreg").val();
+            //array_data.id  = '631278686';
+            const response = await PermitirMatrizAjax('@Url.Content("~/FUA/PermitirMatriz")', array_data);
+            if (response.isSuccess) {
+                let data = response.result;
+                //console.log(data);
+                $.each(data, function (i, item) {
+                    console.log(item);
+                    if (item.ivaL_V_REFDEVELOPER != null) {
+                        $(`#${item.ivaL_V_REFDEVELOPER}`).prop("disabled", false);
+                        //Solo se habilita cuando 
+                        if (item.ivaL_V_REFDEVELOPER== 'txtDocuIdent') {
+                            $('#btnDocuIdent').prop("disabled", false);
+                        }
+                        if (item.ivaL_V_REFDEVELOPER == 'DIA') {
+                            DIA = 1;
+                            $('#btnDIA').show();
+                        }
+                        if (item.ivaL_V_REFDEVELOPER == 'MED') {
+                            MED = 1;
+                            $('#btnMED').show();
+                        }
+                        if (item.ivaL_V_REFDEVELOPER == 'INS') {
+                            INS = 1;
+                            $('#btnINS').show();
+                        }
+                        if (item.ivaL_V_REFDEVELOPER == 'APO') {
+                            APO = 1;
+                            $('#btnAPO').show();
+                        }
+                        if (item.ivaL_V_REFDEVELOPER == 'SMI') {
+                            SMI = 1;
+                            $('#btnSMI').show();
+                        }
+                        if (item.ivaL_V_REFDEVELOPER == 'TODO') {
+                            Habilitar_Todo();
+                            BtnHAB_Detalles();
+                        }
+                        if (item.ivaL_V_REFDEVELOPER == 'NADA') {
+                            Inabilitar_Todo();
+                            BtnINA_Detalles();
+                        }
+                    }
+                });
+
+            }
+            else{
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async function Inabilitar_Todo() {
+        try {
+            DIA = 0;
+            MED = 0;
+            INS = 0;
+            APO = 0;
+            SMI = 0;
+        $('#cbxTipoDocu').prop("disabled", true);
+        $('#txtDocuIdent').prop("disabled", true);
+        $('#btnDocuIdent').prop("disabled", true);
+            $('#cbxProfesional').prop("disabled", true);
+
+
+        $("#txtFUA").prop("disabled", true);
+        $("#txtCostoObservado").prop("disabled", true);
+
+        $("#txtPerProduc").prop("disabled", true);
+
+
+        $("#txtIPRESS").prop("disabled", true);
+
+
+        //3. DATOS ASEGURAD0
+
+        $("#cbxComponente").prop("disabled", true);
+        $("#cbxTipoFormato").prop("disabled", true);
+        $("#txtCodAfiliado").prop("disabled", true);
+        $("#cbxTipoDocumAfi").prop("disabled", true);
+        $("#txtDocIdentAfi").prop("disabled", true);
+        $("#txtApePaterAfi").prop("disabled", true);
+        $("#txtApeMaterAfi").prop("disabled", true);
+        $("#txtNombreAfi").prop("disabled", true);
+        $("#txtOtroNombreAfi").prop("disabled", true);
+        $("#txtFechNaciAfi").prop("disabled", true);
+
+            $("#txtEdadAfi").prop("disabled", true);
+            $("#cbxGeneroAfi").prop("disabled", true);
+            $("#cbxTipoAtencion").prop("disabled", true);
+            //falta prestacion
+
+            $("#cbxGestante").prop("disabled", true);
+                $("#txtFechPartoAfi").prop("disabled", true);
+            $("#txtHCAfi").prop("disabled", true);
+            $("#txtNroAutoriz").prop("disabled", true);
+            $("#txtMontoAfi").prop("disabled", true);
+
+            //DATOS DE LA ATENCIÓN
+
+            $("#txtFechAte").prop("disabled", true);
+            $("#cbxLugarAte").prop("disabled", true);
+            $("#cbxPersonalAte").prop("disabled", true);
+            $("#txtCodPrestacion").prop("disabled", true);
+            $("#txtEESSRef").prop("disabled", true);
+
+            $("#txtNumRef").prop("disabled", true);
+            $("#txtFechIngresoAte").prop("disabled", true);
+            $("#cbxDestinoRefAte").prop("disabled", true);
+            $("#txtFechAltaAte").prop("disabled", true);
+
+            $("#txtEESSContraRef").prop("disabled", true);
+            $("#txtNumContraRef").prop("disabled", true);
+
+            //RESPONSABLE DE LA ATENCION
+
+            $("#cbxTipoDocu").prop("disabled", true);
+            $("#txtDocuIdent").prop("disabled", true);
+            $("#txtColegiatura").prop("disabled", true);
+            $("#cbxProfesional").prop("disabled", true);
+
+            //OBSERVACION
+            $("#txtobservacion").prop("disabled", true);
+
+            $("#cbxOtroSeguro").prop("disabled", true);
+            $("#cbxIntegrSemi").prop("disabled", true);
+            $("#cbxConsiAfili").prop("disabled", true);
+            $("#cbxConceptoPresA").prop("disabled", true);
+            $("#txtServicio").prop("disabled", true);
+            $("#txtRespAte").prop("disabled", true);
+            $('#cbxEspecialidad').prop("disabled", true);
+
+        } catch {
+            console.log('Error inabilitar');
+        }
+    }
+
+    async function Habilitar_Todo() {
+        try {
+            DIA = 1;
+            MED = 1;
+            INS = 1;
+            APO = 1;
+            SMI = 1;
+            $('#cbxTipoDocu').prop("disabled", false);
+            $('#txtDocuIdent').prop("disabled", false);
+            $('#btnDocuIdent').prop("disabled", false);
+            $('#cbxProfesional').prop("disabled", false);
+
+
+            $("#txtFUA").prop("disabled", false);
+            $("#txtCostoObservado").prop("disabled", false);
+
+            $("#txtPerProduc").prop("disabled", false);
+
+
+            $("#txtIPRESS").prop("disabled", false);
+
+
+            //3. DATOS ASEGURAD0
+
+            $("#cbxComponente").prop("disabled", false);
+            $("#cbxTipoFormato").prop("disabled", false);
+            $("#txtCodAfiliado").prop("disabled", false);
+            $("#cbxTipoDocumAfi").prop("disabled", false);
+            $("#txtDocIdentAfi").prop("disabled", false);
+            $("#txtApePaterAfi").prop("disabled", false);
+            $("#txtApeMaterAfi").prop("disabled", false);
+            $("#txtNombreAfi").prop("disabled", false);
+            $("#txtOtroNombreAfi").prop("disabled", false);
+            $("#txtFechNaciAfi").prop("disabled", false);
+
+            $("#txtEdadAfi").prop("disabled", false);
+            $("#cbxGeneroAfi").prop("disabled", false);
+            $("#cbxTipoAtencion").prop("disabled", false);
+            //falta prestacion
+
+            $("#cbxGestante").prop("disabled", false);
+            $("#txtFechPartoAfi").prop("disabled", false);
+            $("#txtHCAfi").prop("disabled", false);
+            $("#txtNroAutoriz").prop("disabled", false);
+            $("#txtMontoAfi").prop("disabled", false);
+
+            //DATOS DE LA ATENCIÓN
+
+            $("#txtFechAte").prop("disabled", false);
+            $("#cbxLugarAte").prop("disabled", false);
+            $("#cbxPersonalAte").prop("disabled", false);
+            $("#txtCodPrestacion").prop("disabled", false);
+            $("#txtEESSRef").prop("disabled", false);
+
+            $("#txtNumRef").prop("disabled", false);
+            $("#txtFechIngresoAte").prop("disabled", false);
+            $("#cbxDestinoRefAte").prop("disabled", false);
+            $("#txtFechAltaAte").prop("disabled", false);
+
+            $("#txtEESSContraRef").prop("disabled", false);
+            $("#txtNumContraRef").prop("disabled", false);
+
+            //RESPONSABLE DE LA ATENCION
+
+            $("#cbxTipoDocu").prop("disabled", false);
+            $("#txtDocuIdent").prop("disabled", false);
+            $("#txtColegiatura").prop("disabled", false);
+            $("#cbxProfesional").prop("disabled", false);
+
+            //OBSERVACION
+            $("#txtobservacion").prop("disabled", false);
+
+            $("#cbxOtroSeguro").prop("disabled", false);
+            $("#cbxIntegrSemi").prop("disabled", false);
+            $("#cbxConsiAfili").prop("disabled", false);
+            $("#cbxConceptoPresA").prop("disabled", false);
+            $("#txtServicio").prop("disabled", false);
+            $("#txtRespAte").prop("disabled", false);
+            $('#cbxEspecialidad').prop("disabled", false);
+
+        } catch {
+            console.log('Error Habilitar');
+        }
+    }
+
+    async function BtnINA_Detalles(){
+        $('#btnDIA').hide();
+        $('#btnMED').hide();
+        $('#btnINS').hide();
+        $('#btnAPO').hide();
+        $('#btnSMI').hide();
+    }
+    async function BtnHAB_Detalles() {
+        $('#btnDIA').show();
+        $('#btnMED').show();
+        $('#btnINS').show();
+        $('#btnAPO').show();
+        $('#btnSMI').show();
     }
 
 </script>
