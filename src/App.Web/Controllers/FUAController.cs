@@ -37,7 +37,7 @@ namespace App.Web.Controllers
             _dELReconsideraciones = dELReconsideraciones;
             _iNSReconsideraciones = iNSReconsideraciones;
         }
-        public IActionResult Index(int id)
+        public async Task<IActionResult> Index(int id)
         {
             ViewBag.DescDisa = "LIMA NORTE";
             ViewBag.DescUE = "HOSPITAL CARLOS LAFRNACO LA HOZ";
@@ -47,12 +47,21 @@ namespace App.Web.Controllers
 
             ViewBag.Titulo = "REGISTRO DE FUA DE RECONSIDERACIÓN DE PRESTACIONES RM-240 Y RM-226";
 
+            await RecEstado(id);
+
             ViewBag.ATE_IDNUMREG = id;
-            
+
+            var result = await _SELReconsideraciones.ListarMatriz(id);
+            ViewBag.Matriz = result.First().Val;
+
             return PartialView();
         }
 
-
+        private async Task RecEstado(int id)
+        {
+            var Resumen = await _SELReconsideraciones.ResumenRecxID(id);
+            ViewBag.RecEstado = Resumen.RREC_ID_ESTADOREC;
+        }
 
         public async Task<IActionResult> InfGeneralFUAV(int id)
         {
@@ -85,6 +94,8 @@ namespace App.Web.Controllers
                 var TipoPersonal = await _Auxiliares.ListarTipoPersonal();
                 ViewBag.ListTipoPersonal = TipoPersonal;
 
+                var Especialidad = await _Auxiliares.ListarEspecialidad();
+                ViewBag.ListEspecialidad = Especialidad;
 
             }
             catch (Exception aa)
@@ -195,9 +206,14 @@ namespace App.Web.Controllers
 
         }
 
-        public async Task<IActionResult> DiagnosticosFUAV(int id)
+        public async Task<IActionResult> DiagnosticosFUAV(int id, int est)
         {
+            
             var result = await _SELReconsideraciones.ListarIAtencionDIAxID(id);
+            await RecEstado(id);
+            var permite = 0;
+            permite = est;
+            ViewBag.Permite = est;
 
             return PartialView(result);
         }
@@ -221,9 +237,14 @@ namespace App.Web.Controllers
             return PartialView();
         }
 
-        public async Task<IActionResult> MedicamentosFUAV(int id)
+        public async Task<IActionResult> MedicamentosFUAV(int id, int est)
         {
             var result = await _SELReconsideraciones.ListarIAtencionMEDxID(id);
+            await RecEstado(id);
+            var permite = 0;
+            permite = est;
+            ViewBag.Permite = est;
+
             return PartialView(result);
         }
 
@@ -293,10 +314,14 @@ namespace App.Web.Controllers
             ViewBag.ListDX = dx;
         }
 
-        public async Task<IActionResult> ProcedimientosFUAV(int id)
+        public async Task<IActionResult> ProcedimientosFUAV(int id, int est)
         {
 
             var result = await _SELReconsideraciones.ListarIAtencionAPOxID(id);
+            await RecEstado(id);
+            var permite = 0;
+            permite = est;
+            ViewBag.Permite = est;
 
             return PartialView(result);
         }
@@ -319,9 +344,13 @@ namespace App.Web.Controllers
         }
 
         
-        public async Task<IActionResult> InsumosFUAV(int id)
+        public async Task<IActionResult> InsumosFUAV(int id, int est)
         {
             var result = await _SELReconsideraciones.ListarIAtencionINSxID(id);
+            await RecEstado(id);
+            var permite = 0;
+            permite = est;
+            ViewBag.Permite = est;
 
             return PartialView(result);
         }
@@ -345,8 +374,12 @@ namespace App.Web.Controllers
 
 
         
-        public IActionResult MaternoInfantilFUAV(int id)
+        public async Task<IActionResult> MaternoInfantilFUAV(int id, int est)
         {
+            var permite = 0;
+            permite = est;
+            ViewBag.Permite = est;
+            await RecEstado(id);
 
             return PartialView();
         }
@@ -602,6 +635,45 @@ namespace App.Web.Controllers
             {
                 return new JsonResult(new { IsSuccess = false });
             }
+        }
+        public async Task<IActionResult> EliminarAtencionTotal(int N_ATE_IDNUMREG)
+        {
+            try
+            {
+                var result = await _dELReconsideraciones.EliminarAtencionTotal(N_ATE_IDNUMREG);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        public async Task<IActionResult> PermitirMatriz(int id)
+        {
+            try
+            {
+                var result = await _SELReconsideraciones.ListarMatriz(id);
+                return new JsonResult(new { IsSuccess = true, result = result });
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+
+        public async Task<IActionResult> MatrizValFUAV( int id)
+        {
+            ViewBag.Titulo_Modal = "MATRIZ DE VALIDACIÓN";
+            var result = await _SELReconsideraciones.ListarMatriz(id);
+            return PartialView(result);
         }
     }
 }

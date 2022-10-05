@@ -290,6 +290,8 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? MED_COSTO { get; set; }
         public string? MED_PRESEN { get; set; }
         public string? MED_CONCEN { get; set; }
+        public string? ROBS_IDNUMREGOBS { get; set; }
+        public string? ROBS_DETALLE { get; set; }
 
     }
 
@@ -343,6 +345,8 @@ namespace App.ViewModels.SELReconsideraciones
         public string? C10_NOMBRE { get; set; }
         public string? APO_NOMBRE { get; set; }
         public decimal? APO_COSTO { get; set; }
+        public string? ROBS_IDNUMREGOBS { get; set; }
+        public string? ROBS_DETALLE { get; set; }
 
     }
     public class getAtencionesINSxID
@@ -395,6 +399,8 @@ namespace App.ViewModels.SELReconsideraciones
         public string? INS_UNIDAD { get; set; }
         public string? INS_PRESEN { get; set; }
         public string? INS_CONCEN { get; set; }
+        public string? ROBS_IDNUMREGOBS { get; set; }
+        public string? ROBS_DETALLE { get; set; }
 
     }
 
@@ -472,6 +478,35 @@ namespace App.ViewModels.SELReconsideraciones
         public string? INS_UNIDAD { get; set; }
         public string? INS_CONCEN { get; set; }
         public decimal? INS_COSTO { get; set; }
+    }
+    public class GetMatriz
+    {
+        public int? Val { get; set; }
+        public int? ID { get; set; }
+        public int? CANT { get; set; }
+        public string? REGLA { get; set; }
+        public string? IVAL_V_DESCRIPCION { get; set; }
+        public string? IVAL_V_REFCOLUMNA { get; set; }
+        public string? IVAL_V_REFDEVELOPER { get; set; }
+        public string? ROBS_DETALLE { get; set; }
+        public string? ROBS_CODIGO_OBSERVACION { get; set; }
+
+        public string? TAB_CODTABLA { get; set; }
+        public string? OBS_ATEIDNUMREG { get; set; }
+        public string? ROBS_IDNUMREGOBS { get; set; }
+
+    }
+    public class GetResumenxID
+    {
+        public int? RREC_IDNUMREG { get; set; }
+        public string? RREC_PERIODO { get; set; }
+        public string? RREC_MES { get; set; }
+        public int? RREC_MODPAGO { get; set; }
+        public int? RREC_RM { get; set; }
+        public int? RREC_OBSPSA { get; set; }
+        public int? RREC_OBSSME { get; set; }
+        public int? RREC_N_ESOBSTOTAL { get; set; }
+        public int? RREC_ID_ESTADOREC { get; set; }
     }
 
 }

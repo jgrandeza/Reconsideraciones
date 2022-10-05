@@ -50,12 +50,12 @@
                                 <input type="text" class="form-control form-control-solid" id="txtPerProduc" disabled />
                             </div>
                         </div>
-@*                        <div class="col-md-4">
-                            <div class="mb-4">
-                                <label for="txtTipoObser" class="form-label text-wrap fw-bolder fs-4">Observación</label>
-                                <input type="text" class="form-control form-control-solid" id="txtTipoObser" disabled />
-                            </div>
-                        </div>*@
+
+                        <div class="col-md-4 mt-8" style="text-align:center;">
+                            <button type="button" class="btn btn-dark btn-md" onclick="CargarModalValMatriz();">
+                                <i class="fas fa-search fs-4 me-2"></i>
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -279,7 +279,7 @@
                                         {
                                             foreach (var item in ViewBag.ListTipoAtenc)
                                             {
-                                                                <option value="@item.TAT_CODATE">@item.TAT_NOMBRE</option>
+                                              <option value="@item.TAT_CODATE">@item.TAT_NOMBRE</option>
                                             }
                                         }
                                     }
@@ -591,7 +591,7 @@
                                         {
                                             foreach (var item in ViewBag.ListTipoPersonal)
                                             {
-                                                                <option value="@item.TPS_IDCODIGO">@item.TPS_DESCRIPCION</option>
+                                               <option value="@item.TPS_IDCODIGO">@item.TPS_DESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -602,6 +602,24 @@
                             <div class="mb-4">
                                 <label for="txtColegiatura" class="form-label text-wrap fw-bolder fs-4">Nro Colegiatura</label>
                                 <input type="text" class="form-control form-control-solid" id="txtColegiatura"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4" data-select2-id="cbxEspecialidad">
+                                <label for="cbxEspecialidad" class="form-label text-wrap fw-bolder fs-4">Especialidad</label>
+                                <select aria-label="Seleccionar" id="cbxEspecialidad" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                    <option selected disabled value="">Seleccionar</option>
+                                    @{ if (ViewBag.ListEspecialidad != null)
+                                        {
+                                            foreach (var item in ViewBag.ListEspecialidad)
+                                            {
+                                                <option value="@item.ESP_IDESPECIALIDAD">@item.ESP_CNOMBRE</option>
+                                            }
+                                        }
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -936,7 +954,16 @@
         }).done(function (response) {
             var data = response.result;
             if (response.isSuccess == true) {
+                console.log(data);
                 $('#txtRespAte').val(data.nombrePersonal);
+                $('#cbxProfesional').val(parseInt(data.idTipoPersonal));
+                $('#txtColegiatura').val(data.colegiatura);
+                $('#cbxEspecialidad').val(data.idEspecialidad);
+                $('#cbxEspecialidad').trigger('change');
+                               
+                //idEspecialidad
+                //cespecialidad
+                
             } else {
                 NotificacionToastr('error', `El Documento Ingresado no existe?`, 'ALERTA');
                 $('#txtRespAte').val('');

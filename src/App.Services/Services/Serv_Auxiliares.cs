@@ -255,5 +255,26 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+        public async Task<IEnumerable<getEspecialidad>> ListarEspecialidad()
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_ESPEPROFESIONAL";
+
+                var result = await SqlMapper.QueryAsync<getEspecialidad>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
     }
 }

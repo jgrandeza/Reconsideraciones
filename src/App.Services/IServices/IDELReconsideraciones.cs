@@ -10,6 +10,9 @@ namespace App.Services.IServices
         Task<Mensaje_Del> EliminarAtencionMed(int N_AMED_IDNUMREG);
         Task<Mensaje_Del> EliminarAtencionApo(int N_AAPO_IDNUMREG);
         Task<Mensaje_Del> EliminarAtencionIns(int N_AINS_IDNUMREG);
+
+        Task<Mensaje_Del> EliminarAtencionTotal(int N_ATE_IDNUMREG);
+
     }
 }
 

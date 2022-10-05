@@ -8,7 +8,10 @@
             <th style="text-align:center">DESCRIPCIÓN</th>
             <th style="text-align:center">INGRESO/EGRESO</th>
             <th style="text-align:center">TIPO DX</th>
-            <th style="text-align:center"><span>ACCIÓN</span></th>
+            @if (ViewBag.RecEstado == 6 && ViewBag.Permite == 1)
+            {
+                <th style="text-align:center"><span>ACCIÓN</span></th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -26,9 +29,13 @@
                     <td style="text-align: justify">@item.C10_NOMBRE</td>
                     <td style="text-align: center">@item.DESC_CDX</td>
                     <td style="text-align: center">@item.DESC_TIPODIA</td>
-                    <td style="text-align: center">
-                        <a onclick="Conf_Eliminar(event,1,@item.ADIA_IDNUMREG);" href="javascript:void(0);"><i style="font-size: 20px; color: #c64821;" title="Eliminar Diagnostico" class="fas fa-trash" aria-hidden="true"></i></a>
-                    </td>
+                    @if (ViewBag.RecEstado == 6 && ViewBag.Permite == 1)
+                    {
+                        <td style="text-align: center">
+                            <a onclick="Conf_Eliminar(event,1,@item.ADIA_IDNUMREG);" href="javascript:void(0);"><i style="font-size: 20px; color: #c64821;" title="Eliminar Diagnostico" class="fas fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                    }
+
 
                 </tr>
                     i = i + 1;

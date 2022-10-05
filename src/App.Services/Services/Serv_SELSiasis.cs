@@ -24,6 +24,8 @@ namespace App.Services.Services
             _SchemaOracle = schemaOracle.Value;
         }
 
+
+
         public async Task<IEnumerable<getAtencionAPOObs>> ListarIAtencionAPORecxID(int v_idnumreg)
         {
             try
