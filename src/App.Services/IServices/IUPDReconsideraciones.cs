@@ -11,5 +11,9 @@ namespace App.Services.IServices
     public interface IUPDReconsideraciones
     {
         Task<bool> ActualizarAtencionesDia(UPDAtencionesDiaDto model);
+
+        //ACTUALIZAR FUA getAtencionRecxID
+        Task<bool> Actualizar_FUA(getAtencionRecxID model);
+
     }
 }
