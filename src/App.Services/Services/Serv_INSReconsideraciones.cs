@@ -39,6 +39,8 @@ namespace App.Services.Services
                 dyParam.Add("N_AMED_ICANTENTREGADA", model.N_AMED_ICANTENTREGADA, OracleMappingType.Decimal, ParameterDirection.Input);
                 dyParam.Add("N_AMED_NPO", model.N_AMED_NPO, OracleMappingType.Decimal, ParameterDirection.Input);
                 dyParam.Add("V_AMED_IDUSUARIOCREA", "ADMIN", OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("N_ROBS_IDNUMREGOBS", model.N_ROBS_IDNUMREGOBS!, OracleMappingType.Decimal, ParameterDirection.Input);
+                
                 dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_INS_IATENCIONMED_REC";
@@ -126,6 +128,7 @@ namespace App.Services.Services
                 dyParam.Add("N_AAPO_NCOSTOAPLICADO", model.N_AAPO_NCOSTOAPLICADO, OracleMappingType.Decimal, ParameterDirection.Input);
                 dyParam.Add("V_AAPO_IDUSUARIOCREA", "ADMIN", OracleMappingType.Varchar2, ParameterDirection.Input);
                 dyParam.Add("N_AAPO_APO_ID", model.N_AAPO_APO_ID!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("N_ROBS_IDNUMREGOBS", model.N_ROBS_IDNUMREGOBS!, OracleMappingType.Decimal, ParameterDirection.Input);
                 dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_INS_IATENCIONAPO_REC";
@@ -160,6 +163,7 @@ namespace App.Services.Services
                 dyParam.Add("N_AINS_NPO", model.N_AINS_NPO, OracleMappingType.Decimal, ParameterDirection.Input);
                 dyParam.Add("N_AINS_NCOSTOAPLICADO", model.N_AINS_NCOSTOAPLICADO, OracleMappingType.Decimal, ParameterDirection.Input);
                 dyParam.Add("V_AINS_IDUSUARIOCREA", "ADMIN", OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("N_ROBS_IDNUMREGOBS", model.N_ROBS_IDNUMREGOBS!, OracleMappingType.Decimal, ParameterDirection.Input);
                 dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_INS_IATENCIONINS_REC";

@@ -54,10 +54,10 @@ var languaje_spanol = {
     "infoThousands": ",",
     "loadingRecords": "Cargando...",
     "paginate": {
-        "first": "Primero",
-        "last": "Último",
-        "next": "Siguiente",
-        "previous": "Anterior"
+        "first": "Pri",
+        "last": "Últ",
+        "next": "Sigu",
+        "previous": "Ant"
     },
     "aria": {
         "sortAscending": ": Activar para ordenar la columna de manera ascendente",

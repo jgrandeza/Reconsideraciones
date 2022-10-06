@@ -293,6 +293,8 @@ namespace App.ViewModels.SELReconsideraciones
         public string? ROBS_IDNUMREGOBS { get; set; }
         public string? ROBS_DETALLE { get; set; }
 
+        public string? C10_CODDIA { get; set; }
+
     }
 
     public class getAtencionesAPOxID
@@ -347,6 +349,7 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? APO_COSTO { get; set; }
         public string? ROBS_IDNUMREGOBS { get; set; }
         public string? ROBS_DETALLE { get; set; }
+        public string? C10_CODDIA { get; set; }
 
     }
     public class getAtencionesINSxID
@@ -401,6 +404,7 @@ namespace App.ViewModels.SELReconsideraciones
         public string? INS_CONCEN { get; set; }
         public string? ROBS_IDNUMREGOBS { get; set; }
         public string? ROBS_DETALLE { get; set; }
+        public string? C10_CODDIA { get; set; }
 
     }
 
@@ -507,6 +511,21 @@ namespace App.ViewModels.SELReconsideraciones
         public int? RREC_OBSSME { get; set; }
         public int? RREC_N_ESOBSTOTAL { get; set; }
         public int? RREC_ID_ESTADOREC { get; set; }
+        public int? RREC_C_ESTARV { get; set; }
+    }
+
+    public class GetAtencionesObs
+    {
+        public int? ROBS_NUMREGATE { get; set; }
+        public int? Id { get; set; }
+        public string? ROBS_CODIGO_OBSERVACION { get; set; }
+        public string? ROBS_DETALLE { get; set; }
+        public string? TAB_CODTABLA { get; set; }
+        public string? TABLA { get; set; }
+        public string? OBS_ATEIDNUMREG { get; set; }
+        public string? ROBS_DESCRIPCION { get; set; }
+        public string? OBS_CODREG { get; set; }
+                
     }
 
 }

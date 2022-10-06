@@ -18,6 +18,7 @@ namespace App.ViewModels.INSReconsideraciones
         public decimal N_AMED_ICANTENTREGADA { get; set; }
         public decimal N_AMED_NPO { get; set; }
         public string? V_AMED_IDUSUARIOCREA { get; set; }
+        public decimal? N_ROBS_IDNUMREGOBS { get; set; }
 
 
     }
@@ -55,6 +56,7 @@ namespace App.ViewModels.INSReconsideraciones
         public decimal N_AAPO_NCOSTOAPLICADO { get; set; }
         public string V_AAPO_IDUSUARIOCREA { get; set; }
         public decimal N_AAPO_APO_ID { get; set; }
+        public decimal? N_ROBS_IDNUMREGOBS { get; set; }
 
     }
     public class getInsertarAtencionINS
@@ -69,6 +71,7 @@ namespace App.ViewModels.INSReconsideraciones
         public decimal N_AINS_NPO { get; set; }
         public decimal N_AINS_NCOSTOAPLICADO { get; set; }
         public string V_AINS_IDUSUARIOCREA { get; set; }
+        public decimal? N_ROBS_IDNUMREGOBS { get; set; }
 
     }
 }

@@ -58,9 +58,10 @@ namespace App.Web.Controllers
         }
 
         private async Task RecEstado(int id)
-        {
+        {           
             var Resumen = await _SELReconsideraciones.ResumenRecxID(id);
             ViewBag.RecEstado = Resumen.RREC_ID_ESTADOREC;
+            ViewBag.RecEstRV = Resumen.RREC_C_ESTARV;
         }
 
         public async Task<IActionResult> InfGeneralFUAV(int id)
@@ -292,7 +293,7 @@ namespace App.Web.Controllers
 
         public async Task<IActionResult> AccionMedicamentosFUAV(string tipo, int id, int idate)
         {
-           
+
             if (Convert.ToInt32(tipo) == 1)
             {
                 ViewBag.Tipo = tipo;
@@ -304,8 +305,16 @@ namespace App.Web.Controllers
                 ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL MEDICAMENTO";
             }
             await ListDiag(idate);
+            var codtabla = "02";
+            await ListObs(idate,codtabla);
 
             return PartialView();
+        }
+
+        private async Task ListObs(int idate, string codtabla)
+        {
+            var obs = await _SELReconsideraciones.ListarIAtencionOBSxID(idate, codtabla);
+            ViewBag.ListObs = obs;
         }
 
         private async Task ListDiag(int idate)
@@ -339,6 +348,8 @@ namespace App.Web.Controllers
                 ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL PROCEDIMIENTO";
             }
             await ListDiag(idate);
+            var codtabla = "04";
+            await ListObs(idate, codtabla);
             ViewBag.vbId = id;
             return PartialView();
         }
@@ -368,6 +379,9 @@ namespace App.Web.Controllers
             }
 
             await ListDiag(idate);
+            var codtabla = "03";
+            await ListObs(idate, codtabla);
+
             ViewBag.vbId = id;
             return PartialView();
         }
