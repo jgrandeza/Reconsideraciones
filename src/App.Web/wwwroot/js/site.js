@@ -56,7 +56,7 @@ var languaje_spanol = {
     "paginate": {
         "first": "Pri",
         "last": "Últ",
-        "next": "Sigu",
+        "next": "Sig",
         "previous": "Ant"
     },
     "aria": {

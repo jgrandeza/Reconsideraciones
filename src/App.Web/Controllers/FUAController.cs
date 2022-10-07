@@ -689,6 +689,31 @@ namespace App.Web.Controllers
             var result = await _SELReconsideraciones.ListarMatriz(id);
             return PartialView(result);
         }
+
+
+        //ACTUALIZAR DATOS FUA
+        [HttpPost]
+        public async Task<IActionResult> ActualizarDatosFUA(getAtencionRecxID model)
+        {
+            try
+            {
+                var result = await _uPDReconsideraciones.Actualizar_FUA(model);
+
+                if (result == true)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = "Datos actualizado." });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+            }
+
+        }
     }
 }
 
