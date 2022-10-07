@@ -329,5 +329,28 @@ namespace App.Services.Services
                 throw;
             }
         }
+
+        public async Task<IEnumerable<GetAtencionesObs>> ListarIAtencionOBSxID(int N_ATE_IDNUMREG, string V_CODTABLA)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ATE_IDNUMREG", N_ATE_IDNUMREG, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("V_CODTABLA", V_CODTABLA, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_IATENCIONOBS_REC_ID";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryAsync<GetAtencionesObs>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

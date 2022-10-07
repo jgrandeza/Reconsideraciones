@@ -32,5 +32,7 @@ namespace App.Services.IServices
         Task<IEnumerable<GetMatriz>> ListarMatriz(int Id);
 
         Task<GetResumenxID> ResumenRecxID(int N_ATE_IDNUMREG);
+
+        Task<IEnumerable<GetAtencionesObs>> ListarIAtencionOBSxID(int N_ATE_IDNUMREG, string V_CODTABLA);
     }
 }

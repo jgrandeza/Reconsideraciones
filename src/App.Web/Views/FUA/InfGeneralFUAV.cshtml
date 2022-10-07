@@ -655,50 +655,20 @@
 
 </div>
 <script>
-    $(".date").daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        minYear: 1901,
-        maxYear: parseInt(moment().format("YYYY"), 10) + 1,
-        "locale": {
-            "format": "DD/MM/YYYY",
-            "separator": " - ",
-            "applyLabel": "Aceptar",
-            "cancelLabel": "Cancelar",
-            "fromLabel": "From",
-            "toLabel": "To",
-            "customRangeLabel": "Custom",
-            "weekLabel": "W",
-            "daysOfWeek": [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
-            ],
-            "monthNames": [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Setiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            "firstDay": 1
-        },
+    $(".date").datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        todayHighlight: true,
+        language: "es"
     });
 </script>
 
 <script>
     setTimeout(() => { CargarDatosIG(); }, 600);
+
+    function Formato_Fecha(fecha) {
+        return fecha.substring(8, 10) + "/" + fecha.substring(5, 7) + "/" + fecha.substring(0, 4);
+    }
 
     function CargarDatosIG() {
         CargarWaitMe();
@@ -755,7 +725,7 @@
                 $("#txtApeMaterAfi").val(data.atE_APMAT);
                 $("#txtNombreAfi").val(data.atE_PNOM);
                 $("#txtOtroNombreAfi").val(data.atE_SNOM);
-                $("#txtFechNaciAfi").val(data.atE_FECNAC); //para revisar formato
+                $('#txtFechNaciAfi').datepicker('setDate', Formato_Fecha(data.atE_FECNAC));
 
                 $("#txtEdadAfi").val(data.atE_EDAD);
                 $("#cbxGeneroAfi").val(data.atE_IDSEXO);
@@ -767,14 +737,16 @@
                 $("#cbxGestante").val(data.atE_ESGESTANTE);
                 $('#cbxGestante').trigger('change');
                 if (data.atE_ESGESTANTE != 0) {
-                    $("#txtFechPartoAfi").val(data.atE_FECPARTO);
+                    $('#txtFechPartoAfi').datepicker('setDate', Formato_Fecha(data.atE_FECPARTO));
+
                 }
                 $("#txtHCAfi").val(data.atE_HISTORIACLINICA);
                 $("#txtNroAutoriz").val(data.atE_NUMAUTORIZACION);
                 $("#txtMontoAfi").val(data.atE_MONTO);
 
                 //DATOS DE LA ATENCIÓN
-                $("#txtFechAte").val(data.atE_FECATENCION);
+                $('#txtFechAte').datepicker('setDate', Formato_Fecha(data.atE_FECATENCION));
+
                 $("#cbxLugarAte").val(data.atE_IDLUGAR);
                 $('#cbxLugarAte').trigger('change');
                 $("#cbxPersonalAte").val(data.atE_IDORIGENPERSONAL);
@@ -786,10 +758,12 @@
                 EESSRefe();
 
                 $("#txtNumRef").val(data.atE_NROHOJAREFERENCIA);
-                $("#txtFechIngresoAte").val(data.atE_FECINGHOSP);
+                $('#txtFechIngresoAte').datepicker('setDate', Formato_Fecha(data.atE_FECINGHOSP));
+
                 $("#cbxDestinoRefAte").val(data.atE_CODDESTINO);
                 $('#cbxDestinoRefAte').trigger('change');
-                $("#txtFechAltaAte").val(data.atE_FECALTAHOSP);
+                $('#txtFechAltaAte').datepicker('setDate', Formato_Fecha(data.atE_FECALTAHOSP));
+
 
                 $("#txtEESSContraRef").val(data.atE_IDEESSCONTRAREFIERE);
                 EESSContrRefe();

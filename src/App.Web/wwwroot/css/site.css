@@ -102,3 +102,19 @@ div.dataTables_wrapper div.dataTables_filter label {
 .modal-header{
     height: 40px !important;
 }
+
+.datepicker {
+    box-shadow: 0 .1rem 1rem .25rem rgba(0,0,0,.05) !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

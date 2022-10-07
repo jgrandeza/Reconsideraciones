@@ -36,24 +36,25 @@
                                 @{
                                     if (ViewBag.RecEstado == 6)
                                     {
-                                            <button type="button" class="btn btn-dark btn-md" onclick="actualizar_datos_FUA();">
-                                                <i class="fas fa-save fs-4 me-2"></i>
-                                                Guardar
-                                            </button>
 
-                                            <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
-                                                <i class="fas fa-trash fs-4 me-2"></i>
-                                                Eliminar
-                                            </button>
 
-                                            <button type="button" class="btn btn-info btn-md" onclick="Conf_Validacion(event)">
-                                                <i class="fas fa-list-ol fs-4 me-2"></i>
-                                                Validar Cambios
-                                            </button>
+                                        <button type="button" class="btn btn-dark btn-md" onclick="actualizar_datos_FUA();">
+                                            <i class="fas fa-save fs-4 me-2"></i>
+                                            Guardar
+                                        </button><button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
+                                            <i class="fas fa-trash fs-4 me-2"></i>
+                                            Eliminar
+                                        </button><button type="button" class="btn btn-info btn-md" onclick="Conf_Validacion(event)">
+                                            <i class="fas fa-list-ol fs-4 me-2"></i>
+                                            Validar Cambios
+                                        </button>
+                                        if (ViewBag.RecEstRV == 1)
+                                        {
                                             <button type="button" class="btn btn-success btn-md" onclick="cargarModalRegistroCorredorVial(1)">
                                                 <i class="fas fa-upload fs-4 me-2"></i>
                                                 Registar Sustento
                                             </button>
+                                        }
                                     }
                                     else if (ViewBag.RecEstado == 2)
                                     {

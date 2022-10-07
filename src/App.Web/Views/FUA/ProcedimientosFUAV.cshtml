@@ -34,11 +34,11 @@
                     <td style="text-align: center"><b>@( string.Format("{0:C2}", item.APO_COSTO))</b></td>
                     <td style="text-align: center">@item.AAPO_ICANTPROCED</td>
                     <td style="text-align: center">@item.AAPO_ICANTEJECUTADA</td>
-                    <td style="text-align: justify">@item.C10_NOMBRE</td>
+                    <td style="text-align: justify"><span class="fw-bold" style="color:red">@item.C10_CODDIA</span>  - @item.C10_NOMBRE</td>
                     <td style="text-align: justify">@item.ROBS_DETALLE</td>
                     <td style="text-align: justify"></td>
                     @if (ViewBag.RecEstado == 6 && ViewBag.Permite == 1)
-                        {
+                    {
                         <td style="text-align: center">
                             <a onclick="Conf_Eliminar(event,3,@item.AAPO_IDNUMREG);" href="javascript:void(0);"><i style="font-size: 20px; color: #c64821;" title="Eliminar Procedimiento" class="fas fa-trash" aria-hidden="true"></i></a>
                         </td>

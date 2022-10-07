@@ -72,7 +72,7 @@
                                             {
                                                 foreach (var item in ViewBag.RecPeriodo)
                                                 {
-                                                                                          <option value="@item.PERIODO">@item.PERIODO</option>
+                                                   <option value="@item.PERIODO">@item.PERIODO</option>
                                                 }
                                             } 
                                          }
@@ -110,7 +110,7 @@
                                             {
                                                 foreach (var item in ViewBag.TipoObservacion)
                                                 {
-                                                                                          <option value="@item.ID">@item.DESCRIPCION</option>
+                                                   <option value="@item.ID">@item.DESCRIPCION</option>
                                                 }
                                             } 
                                          }
@@ -281,6 +281,9 @@
       
         $(".content-custom").load("@Url.Content("~/FUA/Index")", { id: id})
     }
+    function Formato_Fecha(fecha) {
+        return fecha.substring(3, 5) + "/" + fecha.substring(0, 2) + "/" + fecha.substring(6, 10);
+    }
    function CargarRangoPeriodoRec() {
        let cV_PERIODO =$("#cbxPeriodo").val();
        
@@ -290,7 +293,7 @@
             if (response.isSuccess != false) {  
                 let data = response.result;
                 console.log(data);
-                $('#txtCronograma').val(`${data.rcrO_FECHAINICIO.substring(0,10)} al ${data.rcrO_FECHAFIN.substring(0,10)}`);
+                $('#txtCronograma').val(`${Formato_Fecha(data.rcrO_FECHAINICIO)} al ${Formato_Fecha(data.rcrO_FECHAFIN)}`);
                 $('#txtPeriodoAte').val(data.rcrO_TEXTO); 
                 
                 var data2 = response.result2;

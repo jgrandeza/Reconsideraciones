@@ -24,7 +24,7 @@
     <!--
         <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     -->
-    <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
@@ -33,6 +33,7 @@
     <link href="~/css/site.css" rel="stylesheet" type="text/css" />
     <link href="~/css/waitMe.css" rel="stylesheet" type="text/css" />
     <link href="~/css/toastr.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -244,12 +245,12 @@
                                                 <a class="btn btn-sm btn-light-primary fw-bold" href="javascript:void(0)" onclick="CargarForm('/SolicitudReconsideracion/Index')">Solicitud Reconsidereción</a>
                                                 <a class="btn btn-sm btn-light-danger fw-bold" href="javascript:void(0)" onclick="CargarForm('/BusqReconsideracionEval/Index')">Busqueda Reconsidereción Evaluador</a>
                                                 <!--<a class="btn btn-sm btn-light-primary fw-bold" href="javascript:void(0)" onclick="CargarForm('/Reconsideraciones/SolicitudReconsideracion/Index')">Solicitud Reconsidereción</a>
-    <a class="btn btn-sm btn-light-danger fw-bold" href="javascript:void(0)" onclick="CargarForm('/Reconsideraciones/BusqReconsideracionEval/Index')">Busqueda Reconsidereción Evaluador</a>-->
+                                                <a class="btn btn-sm btn-light-danger fw-bold" href="javascript:void(0)" onclick="CargarForm('/Reconsideraciones/BusqReconsideracionEval/Index')">Busqueda Reconsidereción Evaluador</a>-->
 
                                             </div>
-    </div>
-    <!--end::Wrapper-->
-                                            </div>
+                                        </div>
+                                        <!--end::Wrapper-->
+                                    </div>
                                     <!--end::Tab panel-->
                                 </div>
                                 <!--end::Header tab content-->
@@ -340,6 +341,9 @@
     <script src="~/js/jquery.validate.js"></script>
     <script src="~/js/JqueryLenguaje.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/js/bootstrap-datepicker.es.min.js"></script>
+
     <script>var variable = 0;
         var DIA = 0;
         var MED = 0;
@@ -347,8 +351,7 @@
         var APO = 0;
         var SMI = 0;
         var TODO = 0;
-        var NADA = 0;
-    </script>
+        var NADA = 0;</script>
     <script>$('.form-select').select2({
         });</script>
     <!--end::Javascript-->
