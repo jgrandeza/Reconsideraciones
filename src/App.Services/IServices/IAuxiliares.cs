@@ -20,6 +20,7 @@ namespace App.Services.IServices
         Task<IEnumerable<getOrigenPersonal>> ListarOrigenPersonal(string V_CODIGO);
         Task<IEnumerable<getTipoPersonal>> ListarTipoPersonal();
         Task<IEnumerable<getEspecialidad>> ListarEspecialidad();
+        Task<IEnumerable<getDestinoAsegurado>> ListarDestinoAsegurado();
 
     }
 }

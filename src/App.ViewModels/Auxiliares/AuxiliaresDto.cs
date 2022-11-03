@@ -102,4 +102,9 @@ namespace App.ViewModels.Auxiliares
         public string? ESP_IDESPECIALIDAD { get; set; }
         public string? ESP_CNOMBRE { get; set; }
     }
+    public class getDestinoAsegurado
+    {
+        public string? des_coddestino { get; set; }
+        public string? des_nombre { get; set; }
+    }
 }

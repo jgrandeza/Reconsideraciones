@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Data;
 using App.Services.IServices;
+using App.Tools;
 using App.ViewModels;
 using App.ViewModels.INSReconsideraciones;
 using App.ViewModels.SELReconsideraciones;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using static App.ViewModels.DELReconsideraciones.DELReconsideraciones;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -26,7 +29,14 @@ namespace App.Web.Controllers
         private readonly IUPDReconsideraciones _uPDReconsideraciones;
         private readonly IDELReconsideraciones _dELReconsideraciones;
         private readonly IINSReconsideraciones _iNSReconsideraciones;
-        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros, ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones, IINSReconsideraciones iNSReconsideraciones, IDELReconsideraciones dELReconsideraciones)
+        private readonly IValRcRvRecosideraciones _IvalRcRvRecosideraciones;
+        private readonly IFileUploadFTP _fileUploadFTP;
+        private readonly URLReadFile _uRLReadFile;
+
+        public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros,
+            ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones,
+            IINSReconsideraciones iNSReconsideraciones, IDELReconsideraciones dELReconsideraciones,
+            IValRcRvRecosideraciones valRcRvRecosideraciones, IFileUploadFTP fileUploadFTP, IOptions<URLReadFile> uRLReadFile)
 
         {
             _dbContext = dbContext;
@@ -36,6 +46,9 @@ namespace App.Web.Controllers
             _uPDReconsideraciones = uPDReconsideraciones;
             _dELReconsideraciones = dELReconsideraciones;
             _iNSReconsideraciones = iNSReconsideraciones;
+            _IvalRcRvRecosideraciones = valRcRvRecosideraciones;
+            _fileUploadFTP = fileUploadFTP;
+            _uRLReadFile = uRLReadFile.Value;
         }
         public async Task<IActionResult> Index(int id)
         {
@@ -97,6 +110,9 @@ namespace App.Web.Controllers
 
                 var Especialidad = await _Auxiliares.ListarEspecialidad();
                 ViewBag.ListEspecialidad = Especialidad;
+
+                var Destino = await _Auxiliares.ListarDestinoAsegurado();
+                ViewBag.ListDestinoAseg = Destino;
 
             }
             catch (Exception aa)
@@ -713,6 +729,201 @@ namespace App.Web.Controllers
                 return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
             }
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ValidarRcRv(int N_ATE_IDNUMREG)
+        {
+            try
+            {
+                var validar = await _IvalRcRvRecosideraciones.ValidarRcRvRec(N_ATE_IDNUMREG);
+
+
+                if (validar.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = validar.MENSAJE, result= validar });
+                }
+                else if (validar.CODIGO == 1)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = validar.MENSAJE, result = validar });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = validar.MENSAJE, result = validar });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+            }
+
+        }
+
+        public async Task<IActionResult> ListarObsRcRvFUAV(int id)
+        {
+            ViewBag.Titulo_Modal = "OBSERVACIONES DEL PROCESO DE RC Y RV";
+            var result = await _SELReconsideraciones.ListarObservacionesRcRv(id);
+            return PartialView(result);
+        }
+
+        public async Task<IActionResult> AccionSustentoFUAV(int idate)
+        {
+           
+            ViewBag.Titulo_Modal = "REGISTRO DEL SUSTENTO";
+            var result = await _SELReconsideraciones.ListarAteSustxID(idate);
+
+            return PartialView(result);
+        }
+
+        public async Task<IActionResult> ListarObsFUAV(int id)
+        {
+
+            var result = await _SELReconsideraciones.ListarObservacionesSust(id);
+
+            return PartialView(result);
+        }
+
+        public async Task<IActionResult> AccionArchSusFUAV(int id)
+        {
+            ViewBag.url_sis = _uRLReadFile.URL_Read_SIS;
+            var result = await _SELReconsideraciones.ListarAteSusArch(id);
+            return PartialView(result);
+        }
+
+        public async Task<IActionResult> RegistrarSustento(getInsertarAteSustento datos)
+        {
+            try
+            {
+                var result = await _uPDReconsideraciones.ActualizarAteSustento(datos);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        public async Task<IActionResult> SustentoID(int id)
+        {
+            try
+            {
+                var dato = await _SELReconsideraciones.ListarAteSustxID(id);
+
+                return new JsonResult(new { IsSuccess = true, result = dato });
+
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+
+        [HttpPost]
+        [RequestSizeLimit(2147483647)]       //unit is bytes => 2GB
+        [RequestFormLimits(MultipartBodyLengthLimit = 2147483647)]
+        public async Task<IActionResult> RegistrarArchSuste(setInsertarAteArchSuste model)
+        {
+            try
+            {
+                var path = "";
+                if (model.file != null)
+                {
+                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "Sustentos");
+                }
+
+                //var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+                var usuario = "admin";
+                var archivo = model.file.FileName;
+
+                var datos = new setInsertarAteArchSuste2()
+                {
+                    V_asus_v_rutaarch = model.file != null ? $"uploads/Sustentos" : null,
+                    V_asus_v_nombarch = model.file != null ? await ImagenesHelper.UploadFileAsync(path, model.file) : null,
+                    V_asus_v_usuariocrea=usuario,
+                    N_asus_numregate=model.N_asus_numregate,
+                    V_ASUS_V_ARCHIVODESCR=archivo
+
+                };
+
+                var result = await _iNSReconsideraciones.InsertarAtenSustentos(datos);
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new Response { IsSuccess = true, Message = result.MENSAJE });
+
+                }
+                else
+                {
+                    return new JsonResult(new Response { IsSuccess = false, Message = result.MENSAJE });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new Response { IsSuccess = false, Message = "Algo salio intente mas tarde." });
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Eliminar_Sustento(int id)
+        {
+            try
+            {
+                var archivo = await _SELReconsideraciones.ListarAteSusArchxID(id);
+
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", archivo.First().asus_v_rutaarch , archivo.First().asus_v_nombarch);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+
+                var result = await _dELReconsideraciones.EliminarSustento(id);
+   
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+
+            }
+
+        }
+
+        public async Task<IActionResult> RegistrarEnvioSolicitud(int N_ATE_IDNUMREG)
+        {
+            try
+            {
+                var result = await _iNSReconsideraciones.InsertarEnviarSolicitud(N_ATE_IDNUMREG);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
         }
     }
 }

@@ -1,0 +1,410 @@
+﻿@model App.ViewModels.SELReconsideraciones.GetAteSustento
+
+<div class="modal fade" id="mdl_AccionSustentoFUAV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_AccionSustentoFUAVlabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mdl_AccionSustentoFUAVlabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                @*<input type="hidden" id="txtId" value="@ViewBag.vbId">*@
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Lista de Observaciones:</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        <div id="tblObsSus"></div>
+                    </div>
+                </div>
+
+                <hr style="border:2px solid" />
+
+
+                <div class="row mb-0 mt-3">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 col-form-label fw-bolder fs-4">
+                        Motivos de Solictud de Reconsideración:
+                    </label>
+                    <!--begin::Label-->
+                    <!--begin::Label-->
+                    <div class="col-lg-8 d-flex align-items-center">
+                        <div class="form-check form-check-custom form-check-solid me-10" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                            <input class="form-check-input" type="checkbox" value="1" id="checkA" />
+                            <label class="form-check-label" for="checkA">
+                                (a)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="2" id="checkB" />
+                            <label class="form-check-label" for="checkB">
+                                (b)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="3" id="checkC" />
+                            <label class="form-check-label" for="checkC">
+                                (c)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="4" id="checkD" />
+                            <label class="form-check-label" for="checkD">
+                                (d)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="5" id="checkE" />
+                            <label class="form-check-label" for="checkE">
+                                (e)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="6" id="checkF" />
+                            <label class="form-check-label" for="checkF">
+                                (f)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="7" id="checkRM" />
+                            <label class="form-check-label" for="checkRM">
+                                RM-725
+                            </label>
+                        </div>
+                    </div>
+                    <!--begin::Label-->
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-md-4">
+                        <div class="mb-4" data-select2-id="cbxTipoSustento">
+                            <label for="cbxTipoSustento" class="form-label text-wrap fw-bolder fs-4">Tipo Sustento</label>
+                            <select aria-label="Seleccionar" id="cbxTipoSustento" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                <option selected="selected" value="L">Levantar Observación</option>
+                                <option value="E">Sustentar Eliminación de Item observado Parcial</option>
+                                <option value="J">Justificar Extemporaneidad</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Descripción</label>
+                            <input type="text" class="form-control" id="txtDesSustento" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-10" style="text-align:center">
+                        <div class="mb-4">
+                            @{
+                                if (Model.ATE_SUSTENTO == 0 || Model.ATE_SUSTENTO == null)
+                                {
+                                    <button type="button" onclick="RegistrarSustento();" class="btn btn-success">
+                                        <i class="fas fa-save fs-4 me-2"></i>
+                                        Guardar Sustento
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" onclick="RegistrarSustento();" class="btn btn-warning">
+                                        <i class="fas fa-save fs-4 me-2"></i>
+                                        Actualizar Sustento
+                                    </button>
+                                }
+
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+
+                @{
+                    if (Model.ATE_SUSTENTO == 1)
+                    {
+                        <script>
+                            setTimeout(function () {
+                                Cargar_Arch_Sus(); 
+                            }, 500);
+                        </script>
+                        <hr style="border:2px solid" />
+                        <div id="mdl_Archivos"></div>
+                    }
+                }
+
+
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fas fa-times fs-4 me-2"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var check = 0;
+    $("#checkA").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkB").prop('checked', false);
+            $("#checkC").prop('checked', false);
+            $("#checkD").prop('checked', false);
+            $("#checkE").prop('checked', false);
+            $("#checkF").prop('checked', false);
+            $("#checkRM").prop('checked', false);
+            check = 1;
+        }
+    });
+    $("#checkB").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkA").prop('checked', false);
+            $("#checkC").prop('checked', false);
+            $("#checkD").prop('checked', false);
+            $("#checkE").prop('checked', false);
+            $("#checkF").prop('checked', false);
+            $("#checkRM").prop('checked', false);
+            check = 2;
+        }
+    });
+    $("#checkC").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkB").prop('checked', false);
+            $("#checkA").prop('checked', false);
+            $("#checkD").prop('checked', false);
+            $("#checkE").prop('checked', false);
+            $("#checkF").prop('checked', false);
+            $("#checkRM").prop('checked', false);
+            check = 3;
+
+        }
+    });
+    $("#checkD").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkB").prop('checked', false);
+            $("#checkC").prop('checked', false);
+            $("#checkA").prop('checked', false);
+            $("#checkE").prop('checked', false);
+            $("#checkF").prop('checked', false);
+            $("#checkRM").prop('checked', false);
+            check = 4;
+
+        }
+    });
+    $("#checkE").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkB").prop('checked', false);
+            $("#checkC").prop('checked', false);
+            $("#checkD").prop('checked', false);
+            $("#checkA").prop('checked', false);
+            $("#checkF").prop('checked', false);
+            $("#checkRM").prop('checked', false);
+            check = 5;
+        }
+    });
+    $("#checkF").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkB").prop('checked', false);
+            $("#checkC").prop('checked', false);
+            $("#checkD").prop('checked', false);
+            $("#checkE").prop('checked', false);
+            $("#checkA").prop('checked', false);
+            $("#checkRM").prop('checked', false);
+            check = 6;
+
+        }
+    });
+    $("#checkRM").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkB").prop('checked', false);
+            $("#checkC").prop('checked', false);
+            $("#checkD").prop('checked', false);
+            $("#checkE").prop('checked', false);
+            $("#checkF").prop('checked', false);
+            $("#checkA").prop('checked', false);
+            check = 7;
+
+        }
+    });
+    setTimeout(function () {
+        CargarTodoSus();
+        VisualizaSus();
+    }, 500);
+
+    async function CargarTodoSus() {
+       await Cargar_ObsSus();
+    }
+
+    async function Cargar_ObsSus() {
+	    CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        try {
+            const response = await $.get("@Url.Content("~/FUA/ListarObsFUAV")", { id: id});
+            $('#tblObsSus').html(response);
+                TerminarWaitMe();
+        } catch {
+            console.log('Error Obs Suste');
+            TerminarWaitMe();
+        }
+
+    }
+
+   async function Cargar_Arch_Sus() {
+	    CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        try {
+            const response = await $.get("@Url.Content("~/FUA/AccionArchSusFUAV")", { id: id});
+            $('#mdl_Archivos').html(response);
+            TerminarWaitMe();
+        } catch {
+            console.log('Error Archiv Sus');
+            TerminarWaitMe();
+        }
+
+    }
+
+    function RegistrarSustento() {
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si registrar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                _RegistrarSustento();
+            }
+        })
+    }
+
+    function _RegistrarSustento(){
+        let array_plazo = [];
+        array_plazo[0] = $('#Ate_Idnumreg').val();
+        array_plazo[1] = check;
+        array_plazo[2] = $('#cbxTipoSustento').val();
+        array_plazo[3] = $('#txtDesSustento').val();
+
+        if(array_plazo[1] == 0){
+            NotificacionToastr('error', 'Seleccione el Motivo de la Solicitud de Reconsideracion', 'Campos requeridos');
+            return false;
+        }
+
+        if (array_plazo[2] == "") {
+            NotificacionToastr('error', 'Tipo de Sustento', 'Campos requeridos');
+            return false;
+        }
+        if (array_plazo[3] == "") {
+            NotificacionToastr('error', 'Descripción del Sustento', 'Campos requeridos');
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("N_ATE_IDNUMREG", array_plazo[0]);
+        formData.append("V_ATE_MOTIVOSOLICITUD", array_plazo[1]);
+        formData.append("N_ATE_IDTIPOSUSTENTO", array_plazo[2]);
+        formData.append("V_ATE_DESCRIPSUSTENTO", array_plazo[3]);
+
+        $.ajax({
+          url: '@Url.Action("RegistrarSustento", "FUA")',
+          data: formData,
+          processData: false,
+          contentType: false,
+          cache: false,
+          async: true,
+          type: 'POST',
+          success: function(response){
+              if (response.isSuccess == true) {
+                  NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                  TerminarWaitMe();
+                  CargarModalSustento()
+              }
+              else {
+                  NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                  TerminarWaitMe();
+              }
+          },
+            error: function(err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
+    }
+
+   function VisualizaSus() {
+       let id = $("#Ate_Idnumreg").val();
+       CargarWaitMe();
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("SustentoID")",
+            data: {id: id},
+            dataType: "json",
+            success: function (response) {
+                if (response.isSuccess == true) {
+
+                    console.log(response);
+                    console.log(response.result);
+                    setTimeout(() => {
+                        $('#cbxTipoSustento').val(response.result.atE_IDTIPOSUSTENTO);
+                        $('#txtDesSustento').val(response.result.atE_DESCRIPSUSTENTO);
+                        let dato = response.result.atE_MOTIVOSOLICITUD;
+                    if ( dato== 1) {
+                        $('#checkA').prop('checked', true);
+                    } else if (dato == 2) {
+                        $('#checkB').prop('checked', true);
+                    }
+                    else if (dato == 3) {
+                        $('#checkC').prop('checked', true);
+                    } else if (dato == 4) {
+                        $('#checkD').prop('checked', true);
+                    }
+                    else if (dato == 5) {
+                        $('#checkE').prop('checked', true);
+                    }
+                    else if (dato == 6) {
+                        $('#checkF').prop('checked', true);
+                    } else if (dato == 7) {
+                        $('#checkRM').prop('checked', true);
+                    }
+                  }, 500);
+                }
+                else {
+                    NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
+                }
+                 TerminarWaitMe();
+            },
+            error: function (req, status, error) {
+                 TerminarWaitMe();
+            }
+        });
+        
+    }
+
+</script>

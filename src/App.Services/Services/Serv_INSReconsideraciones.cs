@@ -181,6 +181,62 @@ namespace App.Services.Services
 
             }
         }
+
+        public async Task<Mensaje_Ins> InsertarAtenSustentos(setInsertarAteArchSuste2 model)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_asus_numregate", model.N_asus_numregate, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("V_asus_v_rutaarch", model.V_asus_v_rutaarch, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("V_asus_v_nombarch", model.V_asus_v_nombarch, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("V_asus_v_usuariocrea", model.V_asus_v_usuariocrea, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("V_ASUS_V_ARCHIVODESCR", model.V_ASUS_V_ARCHIVODESCR, OracleMappingType.Varchar2, ParameterDirection.Input);
+
+                
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_INS_IATENCIONSUS";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public async Task<Mensaje_Ins> InsertarEnviarSolicitud(int N_ATE_IDNUMREG)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ATE_IDNUMREG", N_ATE_IDNUMREG, OracleMappingType.Decimal, ParameterDirection.Input);
+
+
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_ENVIAR_SOLICITUD";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
     }
 
 }

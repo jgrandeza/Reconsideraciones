@@ -26,89 +26,73 @@
                 var contador = 0;
                 foreach (var item in Model)
                 {
-                    var est ="";
+                    var est = "";
                     switch (item.RREC_ID_ESTADOREC)
                     {
                         case 1: est = "badge py-2 px-2 fs-9 badge-danger"; break;
                         case 2: est = "badge py-2 px-2 fs-9 badge-dark"; break;
                         case 3: est = "badge py-2 px-2 fs-9 badge-info"; break;
-                        case 4: est = "badge py-2 px-2 fs-9 badge-success"; break;                        
+                        case 4: est = "badge py-2 px-2 fs-9 badge-success"; break;
                         case 5: est = "badge py-2 px-2 fs-9 badge-primary"; break;
                         case 6: est = "badge py-2 px-2 fs-9 badge-warning"; break;
                         default: est = "badge py-2 px-2 fs-9 badge-danger"; break;
-                    }   
+                    }
 
-                        <tr id="RecEESS_cant">
-                            <td class="text-center">
+                    <tr id="RecEESS_cant">
+                        <td class="text-center">
                             @{
-                                if (item.RREC_ID_ESTADOREC==1)
+                                if (item.RREC_ID_ESTADOREC == 1)
                                 {
-                                  <a title="Solicitar Reconsideración" onclick="Solicitar_Reconsideracion(event,@item.RREC_IDNUMREG)" href="javascript: void(0);"><i style="font-size: 25px; color: darkgreen" class="fas fa-check"></i></a>
+                                    <a title="Solicitar Reconsideración" onclick="Solicitar_Reconsideracion(event,@item.RREC_IDNUMREG)" href="javascript: void(0);"><i style="font-size: 25px; color: darkgreen" class="fas fa-check"></i></a>
 
-                                }else{
+                                }
+                                else
+                                {
                                     <a title="Visualizar Reconsideración" onclick="Visualizar_FUA(@item.RREC_IDNUMREG)" href="javascript: void(0);"><i style="font-size: 25px; color: darkblue" class="fas fa-search"></i></a>
 
                                 }
 
                             }
-                            
-                            </td>
-                            <td class="text-center">
-                            <span class="@est">@item.DESC_ESTOBSE</span>
-                            </td>
-                            <td class="text-center">@item.RREC_C_ESTADEVAL</td>                            
-                            <td>@item.RREC_IDEESS - @item.DESC_EESS</td>                            
-                            <td class="text-center">@(Convert.ToString(item.RREC_N_PERIODOPROD).Substring(0,4)) - @(Convert.ToString(item.RREC_N_PERIODOPROD).Substring(4,2))</td>                            
-                            <td class="text-center"><b>@item.FUA</b></td>          
-                            <td class="text-center">
-                            <a title="Ver FUA" href="../VisorFUA?dt=@item.RREC_IDNUMREG" target="_blank"><i style="font-size: 25px; color: darkslateblue" class="fas fa-file-invoice"></i></a>
-                            </td>
-                        <td class="text-center"><b>@(string.Format("{0:C2}", item.RREC_VALOR_BRUTO - item.RREC_VALOR_NETO))</b></td>
-                            <td class="text-center"></td>                            
-                            <td class="text-center" style="font-size: 10px;"> @(Convert.ToDateTime(item.RREC_FECATENCION).ToShortDateString()) </td>
-                            <td class="text-center">
-                            <b>
-                            <a title="@item.DESC_SERVICIO">@item.RREC_IDSERVICIO</a>                            
-                            </b>
-                            </td>
-                            <td class="text-center">@item.RREC_IDNUMREG</td>
-                            
-                            <td class="text-center"></td>
-                            <td class="text-center">@item.DESC_COMPO</td>
-                        </tr>
-                    contador ++;
-                }
-            }
-            else
-            {
-                    <tr>
-                        <td colspan="8"><span class="text-danger">No hay registros para mostrar</span></td>
-                    </tr>
-            }
-        }
 
-    </tbody>
-</table>
-<script>
-     function cargarModalPresupCorredVial(id,cui) {
-        $.get("@Url.Content("~/CorredorVial/PresupuestoCorredorVialV")", { id: id, cui:cui})
-        .done(function (response) {
-            $('#modalPresupCorredorVialV').html(response);
-            $('#mdl_PresupCorredorVialV').modal("show");
-        });
-    }
-    function CargarModalMapaCorredorVial(id, cui) {
-        console.log(id, cui);
-        $.get("@Url.Content("~/CorredorVial/GetMapaCorredorVialV")", { id: id, cui: cui})
-        .done(function (response) {
-            $('#modalPresupCorredorVialV').html(response);
-            $('#mdl_MapaCorredorVialV').modal("show");
-        });
-    }
-    function AsignarTramo(id) {
-        $(".content-custom").load("@Url.Content("~/TramoCV/Index")", { id: id})
-    }
-    function CargarComponteCV(id) {
-        $(".content-custom").load("@Url.Content("~/ComponenteCV/Index")", { id: id})
-    }
-</script>
+                        </td>
+                        <td class="text-center">
+                            <span class="@est">@item.DESC_ESTOBSE</span>
+                        </td>
+                        <td class="text-center">@item.RREC_C_ESTADEVAL</td>
+                        <td>@item.RREC_IDEESS - @item.DESC_EESS</td>
+                        <td class="text-center">@(Convert.ToString(item.RREC_N_PERIODOPROD).Substring(0,4)) - @(Convert.ToString(item.RREC_N_PERIODOPROD).Substring(4,2))</td>
+                        <td class="text-center"><b>@item.FUA</b></td>
+                        <td class="text-center">
+                            @*<a title="Ver FUA" href="../VisorFUA?dt=@item.RREC_IDNUMREG" target="_blank"><i style="font-size: 25px; color: darkslateblue" class="fas fa-file-invoice"></i></a>*@
+                            <a title="Ver FUA" href="../Reconsideraciones/VisorFUA?dt=@item.RREC_IDNUMREG" target="_blank"><i style="font-size: 25px; color: darkslateblue" class="fas fa-file-invoice"></i></a>
+
+                        </td>
+                                                <td class="text-center"><b>@(string.Format("{0:C2}", item.RREC_VALOR_BRUTO - item.RREC_VALOR_NETO))</b></td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center" style="font-size: 10px;"> @(Convert.ToDateTime(item.RREC_FECATENCION).ToShortDateString()) </td>
+                                                    <td class="text-center">
+                                                    <b>
+                                                    <a title="@item.DESC_SERVICIO">@item.RREC_IDSERVICIO</a>
+                                                    </b>
+                                                    </td>
+                                                    <td class="text-center">@item.RREC_IDNUMREG</td>
+
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center">@item.DESC_COMPO</td>
+                                                </tr>
+                                            contador ++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                            <tr>
+                                                <td colspan="8"><span class="text-danger">No hay registros para mostrar</span></td>
+                                            </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                        <script>
+
+                        </script>

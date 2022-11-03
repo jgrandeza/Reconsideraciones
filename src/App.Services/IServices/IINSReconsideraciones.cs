@@ -17,6 +17,7 @@ namespace App.Services.IServices
 
         Task<Mensaje_Ins> InsertarAtenProcedimiento(getInsertarAtencionAPO model);
         Task<Mensaje_Ins> InsertarAtenInsumos(getInsertarAtencionINS model);
-
+        Task<Mensaje_Ins> InsertarAtenSustentos(setInsertarAteArchSuste2 model);
+        Task<Mensaje_Ins> InsertarEnviarSolicitud(int N_ATE_IDNUMREG);
     }
 }
