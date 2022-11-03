@@ -58,6 +58,32 @@ namespace App.Services.Services
             }
         }
 
+        public async Task<Mensaje_Ins> ActualizarAteSustento(getInsertarAteSustento model)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ATE_IDNUMREG", model.N_ATE_IDNUMREG, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("V_ATE_MOTIVOSOLICITUD", model.V_ATE_MOTIVOSOLICITUD, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("N_ATE_IDTIPOSUSTENTO", model.N_ATE_IDTIPOSUSTENTO, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("V_ATE_DESCRIPSUSTENTO", model.V_ATE_DESCRIPSUSTENTO, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_UPD_IATENCION_SUS";
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
         public async Task<bool> Actualizar_FUA(getAtencionRecxID model)
         {
             try

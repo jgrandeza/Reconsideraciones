@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace App.ViewModels.INSReconsideraciones
 {
@@ -73,5 +74,34 @@ namespace App.ViewModels.INSReconsideraciones
         public string V_AINS_IDUSUARIOCREA { get; set; }
         public decimal? N_ROBS_IDNUMREGOBS { get; set; }
 
+    }
+
+    public class getValidarReglas
+    {
+        public int? idate { get; set; }
+        public string ORC_OBSERVACION { get; set; }
+        public int CODIGO { get; set; }
+        public string MENSAJE { get; set; }
+        
+    }
+    public class getInsertarAteSustento
+    {
+        public int? N_ATE_IDNUMREG { get; set; }
+        public string? V_ATE_MOTIVOSOLICITUD { get; set; }
+        public string? N_ATE_IDTIPOSUSTENTO { get; set; }
+        public string? V_ATE_DESCRIPSUSTENTO { get; set; }
+    }
+    public class setInsertarAteArchSuste
+    {
+        public int? N_asus_numregate { get; set; }
+        public IFormFile file { get; set; }
+    }
+    public class setInsertarAteArchSuste2
+    {
+        public int? N_asus_numregate { get; set; }
+        public string V_asus_v_rutaarch { get; set; }
+        public string V_asus_v_nombarch { get; set; }
+        public string V_asus_v_usuariocrea { get; set; }
+        public string V_ASUS_V_ARCHIVODESCR { get; set; }
     }
 }

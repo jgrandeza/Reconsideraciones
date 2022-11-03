@@ -330,7 +330,7 @@ namespace App.Services.Services
             }
         }
 
-        public async Task<IEnumerable<GetAtencionesObs>> ListarIAtencionOBSxID(int N_ATE_IDNUMREG, string V_CODTABLA)
+        public async Task<IEnumerable<GetObservacionesRcRv>> ListarIAtencionOBSxID(int N_ATE_IDNUMREG, string V_CODTABLA)
         {
             try
             {
@@ -343,7 +343,116 @@ namespace App.Services.Services
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_IATENCIONOBS_REC_ID";
                 //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
 
-                var result = await SqlMapper.QueryAsync<GetAtencionesObs>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                var result = await SqlMapper.QueryAsync<GetObservacionesRcRv>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<GetObservRcRv>> ListarObservacionesRcRv(int N_ATE_IDNUMREG)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ATE_IDNUMREG", N_ATE_IDNUMREG, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_IOBSERVACIONES_RCRV";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryAsync<GetObservRcRv>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<GetListObservaAte>> ListarObservacionesSust(int N_ATE_IDNUMREG)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ATE_IDNUMREG", N_ATE_IDNUMREG, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_IATENCIONOBSREC_ID";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryAsync<GetListObservaAte>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<GetAteSustento> ListarAteSustxID(int N_ATE_IDNUMREG)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ATE_IDNUMREG", N_ATE_IDNUMREG, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_ATENCIONXIDSUS";
+
+                var result = await SqlMapper.QuerySingleAsync<GetAteSustento>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<getAteSustentoArch>> ListarAteSusArch(int N_ATE_IDNUMREG)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ATE_IDNUMREG", N_ATE_IDNUMREG, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_ATENCIONSUS";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryAsync<getAteSustentoArch>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<getAteSustentoArch>> ListarAteSusArchxID(int N_ASUS_IDNUMREG)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ASUS_IDNUMREG", N_ASUS_IDNUMREG, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_IATENCIONSUSXID";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryAsync<getAteSustentoArch>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 return result;
             }
             catch (Exception)

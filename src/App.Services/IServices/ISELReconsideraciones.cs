@@ -33,6 +33,16 @@ namespace App.Services.IServices
 
         Task<GetResumenxID> ResumenRecxID(int N_ATE_IDNUMREG);
 
-        Task<IEnumerable<GetAtencionesObs>> ListarIAtencionOBSxID(int N_ATE_IDNUMREG, string V_CODTABLA);
+        Task<IEnumerable<GetObservacionesRcRv>> ListarIAtencionOBSxID(int N_ATE_IDNUMREG, string V_CODTABLA);
+
+        Task<IEnumerable<GetObservRcRv>> ListarObservacionesRcRv(int N_ATE_IDNUMREG);
+
+        Task<IEnumerable<GetListObservaAte>> ListarObservacionesSust(int N_ATE_IDNUMREG);
+
+        Task<GetAteSustento> ListarAteSustxID(int N_ATE_IDNUMREG);
+
+        Task<IEnumerable<getAteSustentoArch>> ListarAteSusArch(int N_ATE_IDNUMREG);
+
+        Task<IEnumerable<getAteSustentoArch>> ListarAteSusArchxID(int N_ASUS_IDNUMREG);
     }
 }

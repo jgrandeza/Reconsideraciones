@@ -33,6 +33,11 @@
                                     <i class="fas fa-arrow-left  fs-4 me-2"></i>
                                     Atras
                                 </button>
+                                <button type="button" class="btn btn-md btn-light" onclick="CargarModalValMatriz()">
+                                    <i class="fas fa-search  fs-4 me-2"></i>
+                                    Ver Obser 
+                                </button>
+
                                 @{
                                     if (ViewBag.RecEstado == 6)
                                     {
@@ -41,16 +46,18 @@
                                         <button type="button" class="btn btn-dark btn-md" onclick="actualizar_datos_FUA();">
                                             <i class="fas fa-save fs-4 me-2"></i>
                                             Guardar
-                                        </button><button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
                                             <i class="fas fa-trash fs-4 me-2"></i>
                                             Eliminar
-                                        </button><button type="button" class="btn btn-info btn-md" onclick="Conf_Validacion(event)">
+                                        </button>
+                                        <button type="button" class="btn btn-info btn-md" onclick="Conf_Validacion(event)">
                                             <i class="fas fa-list-ol fs-4 me-2"></i>
                                             Validar Cambios
                                         </button>
                                         if (ViewBag.RecEstRV == 1)
                                         {
-                                            <button type="button" class="btn btn-success btn-md" onclick="cargarModalRegistroCorredorVial(1)">
+                                            <button type="button" class="btn btn-success btn-md" onclick="CargarModalSustento()">
                                                 <i class="fas fa-upload fs-4 me-2"></i>
                                                 Registar Sustento
                                             </button>
@@ -58,10 +65,10 @@
                                     }
                                     else if (ViewBag.RecEstado == 2)
                                     {
-                                            <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
-                                                <i class="fas fa-trash fs-4 me-2"></i>
-                                                Eliminar
-                                            </button>
+                                        <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
+                                            <i class="fas fa-trash fs-4 me-2"></i>
+                                            Eliminar
+                                        </button>
 
                                     }
 
@@ -105,6 +112,8 @@
                     <div class="tab-pane fade show active" id="Tab1" role="tabpanel">
                         <div id="divInfGeneralFUA"></div>
                         <div id="modalMatriz"></div>
+                        <div id="modalObsRcRv"></div>
+                        <div id="modalSustento"></div>
                     </div>
                     <div class="tab-pane fade" id="Tab2" role="tabpanel">
                         <div class="row mb-5">
@@ -428,13 +437,31 @@
     function CargarModalValMatriz() {
         let idate = $("#Ate_Idnumreg").val();
 
-        //let idate = '631278686'; 
+        //let idate = '631278686';
         $.get("@Url.Content("~/FUA/MatrizValFUAV")", { id: idate })
         .done(function (response) {
             $('#modalMatriz').html(response);
             $('#mdl_MatrizFUAV').modal("show");
         });
     }
+
+    function CargarModalObsRcRv(id) {
+        $.get("@Url.Content("~/FUA/ListarObsRcRvFUAV")", { id: id })
+        .done(function (response) {
+            $('#modalObsRcRv').html(response);
+            $('#mdl_ObsRcRvFUAV').modal("show");
+        });
+    }
+
+    function CargarModalSustento() {
+        let idate = $("#Ate_Idnumreg").val();
+        $.get("@Url.Content("~/FUA/AccionSustentoFUAV")", {idate:idate })
+        .done(function (response) {
+            $('#modalSustento').html(response);
+            $('#mdl_AccionSustentoFUAV').modal("show");
+        });
+    }
+
 
 
     function Conf_Validacion(e) {
@@ -453,11 +480,51 @@
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                //Visualizar_FUA(id);
+                Validar_Total();
             } else if (result.isDenied) {
                 Swal.fire('', '', 'info')
             }
         });
+    }
+
+    async function Validar_Total() {
+        CargarWaitMe();
+        let array_data = {};
+        array_data.N_ATE_IDNUMREG = $("#Ate_Idnumreg").val();
+        let url = "@Url.Action("ValidarRcRv", "FUA")";
+        $.post(url, array_data)
+            .done(function (response) {
+                var data = response.result;
+                let { result } = response;
+                console.log(result);
+                if (response.isSuccess == true) {
+                    if (data.codigo == 0) {
+                            NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                            setTimeout(function () {
+
+                                console.log(array_data.N_ATE_IDNUMREG);
+
+                                Visualizar_FUA2(array_data.N_ATE_IDNUMREG);
+
+                            }, 1000);
+                    } else if (data.codigo == 1) {
+
+                            NotificacionToastr('warning', `${response.message}`, 'Mensaje de confirmación');
+                            CargarModalObsRcRv(data.idate);
+                        }
+
+
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+                TerminarWaitMe();
+            });
+
+    }
+    function Visualizar_FUA2(id) {
+
+        $(".content-custom").load("@Url.Content("~/FUA/Index")", { id: id})
     }
 
     function Conf_Guardar(e) {
@@ -601,7 +668,7 @@
                     console.log(item);
                     if (item.ivaL_V_REFDEVELOPER != null) {
                         $(`#${item.ivaL_V_REFDEVELOPER}`).prop("disabled", false);
-                        //Solo se habilita cuando 
+                        //Solo se habilita cuando
                         if (item.ivaL_V_REFDEVELOPER== 'txtDocuIdent') {
                             $('#btnDocuIdent').prop("disabled", false);
                         }
@@ -830,5 +897,6 @@
         $('#btnAPO').show();
         $('#btnSMI').show();
     }
+
 
 </script>

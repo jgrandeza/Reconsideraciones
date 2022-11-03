@@ -37,8 +37,10 @@
     <Folder Include="Views\BusqReconsideracionEval\" />
     <Folder Include="wwwroot\Img\Svg\" />
     <Folder Include="Views\FUA\" />
+    <Folder Include="wwwroot\uploads\Sustentos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\Img\Svg\" />
+    <Content Remove="wwwroot\uploads\Sustentos\" />
   </ItemGroup>
 </Project>

@@ -39,4 +39,9 @@ namespace App.ViewModels
         public string nivel { get; set; }
         public string tableMenuNId { get; set; }
     }
+    public class ResponseUpload
+    {
+        public bool Ok { get; set; }
+        public string FileName { get; set; }
+    }
 }

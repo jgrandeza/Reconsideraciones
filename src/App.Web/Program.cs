@@ -30,6 +30,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 //builder.Services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 builder.Services.Configure<SchemaOracle>(Configuration.GetSection("SchemaOracle"));
+builder.Services.Configure<FTPSettings>(Configuration.GetSection("FTPSettings"));
+builder.Services.Configure<URLReadFile>(Configuration.GetSection("URLReadFile"));
+builder.Services.AddTransient<IFileUploadFTP, FileUploadFTP>();
 builder.Services.AddTransient<IReadSolicitudRecon, RecSolicitud>();
 builder.Services.AddTransient<IAuxiliares, Serv_Auxiliares>();
 builder.Services.AddTransient<IMaestros, Serv_Maestros>();
@@ -39,6 +42,7 @@ builder.Services.AddTransient<IINSReconsideraciones, Serv_INSReconsideraciones>(
 builder.Services.AddTransient<IUPDReconsideraciones, Serv_UPDReconsideraciones>();
 builder.Services.AddTransient<IDELReconsideraciones, Serv_DELReconsideraciones>();
 builder.Services.AddTransient<ISELSiasis, Serv_SELSiasis>();
+builder.Services.AddTransient<IValRcRvRecosideraciones, Serv_ValRcRvRecosideraciones>();
 
 builder.Services.AddCors(o => o.AddPolicy("AllowAllOrigins", builder =>
 {

@@ -514,7 +514,7 @@ namespace App.ViewModels.SELReconsideraciones
         public int? RREC_C_ESTARV { get; set; }
     }
 
-    public class GetAtencionesObs
+    public class GetObservacionesRcRv
     {
         public int? ROBS_NUMREGATE { get; set; }
         public int? Id { get; set; }
@@ -526,6 +526,51 @@ namespace App.ViewModels.SELReconsideraciones
         public string? ROBS_DESCRIPCION { get; set; }
         public string? OBS_CODREG { get; set; }
                 
+    }
+    public class GetObservRcRv
+    {
+        public int? ORC_IDNUMREG { get; set; }
+        public string? ORC_IDRC { get; set; }
+        public string? ORC_OBSERVACION { get; set; }
+        public int? ORC_IDPAQUETE { get; set; }
+
+    }
+
+    public class GetListObservaAte
+    {
+        public int? ROBS_NUMREGATE { get; set; }
+        public int? Id { get; set; }
+        public string? ROBS_CODIGO_OBSERVACION { get; set; }
+        public string? ROBS_DETALLE { get; set; }
+        public string? TAB_CODTABLA { get; set; }
+        public string? TABLA { get; set; }
+        public int? OBS_ATEIDNUMREG { get; set; }
+        public string? ROBS_DESCRIPCION { get; set; }
+        public string? OBS_CODREG { get; set; }
+    }
+
+    public class GetAteSustento
+    {
+        public int? ATE_SUSTENTO { get; set; }
+        public string? ATE_MOTIVOSOLICITUD { get; set; }
+        public string? ATE_IDTIPOSUSTENTO { get; set; }
+        public string? ATE_DESCRIPSUSTENTO { get; set; }
+
+        
+    }
+
+    public class getAteSustentoArch
+    {
+        public int? asus_numregate { get; set; }
+        public int? asus_idnumreg { get; set; }
+        public string? asus_v_rutaarch { get; set; }
+        public string? asus_v_nombarch { get; set; }
+        public string? asus_v_usuariocrea { get; set; }
+        public DateTime asus_v_feccrea { get; set; }
+        public string? asus_v_usuarioedita { get; set; }
+        public DateTime asus_v_fecedita { get; set; }
+        public string? asus_b_estado { get; set; }
+        public string? asus_v_archivodescr { get; set; }
     }
 
 }

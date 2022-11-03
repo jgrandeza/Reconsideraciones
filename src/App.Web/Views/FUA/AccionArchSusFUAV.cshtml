@@ -1,0 +1,226 @@
+﻿@model IEnumerable<App.ViewModels.SELReconsideraciones.getAteSustentoArch>
+
+<div class="row mt-5">
+    <div class="col-md-8">
+        <div class="mb-4" data-select2-id="select2-data-65-fd6n">
+            <label for="file" class="form-label">Cargar Archivo Sustentario <small class="text-danger">Archivo formato .pdf .xls .xlsx .png .jpg</small></label>
+            <input type="file" onchange="ValidateSize(this)" class="form-control" id="fileSus" />
+        </div>
+    </div>
+    <div class="col-md-4 mt-10" style="text-align:center">
+        <div class="mb-4">
+            <button type="button" onclick="RegistrarArchiSustento();" class="btn btn-primary">
+                <i class="fas fa-plus fs-4 me-2"></i>
+                Agregar Documento
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table align-middle border rounded table-row-dashed fs-6 g-5 display responsive" id="tbl_ArchObsSus" style="font-size: 10px !important">
+            <thead class="text-center" style="background-color: #000000; border-width: 2px; color: white; vertical-align: middle; ">
+                <tr>
+                    <th style="text-align:center">Nº</th>
+                    <th style="text-align:center">DESCRIPCIÓN</th>
+                    <th style="text-align:center">ARCHIVO</th>
+                    <th style="text-align:center">ACCION</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+
+                    if (Model.Count() > 0)
+                    {
+                        var i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="text-align: center"> @i</td>
+                                <td class="text-center">@item.asus_v_archivodescr</td>
+                                <td class="text-center"><a title="Documento" href="@ViewBag.url_sis@item.asus_v_rutaarch/@item.asus_v_nombarch" target="_blank"><i style="font-size: 20px; color: #eb2c2c" class="fas fa-file-pdf"></i></a></td>
+                                <td style="text-align: center">
+                                    <a onclick="Conf_Eliminar_Sus(@item.asus_idnumreg);" href="javascript:void(0);"><i style="font-size: 20px; color: #c64821;" title="Eliminar Sustento" class="fas fa-trash" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                            i = i + 1;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" style="text-align: center"><h5 class="text-danger">Aún no hay registros a mostrar</h5></td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+@{
+    if (Model.Count() > 0)
+    {
+        <div class="row mt-5">
+            <button type="button" onclick="Enviar_Solicitud();" class="btn btn-success">
+                <i class="fas fa-paper-plane fs-4 me-2"></i>
+                Enviar Solicitud
+            </button>
+        </div>
+    }
+
+}
+
+<script>
+
+    var filesizeET = 20;
+    function ValidateSize(file) {
+
+        var FileSize = file.files[0].size / 1024 / 1024; // in MB
+
+        var ext = $('#fileSus').val().split('.').pop();
+        if (ext != "") {
+            if (ext == "pdf" || ext == "xlsx" || ext == "xls" || ext == "png" || ext == "jpg") {
+                if (FileSize > filesizeET) {
+                    NotificacionToastr('error', `Tamaño del archivo supera los ${filesizeET} MB`, 'Mensaje de confirmación.');
+                    $('#fileSus').val('');
+                }
+            }
+            else {
+                NotificacionToastr('warning', `Archivos permitidos PDF`, 'Mensaje de confirmación.');
+
+                $('#fileSus').val('');
+            }
+        }
+    }
+
+    function RegistrarArchiSustento() {
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si registrar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                _RegistrarArchiSustento();
+            }
+        })
+    }
+
+
+    function _RegistrarArchiSustento() {
+        let valores = [];
+        valores[0] = $('#Ate_Idnumreg').val();
+
+        var formData = new FormData();
+        formData.append("N_asus_numregate", valores[0]);
+        var fileInput = document.getElementById('fileSus');
+        console.log(fileInput.files.length);
+        for (i = 0; i < fileInput.files.length; i++) {
+            formData.append('file', fileInput.files[i]);
+        }
+
+
+        CargarWaitMe();
+        $.ajax({
+          url: '@Url.Action("RegistrarArchSuste", "FUA")',
+          data: formData,
+          processData: false,
+          contentType: false,
+          cache: false,
+          async: true,
+          type: 'POST',
+          success: function(response){
+              if (response.isSuccess == true) {
+                  NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                  Cargar_Arch_Sus();
+                  TerminarWaitMe();
+              }
+              else {
+                  NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                  TerminarWaitMe();
+              }
+          },
+            error: function(err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
+   }
+
+    function Conf_Eliminar_Sus(id) {
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si Eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                _EliminarSustento(id);
+            }
+        })
+    }
+
+   async function _EliminarSustento(id) {
+        let array_data = {};
+        array_data.id = id;
+        let url = "@Url.Action("Eliminar_Sustento", "FUA")";
+        $.post(url, array_data)
+            .done(function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                    Cargar_Arch_Sus();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+            });
+    }
+
+    function Enviar_Solicitud() {
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si Enviar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                _Enviar_Solicitud();
+            }
+        })
+    }
+
+    async function _Enviar_Solicitud() {
+        let array_data = {};
+        array_plazo[0] = $('#Ate_Idnumreg').val();
+        let url = "@Url.Action("RegistrarEnvioSolicitud", "FUA")";
+        $.post(url, array_data)
+            .done(function (response) {
+                console.log(response);
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                    VoverAtras_Reconsideraciones();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+            });
+    }
+
+
+</script>

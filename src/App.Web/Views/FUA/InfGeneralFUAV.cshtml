@@ -51,11 +51,11 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4 mt-8" style="text-align:center;">
-                            <button type="button" class="btn btn-dark btn-md" onclick="CargarModalValMatriz();">
-                                <i class="fas fa-search fs-4 me-2"></i>
-                            </button>
-                        </div>
+                       @*<div class="col-md-4 mt-8" style="text-align:center;">
+                           <button type="button" class="btn btn-dark btn-md" onclick="CargarModalValMatriz();">
+                               <i class="fas fa-search fs-4 me-2"></i>
+                           </button>
+                       </div>*@
                     </div>
 
                 </div>
@@ -491,7 +491,14 @@
                             <div class="mb-4" data-select2-id="cbxDestinoRefAte">
                                 <label for="cbxDestinoRefAte" class="form-label text-wrap fw-bolder fs-4">Destino del Asegurado</label>
                                 <select aria-label="Seleccionar" id="cbxDestinoRefAte" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
-                                    <option selected value="1">(REVISAR-ESTE SELECT)</option>
+                                    @{ if (ViewBag.ListDestinoAseg != null)
+                                        {
+                                            foreach (var item in ViewBag.ListDestinoAseg)
+                                            {
+                                                <option value="@item.des_coddestino">@item.des_nombre</option>
+                                            }
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
