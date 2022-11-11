@@ -207,13 +207,14 @@
 
     async function _Enviar_Solicitud() {
         let array_data = {};
-        array_plazo[0] = $('#Ate_Idnumreg').val();
+        array_data.N_ATE_IDNUMREG = $('#Ate_Idnumreg').val();
         let url = "@Url.Action("RegistrarEnvioSolicitud", "FUA")";
         $.post(url, array_data)
             .done(function (response) {
                 console.log(response);
                 if (response.isSuccess == true) {
                     NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                    $('#mdl_AccionSustentoFUAV').modal("hide");
                     VoverAtras_Reconsideraciones();
                 }
                 else {

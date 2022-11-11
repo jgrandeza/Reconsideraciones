@@ -16,5 +16,7 @@ namespace App.Services.IServices
         Task<bool> Actualizar_FUA(getAtencionRecxID model);
 
         Task<Mensaje_Ins> ActualizarAteSustento(getInsertarAteSustento model);
+        Task<Mensaje_Ins> ActualizarAteEval(int N_ATE_IDNUMREG);
+
     }
 }

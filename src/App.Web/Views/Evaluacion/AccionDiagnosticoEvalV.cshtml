@@ -1,0 +1,220 @@
+﻿
+<div class="modal fade" id="mdl_AccionDiagnosticoFUAV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_AccionDiagnosticoFUAVlabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mdl_AccionDiagnosticoFUAVlabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="txtId" value="@ViewBag.vbId">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <div class="form-label fw-bolder fs-4">
+                                Código
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="txtCodDiagnostico" disabled/>
+                                <button onclick="GetDiagnosticoPorId()" type="button" class="btn btn-primary input-group-text" id="btnConsultarDX" disabled>
+                                    <span class="indicator-label">
+                                        <i class="fas fa-search fs-4"></i> Consultar
+                                    </span>
+                                    <span class="indicator-progress">
+                                        Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Descripción</label>
+                            <textarea type="text" rows="5" class="form-control form-control-solid " id="txtDesDiagnostico" disabled></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4" data-select2-id="cbxIngEgre">
+                            <label for="cbxIngEgre" class="form-label text-wrap fw-bolder fs-4">Ingreso/Egreso</label>
+                            <select aria-label="Seleccionar" id="cbxIngEgre" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4" disabled>
+                                <option selected disabled value="">Seleccionar</option>
+                                <option value="I">INGRESO</option>
+                                <option value="E">EGRESO</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4" data-select2-id="cbxTipoDx">
+                            <label for="cbxTipoDx" class="form-label text-wrap fw-bolder fs-4">Tipo DX</label>
+                            <select aria-label="Seleccionar" id="cbxTipoDx" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4" disabled>
+                                <option selected disabled value="">Seleccionar</option>                               
+                                    @{ if (ViewBag.ListTipoDX != null)
+                                    {
+                                        foreach (var item in ViewBag.ListTipoDX)
+                                        {
+                                          <option value="@item.TDA_TIPODIA">@item.TDA_CDESCRIPCION</option>
+                                        }
+                                    } 
+                                 }
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    @if (ViewBag.Tipo == "1")
+                    {
+                        <button type="button" onclick="RegistrarATenMedicamentoRec();" class="btn btn-success">
+                            <i class="fas fa-save fs-4 me-2"></i>
+                            Guardar
+                        </button>
+                    }
+                    else if (ViewBag.Tipo == "2")
+                    {
+                        <button type="button" onclick="" class="btn btn-warning">
+                            <i class="fas fa-edit fs-4 me-2"></i>
+                            Actualizar
+                        </button>
+                    }
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fas fa-times fs-4 me-2"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('#txtCodDiagnostico').keypress(function (event) {
+        var keycode = event.keyCode || event.which;
+        if (keycode == '13') {
+            GetDiagnosticoPorId();
+        }
+    });
+
+    function GetDiagnosticoPorId() {
+        let V_C10_CODDIA = $('#txtCodDiagnostico').val();
+        if (V_C10_CODDIA == '') {
+            NotificacionToastr('error', `Ingrese el codigo de Diagnostico.`, 'Campo requerido');
+            $('#txtCodDiagnostico').focus();
+            return false;
+        }
+        CargarWaitMe();
+        $.get('@Url.Content("~/FUA/ListarDiagnosticoPorId")', { V_C10_CODDIA: V_C10_CODDIA })
+            .done(function (response) {
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    console.log(result);
+                    $('#txtDesDiagnostico').val(result.c10_NOMBRE);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+
+
+
+    function ActualizarAtencionDia(){
+        let array_data = {};
+        array_data.N_ADIA_IDNUMREG = $('#txtId').val();
+        array_data.V_ADIA_CODDIA = $('#txtCodDiagnostico').val();
+        array_data.V_ADIA_CDX = $('#cbxIngEgre').val();
+        array_data.V_ADIA_TIPODIA = $('#cbxTipoDx').val();
+
+        console.log(array_data);
+
+        if (array_data.N_ADIA_IDNUMREG == '' || array_data.V_ADIA_CODDIA == '' || array_data.V_ADIA_CDX === null || array_data.V_ADIA_TIPODIA === null) {
+            NotificacionToastr('error', `Ingrese todos los campos para continuar.`, 'Campos requeridos');
+            $('#txtCodDiagnostico').focus();
+            return false;
+        }
+
+        if (parseFloat(array_data.N_ADIA_IDNUMREG) == 0){
+            //registrar nuevos datos
+        }
+        else{
+            //actualizar datos
+            let url_upd = "@Url.Action("ActualizarAtencionDia","FUA")";
+            AccionAjaxAtencion(url_upd, array_data);
+        }
+
+    }
+
+    function AccionAjaxAtencion(url, array_data){
+        $.post(url, array_data)
+            .done(function (response) {
+                console.log(response);
+                if(response.isSuccess == true){
+                    $('#mdl_AccionDiagnosticoFUAV').modal('hide');
+                    $('#modalDiagnostico').html('');
+                    Cargar_Diagnosticos();
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                }
+                else{
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+            });
+    }
+
+  async function RegistrarAteDiagRecAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    }
+
+    async function RegistrarATenMedicamentoRec(){
+        try{
+            const array_data = {};
+            array_data.N_ADIA_NUMREGATE = $("#Ate_Idnumreg").val();
+            array_data.V_ADIA_CODDIA = $("#txtCodDiagnostico").val();
+            array_data.V_ADIA_CDX = $("#cbxIngEgre").val();
+            array_data.V_ADIA_TIPODIA = $("#cbxTipoDx").val();
+
+            if (array_data.N_ADIA_NUMREGATE == "" || array_data.V_ADIA_CODDIA == "" || array_data.V_ADIA_CDX == "" || array_data.V_ADIA_TIPODIA == ""){
+                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
+                $('#txtCodDiagnostico').focus();
+                return false;
+            }
+
+            const response = await RegistrarAteDiagRecAjax('@Url.Content("~/FUA/InsertarAtenDiagnosticoREc")', array_data);
+            if(response.isSuccess){
+                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
+                $('#mdl_AccionDiagnosticoFUAV').modal('hide');
+                $('#modalDiagnostico').html('');
+                setTimeout(function () {
+                        Cargar_Diagnosticos();
+                }, 500);
+            }
+            else{
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+            }
+
+        } catch (err) {
+
+        }
+    }
+</script>

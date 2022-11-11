@@ -53,19 +53,19 @@
                     </div>
 
                     <div class="row mt-4">
-                        <div class="col-md-2">
-                            <div class="mb-4" data-select2-id="cbxPeriodo">
+                        <div class="col-md-4">
+                            <div class="mb-2" data-select2-id="cbxPeriodo">
                                 <label for="cbxPeriodo" class="form-label text-wrap fw-bolder fs-4">Periodo</label>
-                                <select aria-label="Seleccionar" id="cbxPeriodo" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                <select aria-label="Seleccionar" id="cbxPeriodo" onchange="CargarRangoPeriodoRec()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
                                     <option selected disabled value="">Seleccionar</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="mb-4" data-select2-id="cbxMes">
-                                <label for="cbxMes" class="form-label text-wrap fw-bolder fs-4">Mes</label>
-                                <select aria-label="Seleccionar" id="cbxMes" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
-                                    <option selected disabled value="">Seleccionar</option>
+                                    @{ if (ViewBag.RecPeriodo != null)
+                                        {
+                                            foreach (var item in ViewBag.RecPeriodo)
+                                            {
+                                                <option value="@item.PERIODO">@item.PERIODO</option>
+                                            }
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                     <div id="modalFiltroFUA"></div>
                     <div class="row mt-2">
                         <div class="col-md-12 d-grid gap-2">
-                            <button type="button"  onclick="Visualizar_FUA(1);" href="javascript:void(0);" id="btnConsultar" class="btn btn-primary">
+                            <button type="button"  onclick="CargarParametros(2,0);" href="javascript:void(0);" id="btnConsultar" class="btn btn-primary">
                                 <i class="fas fa-search fs-4 me-2"></i>
                                 Consultar
                             </button>
@@ -219,25 +219,35 @@
 </div>
 <script>
     setTimeout(function () {
-        CargarParametros();
-    }, 500);
-    function CargarParametros() {
+        //CargarParametros();
+    }, 1000);
+    function CargarParametros(vfiltro,vfua) {
         CargarWaitMe();
-            $("#tabla_p").load("@Url.Content("~/BusqReconsideracionEval/GetReconsideracionesEvalV")", function () {
-            if ($("#RecEval_cant").length == 1) {
-                $('#tblRecEval').DataTable({
-                    destroy: true,
-                    "ordering": false,
-                    responsive: true,
-                    "lengthChange": false,
-                    "searching": true,
-                    "language": languaje_spanol
-                });
-                TerminarWaitMe();
-            }else{
-                TerminarWaitMe();
-            }
+        let prd =$("#cbxPeriodo").val();
+               console.log(prd);
+        if (prd == "" || prd == null) {
+
+            NotificacionToastr('error', 'Debe ingresar el Periodo para inciar la busqueda', 'Oops...');
+            $("#cbxPeriodo").focus();
+            TerminarWaitMe();
+        } else {
+            $("#tabla_p").load("@Url.Content("~/BusqReconsideracionEval/GetReconsideracionesEvalV")", { periodo: prd, filtro: vfiltro, fua: vfua }, function() {
+
+                if ($("#tblRecEval_cant").length == 1) {
+                    $('#tblRecEval').DataTable({
+                        destroy: true,
+                        "ordering": true,
+                        responsive: true,
+                        "lengthChange": false,
+                        "searching": true,
+                        "language": languaje_spanol
+                    });
+                    TerminarWaitMe();
+                } else {
+                    TerminarWaitMe();
+                }
             });
+        }
     }
     $("#rbtnFiltroFUA").change(function () {
         if (this.checked) {
@@ -252,9 +262,88 @@
             $('#mdl_FiltroFuaReconsEvalV').modal("show");
         });
     }
-        function Visualizar_FUA(id) {
+    function Visualizar_FUA_EVAL(id) {
 
-        $(".content-custom").load("@Url.Content("~/FUA/Index")", { id: id})
+        $(".content-custom").load("@Url.Content("~/Evaluacion/Index")", { id: id})
+    }
+    function Formato_Fecha(fecha) {
+        return fecha.substring(3, 5) + "/" + fecha.substring(0, 2) + "/" + fecha.substring(6, 10);
+    }
+    function CargarRangoPeriodoRec() {
+        let cV_PERIODO = $("#cbxPeriodo").val();
+
+        var valores = { V_PERIODO: cV_PERIODO };
+        $.get("@Url.Content("~/BusqReconsideracionEval/CargarRangoPeriodoRec")", valores)
+            .done(function (response) {
+                if (response.isSuccess != false) {
+                    let data = response.result;
+                    console.log(data);
+                    $('#txtCronograma').val(`${Formato_Fecha(data.rcrO_FECHAINICIO)} al ${Formato_Fecha(data.rcrO_FECHAFIN)}`);
+                    $('#txtPeriodoAte').val(data.rcrO_TEXTO);
+
+
+                }
+                else {
+                    NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
+                }
+            });
+    }
+
+    function Evaluar_Reconsideracion(e,id) {
+        e.preventDefault();
+        Swal.fire({
+            html: `EVALUAR LA SOLICITUD DE RECONSIDERACION?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, Evaluar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Registrar_EvalRecon(id)
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+    function Registrar_EvalRecon(id) {
+        let valores_Aprob = [];
+        valores_Aprob[0] = id;
+
+        var formData = new FormData();
+        formData.append("id", valores_Aprob[0]);
+
+        CargarWaitMe();
+        $.ajax({
+            url: '@Url.Action("RegistrarEvaluacion", "BusqReconsideracionEval")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            type: 'POST',
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                    Visualizar_FUA_EVAL(id);
+                    TerminarWaitMe();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                    TerminarWaitMe();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
     }
 
 </script>

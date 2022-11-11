@@ -17,7 +17,7 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" id="txtId" >
+                <input type="hidden" id="txtId">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-4">
@@ -25,15 +25,7 @@
                                 Código
                             </div>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="txtCodMedicamento" />
-                                <button onclick="GetMedicamentoxMED_CODMED()" type="button" class="btn btn-primary input-group-text" id="btnConsultarMed">
-                                    <span class="indicator-label">
-                                        <i class="fas fa-search fs-4"></i> Consultar
-                                    </span>
-                                    <span class="indicator-progress">
-                                        Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                    </span>
-                                </button>
+                                <input type="text" class="form-control" id="txtCodMedicamento" disabled />
                             </div>
 
                         </div>
@@ -41,59 +33,27 @@
                     <div class="col-md-8">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Descripción</label>
-                            <input type="text" class="form-control form-control-solid " id="txtDesMedicamento" disabled />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">F. Farmacéutica</label>
-                            <input type="text" class="form-control form-control-solid " id="txtFormFarmace" disabled />
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Concentración</label>
-                            <input type="text" class="form-control form-control-solid " id="txtConcentrMed" disabled />
+                            <textarea type="text" class="form-control form-control-solid" rows="1" id="txtDesMedicamento" disabled></textarea>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Petitorio</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPetitorio" disabled  />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Fecha</label>
-                            <input type="text" class="form-control form-control-solid date " id="txtFechPetitorio" disabled  />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Nro Doc.</label>
-                            <input type="text" class="form-control " id="txtNroDocPetitorio" disabled  />
-                        </div>
-                    </div>
-                </div>
 
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Prescrita</label>
-                            <input type="text" class="form-control " id="txtPrescrito"  />
+                            <input type="text" class="form-control " id="txtPrescrito" disabled />
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Entregada</label>
-                            <input type="text" class="form-control " id="txtEntregado" />
+                            <input type="text" class="form-control " id="txtEntregado" disabled />
                         </div>
                     </div>
+
+
                     <div class="col-md-4">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Precio (S/.)</label>
@@ -102,53 +62,38 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-4" data-select2-id="cbxDiagnostico">
-                            <label for="cbxDiagnostico" class="form-label text-wrap fw-bolder fs-4">Diagnostico</label>
-                            <select aria-label="Seleccionar" id="cbxDiagnostico" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
-                                <option selected disabled value="">Seleccionar</option>
-                                @{ if (ViewBag.ListDX != null)
-                                    {
-                                        foreach (var item in ViewBag.ListDX)
-                                        {
-                                                                                                                                                        <option value="@item.ADIA_INRODIA">@item.C10_NOMBRE</option>
-                                        }
-                                    }
-                                }                                
-                            </select>
-                        </div>
-                    </div>
-                </div>
                 <hr style="border:3px solid" />
+
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-4" data-select2-id="cbxMedObsPar">
-                            <label for="cbxMedObsPar" class="form-label text-wrap fw-bolder fs-4">Codigo de Observacion *</label>
-                            <select aria-label="Seleccionar" id="cbxMedObsPar" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
-                                <option selected disabled value="0">Seleccionar</option>
-                                @{ if (ViewBag.ListObs != null)
-                                    {
-                                        foreach (var item in ViewBag.ListObs)
-                                        {
-                                            <option value="@item.Id">RVAL @item.ROBS_CODIGO_OBSERVACION - @item.TABLA - @item.ROBS_DESCRIPCION</option>
-                                        }
-                                    }
-                                }
-                            </select>
+
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Cant. Evaluación (S/.)</label>
+                            <input type="text" class="form-control" id="txtCantEval" />
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <span style="color:red">(*)SOLO PARA OBSERVACIONES PARCIALES:
-                        Seleccione la observación Parcial relacionado al Item que
-                        está ingresando o modificando (servirá como sustento
-                        para la solicitud de Reconsideración)
-                        </span>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Precio de Evaluación (S/.)</label>
+                            <input type="text" class="form-control form-control-solid " id="txtPrecioEval" disabled />
+                        </div>
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Motivo Cambio Cantidad</label>
+                            <textarea type="text" rows="3" class="form-control" id="txtMontCambCant"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Motivo Cambio Precio</label>
+                            <textarea type="text" rows="3" class="form-control" id="txtMontCambPrecio"></textarea>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="modal-footer">
                     @if (ViewBag.Tipo == "1")
@@ -251,6 +196,8 @@
                 $('#txtPetitorio').val(result.meD_PETIT);
                 $('#txtPrecio').val(result.meD_COSTO);
                 $('#txtNroDocPetitorio').val(result.meD_DOC);
+                $('#txtFechPetitorio').val(result.meD_MESALTA.substring(0, 10));
+                
             }
             else{
                 NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');

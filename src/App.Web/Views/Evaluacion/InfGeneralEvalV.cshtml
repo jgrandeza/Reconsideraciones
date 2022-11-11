@@ -1,0 +1,1039 @@
+﻿
+<div class="row">
+    <div class="accordion mt-10" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="PanelHeader1">
+                <button class="accordion-button" style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby1" aria-expanded="true" aria-controls="PanelBoby1">
+                    1. DATOS DE LA ATENCION
+                </button>
+            </h2>
+            <div id="PanelBoby1" class="accordion-collapse collapse show" aria-labelledby="PanelHeader1">
+                <div class="accordion-body">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtFUA" class="form-label text-wrap fw-bolder fs-4">N Formato de Atención</label>
+                                <input type="text" class="form-control form-control-solid" id="txtFUA" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-4">
+                                <label for="txtCostoSolicitado" class="form-label text-wrap fw-bolder fs-4">Costo Solicitado</label>
+                                <input type="text" class="form-control form-control-solid" id="txtCostoSolicitado" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-4">
+                                <label for="txtCostoObservado" class="form-label text-wrap fw-bolder fs-4">Costo Observado</label>
+                                <input type="text" class="form-control form-control-solid" id="txtCostoObservado" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-4">
+                                <label for="txtRM" class="form-label text-wrap fw-bolder fs-4">RM</label>
+                                <input type="text" class="form-control form-control-solid" id="txtRM" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtTipoTarifa" class="form-label text-wrap fw-bolder fs-4">Tipo</label>
+                                <input type="text" class="form-control form-control-solid" id="txtTipoTarifa" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtPerProduc" class="form-label text-wrap fw-bolder fs-4">Periodo Producción</label>
+                                <input type="text" class="form-control form-control-solid" id="txtPerProduc" disabled />
+                            </div>
+                        </div>
+
+                       @*<div class="col-md-4 mt-8" style="text-align:center;">
+                           <button type="button" class="btn btn-dark btn-md" onclick="CargarModalValMatriz();">
+                               <i class="fas fa-search fs-4 me-2"></i>
+                           </button>
+                       </div>*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="PanelHeader2">
+                <button class="accordion-button collapsed" style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby2" aria-expanded="false" aria-controls="PanelBoby2">
+                    2. DATOS DE LA ENTIDAD
+                </button>
+            </h2>
+            <div id="PanelBoby2" class="accordion-collapse collapse" aria-labelledby="PanelHeader2">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <div class="form-label fw-bolder fs-4">
+                                    IPRESS
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtIPRESS" />
+                                    <button type="button" onclick="CONS_IPRESS()" class="btn btn-primary input-group-text" id="btnIPRESS">
+                                        <i class="fas fa-search fs-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtEESS" class="form-label text-wrap fw-bolder fs-4">EESS</label>
+                                <input type="text" class="form-control form-control-solid" id="txtEESS" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtCategoria" class="form-label text-wrap fw-bolder fs-4">Categoria</label>
+                                <input type="text" class="form-control form-control-solid" id="txtCategoria" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-4">
+                                <label for="txtUEFUA" class="form-label text-wrap fw-bolder fs-4">Unidad Ejecutora</label>
+                                <input type="text" class="form-control form-control-solid" id="txtUEFUA" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="PanelHeader3">
+                <button class="accordion-button collapsed" style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby3" aria-expanded="false" aria-controls="PanelBoby3">
+                    3. DATOS DEL ASEGURADO
+                </button>
+            </h2>
+            <div id="PanelBoby3" class="accordion-collapse collapse" aria-labelledby="PanelHeader3">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxComponente">
+                                <label for="cbxComponente" class="form-label text-wrap fw-bolder fs-4">Componente</label>
+                                <select aria-label="Seleccionar" id="cbxComponente" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                    <option selected disabled value="">Seleccionar</option>                                    
+                                    @{ if (ViewBag.LisComponente != null)
+                                    {
+                                        foreach (var item in ViewBag.LisComponente)
+                                        {
+                                                                            <option value="@item.COM_IDCOMPONENTE">@item.COM_DESCRIPCION</option>
+                                        }
+                                    } 
+                                 }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxTipoFormato">
+                                <label for="cbxTipoFormato" class="form-label text-wrap fw-bolder fs-4">Tipo Formato</label>
+                                <select aria-label="Seleccionar" id="cbxTipoFormato" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtCodAfiliado" class="form-label text-wrap fw-bolder fs-4">Cod Afiliación / Inscripción</label>
+                                <!--<input type="text" class="form-control form-control-solid" id="txtCodAfiliado" disabled />-->
+                                <div class="row">
+                                    <div class="col-md-4"><input style="text-align: center;" type="text" class="form-control form-control-solid" id="txtCodAfiliado" disabled /></div>
+                                    <div class="col-md-3"><input style="text-align: center;" type="text" class="form-control form-control-solid" id="txtCodAfiliado1" disabled /></div>
+                                    <div class="col-md-5"><input style="text-align: center;" type="text" class="form-control form-control-solid" id="txtCodAfiliado2" disabled /></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border: 2px solid; color: #0697C9" />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-4" data-select2-id="cbxTipoDocumAfi">
+                                <label for="cbxTipoDocumAfi" class="form-label text-wrap fw-bolder fs-4">Tipo Documento</label>
+                                <select aria-label="Seleccionar" id="cbxTipoDocumAfi" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                    <option selected disabled value="">Seleccionar</option>
+
+                                         @{ if (ViewBag.ListTipoDocIdent != null)
+                                            {
+                                                foreach (var item in ViewBag.ListTipoDocIdent)
+                                                {
+                                                                                    <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
+                                                }
+                                            } 
+                                         }
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-4">
+                                <label for="txtDocIdentAfi" class="form-label text-wrap fw-bolder fs-4">Nro Documento</label>
+                                <input type="text" class="form-control form-control-solid" id="txtDocIdentAfi" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-4" data-select2-id="cbxOtroSeguro">
+                                <label for="cbxOtroSeguro" class="form-label text-wrap fw-bolder fs-4">Tiene otro seguro?</label>
+                                <select aria-label="Seleccionar" id="cbxOtroSeguro" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-4">
+                                <label for="txtCodAfiOtr" class="form-label text-wrap fw-bolder fs-4">Cod Afiliación del Seguro</label>
+                                <div class="row">
+                                    <div class="col-md-4"><input type="text" class="form-control form-control-solid" id="txtCodAfiOtr" disabled /></div>
+                                    <div class="col-md-4"><input type="text" class="form-control form-control-solid" id="txtCodAfiOtr1" disabled /></div>
+                                    <div class="col-md-4"><input type="text" class="form-control form-control-solid" id="txtCodAfiOtr2" disabled /></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-4">
+                                <label for="txtApePaterAfi" class="form-label text-wrap fw-bolder fs-4">Apellido Paterno</label>
+                                <input type="text" class="form-control form-control-solid" id="txtApePaterAfi" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-4">
+                                <label for="txtApeMaterAfi" class="form-label text-wrap fw-bolder fs-4">Apellido Materno</label>
+                                <input type="text" class="form-control form-control-solid" id="txtApeMaterAfi" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-4">
+                                <label for="txtNombreAfi" class="form-label text-wrap fw-bolder fs-4">Primer Nombre</label>
+                                <input type="text" class="form-control form-control-solid" id="txtNombreAfi" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-4">
+                                <label for="txtOtroNombreAfi" class="form-label text-wrap fw-bolder fs-4">Otros Nombres</label>
+                                <input type="text" class="form-control form-control-solid" id="txtOtroNombreAfi" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtFechNaciAfi" class="form-label fw-bolder fs-4">Fecha Nacimiento</label>
+                                <input class="form-control form-control-solid date" id="txtFechNaciAfi" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtEdadAfi" class="form-label text-wrap fw-bolder fs-4">Edad (año/mes/dia)</label>
+                                <input type="text" class="form-control form-control-solid" id="txtEdadAfi" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxGeneroAfi">
+                                <label for="cbxGeneroAfi" class="form-label text-wrap fw-bolder fs-4">Genero</label>
+                                <select aria-label="Seleccionar" id="cbxGeneroAfi" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                    <option selected disabled value="">Seleccionar</option>
+                                         @{ if (ViewBag.ListGenero != null)
+                                            {
+                                                foreach (var item in ViewBag.ListGenero)
+                                                {
+                                                                                    <option value="@item.SEX_IDSEXO">@item.SEX_DESCRIPCION</option>
+                                                }
+                                            } 
+                                         }
+                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4" data-select2-id="cbxIntegrSemi">
+                                <label for="cbxIntegrSemi" class="form-label text-wrap fw-bolder fs-4">Integrante Semisubsidiado</label>
+                                <select aria-label="Seleccionar" id="cbxIntegrSemi" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4" data-select2-id="cbxConsiAfili">
+                                <label for="cbxConsiAfili" class="form-label text-wrap fw-bolder fs-4">Coincidencia de Nro Afiliado</label>
+                                <select aria-label="Seleccionar" id="cbxConsiAfili" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                    <option selected disabled value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border: 2px solid; color: #0697C9" />
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4" data-select2-id="cbxTipoAtencion">
+                                <label for="cbxTipoAtencion" class="form-label text-wrap fw-bolder fs-4">Atención</label>
+                                <select aria-label="Seleccionar" id="cbxTipoAtencion" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                    <option selected disabled value="">Seleccionar</option>
+                                    @{ if (ViewBag.ListTipoAtenc != null)
+                                        {
+                                            foreach (var item in ViewBag.ListTipoAtenc)
+                                            {
+                                                              <option value="@item.TAT_CODATE">@item.TAT_NOMBRE</option>
+                                            }
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4" data-select2-id="cbxConceptoPresA">
+                                <label for="cbxConceptoPresA" class="form-label text-wrap fw-bolder fs-4">Concepto Prestacional:</label>
+                                <select aria-label="Seleccionar" id="cbxConceptoPresA" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                   
+                                    @{ if (ViewBag.ListModalidadAte != null)
+                                        {
+                                            foreach (var item in ViewBag.ListModalidadAte)
+                                            {
+                                                                                <option value="@item.MOD_IDMODALIDAD">@item.MOD_DESCRIPCION</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4" data-select2-id="cbxGestante">
+                                <label for="cbxGestante" class="form-label text-wrap fw-bolder fs-4">Condición Materna</label>
+                                <select aria-label="Seleccionar" id="cbxGestante" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                    <option selected disabled value="">Seleccionar</option>
+                                     @{ if (ViewBag.ListCondiMaterna != null)
+                                            {
+                                                foreach (var item in ViewBag.ListCondiMaterna)
+                                                {
+                                                                                    <option value="@item.CDM_IDCONDICION">@item.CDM_NOMBRE</option>
+                                                }
+                                            } 
+                                         }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label for="txtFechPartoAfi" class="form-label fw-bolder fs-4">Fecha Parto</label>
+                                <input class="form-control form-control-solid date" id="txtFechPartoAfi" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtHCAfi" class="form-label text-wrap fw-bolder fs-4">N Historia Clinica</label>
+                                <input type="text" class="form-control form-control-solid" id="txtHCAfi" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtNroAutoriz" class="form-label text-wrap fw-bolder fs-4">N Autorización</label>
+                                <input type="text" class="form-control form-control-solid" id="txtNroAutoriz" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtMontoAfi" class="form-label text-wrap fw-bolder fs-4">Costo</label>
+                                <input type="text" class="form-control form-control-solid" id="txtMontoAfi" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="PanelHeader4">
+                <button class="accordion-button collapsed" style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby4" aria-expanded="false" aria-controls="PanelBoby4">
+                    4. DATOS DE LA ATENCIÓN
+                </button>
+            </h2>
+            <div id="PanelBoby4" class="accordion-collapse collapse" aria-labelledby="PanelHeader4">
+                <div class="accordion-body">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtFechAte" class="form-label fw-bolder fs-4">Fecha de Atención</label>
+                                <input class="form-control form-control-solid date" id="txtFechAte" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxLugarAte">
+                                <label for="cbxLugarAte" class="form-label text-wrap fw-bolder fs-4">Lugar Atención</label>
+                                <select aria-label="Seleccionar" id="cbxLugarAte" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+                                    <option selected disabled value="">Seleccionar</option>
+                                    @{ if (ViewBag.ListLugarAte != null)
+                                        {
+                                            foreach (var item in ViewBag.ListLugarAte)
+                                            {
+                                                                                <option value="@item.LUG_IDLUGAR">@item.LUG_DESCRIPCION</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4" data-select2-id="cbxPersonalAte">
+                                <label for="cbxPersonalAte" class="form-label text-wrap fw-bolder fs-4">Personal que atiende</label>
+                                <select aria-label="Seleccionar" id="cbxPersonalAte" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 select">
+
+                                    @{ if (ViewBag.ListOrigenPersona != null)
+                                        {
+                                            foreach (var item in ViewBag.ListOrigenPersona)
+                                            {
+                                                                                <option value="@item.OPE_IDORIGENPERSONAL">@item.OPE_DESCRIPCION</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <div class="form-label fw-bolder fs-4">
+                                    Código Prestación
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtCodPrestacion" />
+                                    <button type="button" onclick="CargarServ()" class="btn btn-primary input-group-text" id="btnConsPrest">
+                                        <span class="indicator-label">
+                                            <i class="fas fa-search fs-4"></i>
+                                        </span>
+                                        <span class="indicator-progress">
+                                            Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <label for="txtServicio" class="form-label text-wrap fw-bolder fs-4">Perstación</label>
+                                <input type="text" class="form-control form-control-solid" id="txtServicio" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border: 2px solid; color: #0697C9" />
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <div class="form-label fw-bolder fs-4">
+                                    Es Referido del EESS
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtEESSRef" />
+                                    <button type="button" onclick="EESSRefe()" class="btn btn-primary input-group-text" id="btnEESSRef">
+                                        <span class="indicator-label">
+                                            <i class="fas fa-search fs-4"></i>
+                                        </span>
+                                        <span class="indicator-progress">
+                                            Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <label for="txtDescEESSRef" class="form-label text-wrap fw-bolder fs-4">Estab Referencia</label>
+                                <input type="text" class="form-control form-control-solid" disabled id="txtDescEESSRef" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label for="txtNumRef" class="form-label text-wrap fw-bolder fs-4">N Hoja de Referencia</label>
+                                <input type="text" class="form-control form-control-solid" id="txtNumRef" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label for="txtFechIngresoAte" class="form-label text-wrap fw-bolder fs-4">Fecha Ingreso</label>
+                                <input type="text" class="form-control form-control-solid date" id="txtFechIngresoAte" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4" data-select2-id="cbxDestinoRefAte">
+                                <label for="cbxDestinoRefAte" class="form-label text-wrap fw-bolder fs-4">Destino del Asegurado</label>
+                                <select aria-label="Seleccionar" id="cbxDestinoRefAte" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                    @{ if (ViewBag.ListDestinoAseg != null)
+                                        {
+                                            foreach (var item in ViewBag.ListDestinoAseg)
+                                            {
+                                                <option value="@item.des_coddestino">@item.des_nombre</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label for="txtFechAltaAte" class="form-label text-wrap fw-bolder fs-4">Fecha Alta</label>
+                                <input type="text" class="form-control form-control-solid date" id="txtFechAltaAte" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <div class="form-label fw-bolder fs-4">
+                                    Cod. E.S. Referencia/ContraRefe
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtEESSContraRef" />
+                                    <button type="button" onclick="EESSContrRefe()" class="btn btn-primary input-group-text" id="btnEESSContraRef">
+                                        <span class="indicator-label">
+                                            <i class="fas fa-search fs-4"></i>
+                                        </span>
+                                        <span class="indicator-progress">
+                                            Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <label for="txtDescEESSContraRef" class="form-label text-wrap fw-bolder fs-4">E.S. Referencia/ContraRefe</label>
+                                <input type="text" class="form-control form-control-solid" disabled id="txtDescEESSContraRef" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="txtNumContraRef" class="form-label text-wrap fw-bolder fs-4">N Hoja Referencia/ContraRefe</label>
+                                <input type="text" class="form-control form-control-solid" id="txtNumContraRef" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="PanelHeader5">
+                <button class="accordion-button collapsed" style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby5" aria-expanded="false" aria-controls="PanelBoby5">
+                    5. RESPONSABLE DE LA ATENCIÓN
+                </button>
+            </h2>
+            <div id="PanelBoby5" class="accordion-collapse collapse" aria-labelledby="PanelHeader5">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-4" data-select2-id="cbxTipoDocu">
+                                <label for="cbxTipoDocu" class="form-label text-wrap fw-bolder fs-4">Tipo Documento</label>
+                                <select aria-label="Seleccionar" id="cbxTipoDocu" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                    <option selected disabled value="">Seleccionar</option>
+                                    @{ if (ViewBag.ListTipoDocIdent != null)
+                                        {
+                                            foreach (var item in ViewBag.ListTipoDocIdent)
+                                            {
+                                                                                <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-4">
+                                <div class="form-label fw-bolder fs-4">
+                                    Nro Documento
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtDocuIdent" />
+                                    <button type="button" onclick="CargaPersSalud()" class="btn btn-primary input-group-text" id="btnDocuIdent">
+                                            <i class="fas fa-search fs-4"></i>                                        
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label for="txtRespAte" class="form-label text-wrap fw-bolder fs-4">Apellidos y Nombres</label>
+                                <input type="text" class="form-control form-control-solid" id="txtRespAte" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4" data-select2-id="cbxProfesional">
+                                <label for="cbxProfesional" class="form-label text-wrap fw-bolder fs-4">Responsable Atención</label>
+                                <select aria-label="Seleccionar" id="cbxProfesional" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                    <option selected disabled value="">Seleccionar</option>
+                                    @{ if (ViewBag.ListTipoPersonal != null)
+                                        {
+                                            foreach (var item in ViewBag.ListTipoPersonal)
+                                            {
+                                                               <option value="@item.TPS_IDCODIGO">@item.TPS_DESCRIPCION</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label for="txtColegiatura" class="form-label text-wrap fw-bolder fs-4">Nro Colegiatura</label>
+                                <input type="text" class="form-control form-control-solid" id="txtColegiatura"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4" data-select2-id="cbxEspecialidad">
+                                <label for="cbxEspecialidad" class="form-label text-wrap fw-bolder fs-4">Especialidad</label>
+                                <select aria-label="Seleccionar" id="cbxEspecialidad" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                    <option selected disabled value="">Seleccionar</option>
+                                    @{ if (ViewBag.ListEspecialidad != null)
+                                        {
+                                            foreach (var item in ViewBag.ListEspecialidad)
+                                            {
+                                                                <option value="@item.ESP_IDESPECIALIDAD">@item.ESP_CNOMBRE</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="PanelHeader6">
+                <button class="accordion-button collapsed" style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby6" aria-expanded="false" aria-controls="PanelBoby6">
+                    6. OBSERVACIONES
+                </button>
+            </h2>
+            <div id="PanelBoby6" class="accordion-collapse collapse" aria-labelledby="PanelHeader6">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                                <textarea class="form-control form-control-solid" data-kt-autosize="true" id="txtobservacion" disabled></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(".date").datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        todayHighlight: true,
+        language: "es"
+    });
+</script>
+
+<script>
+    setTimeout(() => { CargarDatosIG(); }, 600);
+
+    function Formato_Fecha(fecha) {
+        return fecha.substring(8, 10) + "/" + fecha.substring(5, 7) + "/" + fecha.substring(0, 4);
+    }
+
+    function CargarDatosIG() {
+        CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        var formData = new FormData();
+        formData.append("id", id);
+
+        $.ajax({
+            url: '@Url.Action("AtencionxID", "FUA")',
+            type: "POST",
+            enctype: 'multipart/form-data',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+
+            error: function (e) {
+                NotificacionToastr('error', `Error al conectarse?`, 'ALERTA');
+                //TerminarWaitMe();
+                console.log("ERROR : ", e.responseText);
+            }
+
+        }).done(function (response) {
+            var data = response.result;
+            console.log(data);
+            if (response.isSuccess == true) {
+                //$("#lblProyecto2").html(data.proNombreProyectoInversion);
+
+                $("#txtFUA").val(data.atE_DISA +"-"+ data.atE_LOTE +"-"+ data.atE_NUMREGATE );
+                $("#txtCostoObservado").val(data.atE_VALOR_BRUTO- data.atE_VALOR_NETO);
+
+                 $("#txtPerProduc").val(data.atE_PERIODO + "-"+ data.atE_MES);
+
+      
+                $("#txtIPRESS").val(data.atE_IDEESS);
+
+                CONS_IPRESS();
+
+
+                //3. DATOS ASEGURAD0
+
+                $("#cbxComponente").val(data.atE_IDCOMPONENTE);
+                $('#cbxComponente').trigger('change');
+                $("#cbxTipoFormato").val(data.atE_TIPOFORMATOAFIINS);
+                $('#cbxTipoFormato').trigger('change');
+                $("#txtCodAfiliado").val(data.atE_DISAAFIINS);
+                $("#txtCodAfiliado1").val(data.atE_TIPOFORMATOAFIINS);
+                $("#txtCodAfiliado2").val(data.atE_NUMREGAFIINS);
+                $("#cbxTipoDocumAfi").val(data.atE_TIPODOCUMENTO);
+                $('#cbxTipoDocumAfi').trigger('change');
+                $("#txtDocIdentAfi").val(data.atE_DNI);
+                $("#txtApePaterAfi").val(data.atE_APPAT);
+                $("#txtApeMaterAfi").val(data.atE_APMAT);
+                $("#txtNombreAfi").val(data.atE_PNOM);
+                $("#txtOtroNombreAfi").val(data.atE_SNOM);
+                $('#txtFechNaciAfi').datepicker('setDate', Formato_Fecha(data.atE_FECNAC));
+
+                $("#txtEdadAfi").val(data.atE_EDAD);
+                $("#cbxGeneroAfi").val(data.atE_IDSEXO);
+                $('#cbxGeneroAfi').trigger('change');
+                $("#cbxTipoAtencion").val(data.atE_IDMODALIDAD);
+                $('#cbxTipoAtencion').trigger('change');
+                //falta prestacion
+
+                $("#cbxGestante").val(data.atE_ESGESTANTE);
+                $('#cbxGestante').trigger('change');
+                if (data.atE_ESGESTANTE != 0) {
+                    $('#txtFechPartoAfi').datepicker('setDate', Formato_Fecha(data.atE_FECPARTO));
+
+                }
+                $("#txtHCAfi").val(data.atE_HISTORIACLINICA);
+                $("#txtNroAutoriz").val(data.atE_NUMAUTORIZACION);
+                $("#txtMontoAfi").val(data.atE_MONTO);
+
+                //DATOS DE LA ATENCIÓN
+                $('#txtFechAte').datepicker('setDate', Formato_Fecha(data.atE_FECATENCION));
+
+                $("#cbxLugarAte").val(data.atE_IDLUGAR);
+                $('#cbxLugarAte').trigger('change');
+                $("#cbxPersonalAte").val(data.atE_IDORIGENPERSONAL);
+                $('#cbxPersonalAte').trigger('change');
+                $("#txtCodPrestacion").val(data.atE_IDSERVICIO);
+                CargarServicio(data.atE_IDSERVICIO);
+                $("#txtEESSRef").val(data.atE_IDEESSREFIRIO);
+
+                EESSRefe();
+
+                $("#txtNumRef").val(data.atE_NROHOJAREFERENCIA);
+                $('#txtFechIngresoAte').datepicker('setDate', Formato_Fecha(data.atE_FECINGHOSP));
+
+                $("#cbxDestinoRefAte").val(data.atE_CODDESTINO);
+                $('#cbxDestinoRefAte').trigger('change');
+                $('#txtFechAltaAte').datepicker('setDate', Formato_Fecha(data.atE_FECALTAHOSP));
+
+
+                $("#txtEESSContraRef").val(data.atE_IDEESSCONTRAREFIERE);
+                EESSContrRefe();
+
+                $("#txtNumContraRef").val(data.atE_NUMHOJACONTRAREFIERE);
+
+                //RESPONSABLE DE LA ATENCION
+
+                $("#cbxTipoDocu").val(data.atE_TIPODOCPERSONALSALUD);
+                $('#cbxTipoDocu').trigger('change');
+                $("#txtDocuIdent").val(data.atE_DNIPERSONALSALUD);
+                CargarPersonalSalud(data.atE_DNIPERSONALSALUD);
+                $("#txtColegiatura").val(data.atE_COLEGIATURAPERSONALSALUD);
+                $("#cbxProfesional").val(data.atE_IDTIPOPERSONALSALUD);
+                $('#cbxProfesional').trigger('change');
+
+                //OBSERVACION
+                $("#txtobservacion").val(data.atE_OBSERVACION);  
+                
+
+
+            } else {
+                NotificacionToastr('error', `Error al conectarse?`, 'ALERTA');
+            }
+
+        }).fail(function () {
+
+        }).always(function () {
+            TerminarWaitMe();
+        });
+    }
+
+    async function CONS_IPRESS() {
+        let eess = $("#txtIPRESS").val();
+        try {
+            const { result } = await CargarEESS(eess)
+            console.log(result);
+            $("#txtEESS").val(result.nombre);
+            $("#txtCategoria").val(result.abrvcat);
+            $("#txtUEFUA").val(result.desejec);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+    async function EESSRefe() {
+        let eess = $("#txtEESSRef").val();
+        try {
+            const { result } = await CargarEESS(eess)
+            console.log(result);
+            $("#txtDescEESSRef").val(result.nombre);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    async function EESSContrRefe() {
+        let eess = $("#txtEESSContraRef").val();
+        try {
+            const { result } = await CargarEESS(eess)
+            console.log(result);
+            $("#txtDescEESSContraRef").val(result.nombre);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async function CargarEESS(eess) {
+        if (eess == "" || eess === null) {
+            return false;
+        }
+
+        let id = eess;
+        var formData = new FormData();
+        formData.append("id", id);
+
+        return $.ajax({
+            url: '@Url.Action("EESSxID", "FUA")',
+            type: "POST",
+            enctype: 'multipart/form-data',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            async: true,
+
+            error: function (e) {
+                NotificacionToastr('error', `Error al conectarse?`, 'ALERTA');
+                //TerminarWaitMe();
+                console.log("ERROR : ", e.responseText);
+            }
+
+        });
+    }
+
+    function CargarServ() {
+        let id=$("#txtCodPrestacion").val();
+        CargarServicio(id);
+    }
+
+
+    function CargarServicio(srv) {
+        if (srv == "" || srv === null || srv.length != 3) {
+            NotificacionToastr('error', `Ingrese Codigo de Servicio correcto.`, 'ALERTA');
+            return false;
+        }
+
+        let id = srv;
+        var formData = new FormData();
+        formData.append("id", id);
+
+        $.ajax({
+            url: '@Url.Action("ServicioxID", "FUA")',
+            type: "POST",
+            enctype: 'multipart/form-data',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+
+            error: function (e) {
+                NotificacionToastr('error', `Error al conectarse?`, 'ALERTA');
+                //TerminarWaitMe();
+                console.log("ERROR : ", e.responseText);
+            }
+
+        }).done(function (response) {
+            var data = response.result;
+            if (response.isSuccess == true) {
+                $('#txtServicio').val(data.seR_NOMBRE);
+            } else {
+                NotificacionToastr('error', `Error al conectarse?`, 'ALERTA');
+            }
+
+        }).fail(function () {
+
+        }).always(function () {
+
+        });
+    }
+
+    function CargaPersSalud(){
+        let pers=$("#txtDocuIdent").val();
+        CargarPersonalSalud(pers);
+    }
+
+    function CargarPersonalSalud(srv) {
+        if (srv == "" || srv === null) {
+            NotificacionToastr('error', `Ingrese el Documento de Identidad correcto.`, 'ALERTA');
+            return false;
+        }
+
+        let id = srv;
+        var formData = new FormData();
+        formData.append("id", id);
+
+        $.ajax({
+            url: '@Url.Action("PersonalSaludxID", "FUA")',
+            type: "POST",
+            enctype: 'multipart/form-data',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+
+            error: function (e) {
+                NotificacionToastr('error', `Error al conectarse?`, 'ALERTA');
+                //TerminarWaitMe();
+                console.log("ERROR : ", e.responseText);
+            }
+
+        }).done(function (response) {
+            var data = response.result;
+            if (response.isSuccess == true) {
+                console.log(data);
+                $('#txtRespAte').val(data.nombrePersonal);
+                $('#cbxProfesional').val(parseInt(data.idTipoPersonal));
+                $('#txtColegiatura').val(data.colegiatura);
+                $('#cbxEspecialidad').val(data.idEspecialidad);
+                $('#cbxEspecialidad').trigger('change');
+                               
+                //idEspecialidad
+                //cespecialidad
+                
+            } else {
+                NotificacionToastr('error', `El Documento Ingresado no existe?`, 'ALERTA');
+                $('#txtRespAte').val('');
+            }
+
+        }).fail(function () {
+
+        }).always(function () {
+
+        });
+    }
+
+    function actualizar_datos_FUA(){
+        Swal.fire({
+          title: '¿Estas Seguro?',
+          text: "¡No podrás revertir esto!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'Si, Actualizar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            _actualizar_datos_FUA();
+          }
+        })
+    }
+
+    function _actualizar_datos_FUA(){
+        const FUA = {};
+
+        FUA.ATE_IDNUMREG = $("#Ate_Idnumreg").val();
+        FUA.ATE_IDCOMPONENTE = $("#cbxComponente").val();
+        FUA.ATE_DISAAFIINS = $("#txtCodAfiliado").val();
+        FUA.ATE_TIPOFORMATOAFIINS = $("#txtCodAfiliado1").val();
+        FUA.ATE_NUMREGAFIINS = $("#txtCodAfiliado2").val();
+        FUA.ATE_TIPODOCUMENTO = $("#cbxTipoDocumAfi").val();
+        FUA.ATE_DNI = $("#txtDocIdentAfi").val();
+        FUA.ATE_APPAT = $("#txtApePaterAfi").val();
+        FUA.ATE_APMAT = $("#txtApeMaterAfi").val();
+        FUA.ATE_PNOM = $("#txtNombreAfi").val();
+        FUA.ATE_SNOM = $("#txtOtroNombreAfi").val();
+        FUA.ATE_FECNAC = $("#txtFechNaciAfi").val();
+        FUA.ATE_EDAD = $("#txtEdadAfi").val();
+        FUA.ATE_IDSEXO = $("#cbxGeneroAfi").val();
+        FUA.ATE_IDMODALIDAD = $("#cbxTipoAtencion").val();
+        FUA.ATE_ESGESTANTE = $("#cbxGestante").val();
+        FUA.ATE_FECPARTO = $("#txtFechPartoAfi").val();
+        FUA.ATE_HISTORIACLINICA = $("#txtHCAfi").val();
+        FUA.ATE_NUMAUTORIZACION = $("#txtNroAutoriz").val();
+        FUA.ATE_MONTO = $("#txtMontoAfi").val();
+        FUA.ATE_FECATENCION = $("#txtFechAte").val();
+        FUA.ATE_IDLUGAR = $("#cbxLugarAte").val();
+        FUA.ATE_IDORIGENPERSONAL = $("#cbxPersonalAte").val();
+        FUA.ATE_IDSERVICIO = $("#txtCodPrestacion").val(); 
+        FUA.ATE_IDEESSREFIRIO = $("#txtEESSRef").val();
+        FUA.ATE_NROHOJAREFERENCIA = $("#txtNumRef").val();
+        FUA.ATE_FECINGHOSP = $("#txtFechIngresoAte").val();
+        FUA.ATE_CODDESTINO = $("#cbxDestinoRefAte").val();
+        FUA.ATE_FECALTAHOSP = $("#txtFechAltaAte").val();
+        FUA.ATE_IDEESSCONTRAREFIERE = $("#txtEESSContraRef").val();
+        FUA.ATE_NUMHOJACONTRAREFIERE = $("#txtNumContraRef").val();;
+        FUA.ATE_TIPODOCPERSONALSALUD = $("#cbxTipoDocu").val();;
+        FUA.ATE_DNIPERSONALSALUD = $("#txtDocuIdent").val();;
+        FUA.ATE_COLEGIATURAPERSONALSALUD = $("#txtColegiatura").val();
+        FUA.ATE_IDTIPOPERSONALSALUD = $("#cbxProfesional").val();
+        FUA.ATE_OBSERVACION = $("#txtobservacion").val();
+
+        $.post('@Url.Action("ActualizarDatosFUA","FUA")', FUA)
+          .done(function(response) {
+            if(response.isSuccess == true){
+                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+            }
+            else{
+                NotificacionToastr('error', `${response.message}`, 'Error..!');
+            }
+          });
+    }
+
+</script>

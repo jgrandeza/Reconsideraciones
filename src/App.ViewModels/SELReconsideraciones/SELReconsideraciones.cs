@@ -444,6 +444,8 @@ namespace App.ViewModels.SELReconsideraciones
         public string? MED_CONCEN { get; set; }
         public int? MED_COSTO { get; set; }
         public string? MED_PETIT { get; set; }
+        public DateTime? MED_MESALTA { get; set; }
+        public string? MED_DOC { get; set; }
 
 
     }

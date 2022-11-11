@@ -149,5 +149,31 @@ namespace App.Services.Services
                 return false;
             }
         }
+
+        public async Task<Mensaje_Ins> ActualizarAteEval(int N_ATE_IDNUMREG)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_ATE_IDNUMREG", N_ATE_IDNUMREG, OracleMappingType.Decimal, ParameterDirection.Input);
+
+
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_EVALUAR_RECONS";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
     }
 }
