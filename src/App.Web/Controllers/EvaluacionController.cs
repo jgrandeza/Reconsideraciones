@@ -412,6 +412,15 @@ namespace App.Web.Controllers
             return PartialView();
         }
 
+        public async Task<IActionResult> ListarObsEvalV(int id)
+        {
+
+            var result = await _SELReconsideraciones.ListarObservacionesSust(id);
+
+            return PartialView(result);
+        }
+
+
     }
 }
 
