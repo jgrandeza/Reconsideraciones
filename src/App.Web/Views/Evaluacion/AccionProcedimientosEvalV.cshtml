@@ -135,7 +135,7 @@
             return false;
         }
         CargarWaitMe();
-        $.get('@Url.Content("~/FUA/ListarApoDIAGPorId")', { idate:idate, id: id })
+        $.get('@Url.Content("~/Evaluacion/ListarApoDIAGPorId")', { idate:idate, id: id })
             .done(function (response) {
                 if (response.isSuccess == true) {
                     let { result } = response;
@@ -157,30 +157,6 @@
        $('#txtSubGrupoProc').val('');
     }
 
-    function GetAtencionAPOPorId() {
-        let id = $('#txtId').val();
-        CargarWaitMe();
-        $.get('@Url.Content("~/FUA/ListarAtencionAPOPorId")', { id: id })
-            .done(function (response) {
-                if (response.isSuccess == true) {
-                    let { result } = response;
-                    console.log(result);
-                    $('#txtCodProcedimiento').val(result.aapO_CODAPO);
-                    $('#txtPrescritaProc').val(result.aapO_ICANTPROCED);
-                    $('#txtEjecutadoProc').val(result.aapO_ICANTEJECUTADA);
-                    $('#txtPrecioProc').val(result.aapO_NPO);
-                    $('#cbxDiagnosticoProc').val(result.aapO_INRODIA);
-                    $('#cbxDiagnosticoProc').trigger('change');
-                    GetProcedimientoPorId();
-
-                }
-                else {
-                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-                }
-                TerminarWaitMe();
-
-            });
-    }
 
     function Conf_GuardarApo(e) {
         e.preventDefault();
