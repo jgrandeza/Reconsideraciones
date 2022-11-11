@@ -8,43 +8,43 @@
     <!--begin::Label-->
     <div class="col-lg-8 d-flex align-items-center">
         <div class="form-check form-check-custom form-check-solid me-10" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
-            <input class="form-check-input" type="checkbox" value="1" id="checkA" />
+            <input class="form-check-input" type="checkbox" value="1" id="checkA" disabled/>
             <label class="form-check-label" for="checkA">
                 (a)
             </label>
         </div>
         <div class="form-check form-check-custom form-check-solid me-10">
-            <input class="form-check-input" type="checkbox" value="2" id="checkB" />
+            <input class="form-check-input" type="checkbox" value="2" id="checkB" disabled/>
             <label class="form-check-label" for="checkB">
                 (b)
             </label>
         </div>
         <div class="form-check form-check-custom form-check-solid me-10">
-            <input class="form-check-input" type="checkbox" value="3" id="checkC" />
+            <input class="form-check-input" type="checkbox" value="3" id="checkC" disabled/>
             <label class="form-check-label" for="checkC">
                 (c)
             </label>
         </div>
         <div class="form-check form-check-custom form-check-solid me-10">
-            <input class="form-check-input" type="checkbox" value="4" id="checkD" />
+            <input class="form-check-input" type="checkbox" value="4" id="checkD" disabled/>
             <label class="form-check-label" for="checkD">
                 (d)
             </label>
         </div>
         <div class="form-check form-check-custom form-check-solid me-10">
-            <input class="form-check-input" type="checkbox" value="5" id="checkE" />
+            <input class="form-check-input" type="checkbox" value="5" id="checkE" disabled/>
             <label class="form-check-label" for="checkE">
                 (e)
             </label>
         </div>
         <div class="form-check form-check-custom form-check-solid me-10">
-            <input class="form-check-input" type="checkbox" value="6" id="checkF" />
+            <input class="form-check-input" type="checkbox" value="6" id="checkF" disabled/>
             <label class="form-check-label" for="checkF">
                 (f)
             </label>
         </div>
         <div class="form-check form-check-custom form-check-solid me-10">
-            <input class="form-check-input" type="checkbox" value="7" id="checkRM" />
+            <input class="form-check-input" type="checkbox" value="7" id="checkRM" disabled/>
             <label class="form-check-label" for="checkRM">
                 RM-725
             </label>
@@ -57,18 +57,105 @@
     <div class="col-md-4">
         <div class="mb-4" data-select2-id="cbxTipoSustento">
             <label for="cbxTipoSustento" class="form-label text-wrap fw-bolder fs-4">Tipo Reconsideración</label>
-            <select aria-label="Seleccionar" id="cbxTipoSustento" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+            <select aria-label="Seleccionar" id="cbxTipoSustento" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4" disabled>
                 <option selected="selected" value="L">Levantar Observación</option>
                 <option value="E">Sustentar Eliminación de Item observado Parcial</option>
                 <option value="J">Justificar Extemporaneidad</option>
             </select>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-8">
         <div class="mb-4">
             <label class="form-label fw-bolder fs-4">Descripción</label>
-            <input type="text" class="form-control" id="txtDesSustento" value="" />
+            <input type="text" class="form-control" id="txtDesSustento" value="" disabled/>
         </div>
     </div>
 </div>
 
+<div id="mdl_Archivos"></div>
+<hr class="mt-5" style="border:2px solid" />
+<h3 style="color: #264a74">COSTO A RECONSIDERAR: POR SER PRESTACIÓN CONSUMO,SE CONSIDERA EL COSTO DE LA TARIFA MÁS EL TOTAL DE CONSUMO.</h3>
+<div id="mdl_Costos" ></div>
+<script>
+     setTimeout(function () {
+         VisualizaSus();
+         Cargar_Arch_Sus();
+         Cargar_Costos_Eval();
+    }, 500);
+
+    async function Cargar_Arch_Sus() {
+	    CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        try {
+            const response = await $.get("@Url.Content("~/Evaluacion/InfSoliRecSusEval")", { id: id});
+            $('#mdl_Archivos').html(response);
+            TerminarWaitMe();
+        } catch {
+            console.log('Error Archiv Sus');
+            TerminarWaitMe();
+        }
+
+    }
+     async function Cargar_Costos_Eval() {
+	    CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        try {
+            const response = await $.get("@Url.Content("~/Evaluacion/InfSoliRecCostEval")", { id: id});
+            $('#mdl_Costos').html(response);
+            TerminarWaitMe();
+        } catch {
+            console.log('Error al Cargar Costos de Evaluacion');
+            TerminarWaitMe();
+        }
+
+    }
+
+    function VisualizaSus() {
+       let id = $("#Ate_Idnumreg").val();
+       CargarWaitMe();
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("SustentoEvalID")",
+            data: {id: id},
+            dataType: "json",
+            success: function (response) {
+                if (response.isSuccess == true) {
+
+                    console.log(response);
+                    console.log(response.result);
+                    setTimeout(() => {
+                        $('#cbxTipoSustento').val(response.result.atE_IDTIPOSUSTENTO);
+                        $('#txtDesSustento').val(response.result.atE_DESCRIPSUSTENTO);
+                        let dato = response.result.atE_MOTIVOSOLICITUD;
+                    if ( dato== 1) {
+                        $('#checkA').prop('checked', true);
+                    } else if (dato == 2) {
+                        $('#checkB').prop('checked', true);
+                    }
+                    else if (dato == 3) {
+                        $('#checkC').prop('checked', true);
+                    } else if (dato == 4) {
+                        $('#checkD').prop('checked', true);
+                    }
+                    else if (dato == 5) {
+                        $('#checkE').prop('checked', true);
+                    }
+                    else if (dato == 6) {
+                        $('#checkF').prop('checked', true);
+                    } else if (dato == 7) {
+                        $('#checkRM').prop('checked', true);
+                    }
+                  }, 500);
+                }
+                else {
+                    NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
+                }
+                 TerminarWaitMe();
+            },
+            error: function (req, status, error) {
+                 TerminarWaitMe();
+            }
+        });
+
+    }
+</script>

@@ -1,0 +1,319 @@
+﻿
+<div class="modal fade" id="mdl_AccionEvaluacionV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mmdl_AccionEvaluacionVlabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mmdl_AccionEvaluacionVlabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                @*<input type="hidden" id="txtId" value="@ViewBag.vbId">*@
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4" data-select2-id="cbxTipoSustento">
+                            <label for="cbxTipoSustento" class="form-label text-wrap fw-bolder fs-4">Estado de la Evaluación de la Reconsideración:</label>
+                            <select aria-label="Seleccionar" id="cbxTipoSustento" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                <option value="4">RECONSIDERADO</option>
+                                <option value="3">RECHAZADO</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-0 mt-3">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 col-form-label fw-bolder fs-4">
+                        Criterios que no cumple la Reconsideración:
+                    </label>
+                    <!--begin::Label-->
+                    <!--begin::Label-->
+                    <div class="col-lg-8 d-flex align-items-center">
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="1" id="checkA1Eval" />
+                            <label class="form-check-label" for="checkA1Eval">
+                                (A1)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="2" id="checkA2Eval" />
+                            <label class="form-check-label" for="checkA2Eval">
+                                (A2)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="3" id="checkA4Eval" />
+                            <label class="form-check-label" for="checkA3Eval">
+                                (A3)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="4" id="checkA4Eval" />
+                            <label class="form-check-label" for="checkA4Eval">
+                                (A4)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="5" id="checkB1Eval" />
+                            <label class="form-check-label" for="checkB1Eval">
+                                (B1)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="6" id="checkB2Eval" />
+                            <label class="form-check-label" for="checkB2Eval">
+                                (B2)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="7" id="checkB3Eval" />
+                            <label class="form-check-label" for="checkB3Eval">
+                                (B3)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid me-10">
+                            <input class="form-check-input" type="checkbox" value="7" id="checkB4Eval" />
+                            <label class="form-check-label" for="checkB4Eval">
+                                (B4)
+                            </label>
+                        </div>
+                    </div>
+                    <!--begin::Label-->
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Observación General:</label>
+                            <textarea type="text" rows="3" class="form-control" id="txtObsGeneralEval" value=""></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Detalle de Cambios realizados por el Médico Supervisor durante la Evaluación:</label>
+                            <textarea type="text" rows="3" class="form-control" id="txtObsDetalleEval" value=""></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">
+                        <i class="fas fa-paper-plane fs-4 me-2"></i>
+                        Guardar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fas fa-times fs-4 me-2"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var checkEval = 0;
+    $("#checkA1Eval").change(function () {
+        if (this.checked) {
+            console.log("1");
+            //I am checked
+            $("#checkA2Eval").prop('checked', false);
+            $("#checkA3Eval").prop('checked', false);
+            $("#checkA4Eval").prop('checked', false);
+            $("#checkB1Eval").prop('checked', false);
+            $("#checkB2Eval").prop('checked', false);
+            $("#checkB3Eval").prop('checked', false);
+            $("#checkB4Eval").prop('checked', false);
+            checkEval = 1;
+        }
+    });
+    $("#checkA2Eval").change(function () {
+        if (this.checked) {
+            console.log("2");
+            //I am checked
+            $("#checkA1Eval").prop('checked', false);
+            $("#checkA3Eval").prop('checked', false);
+            $("#checkA4Eval").prop('checked', false);
+            $("#checkB1Eval").prop('checked', false);
+            $("#checkB2Eval").prop('checked', false);
+            $("#checkB3Eval").prop('checked', false);
+            $("#checkB4Eval").prop('checked', false);
+            checkEval = 2;
+        }
+    });
+    $("#checkA3Eval").change(function () {
+        if (this.checked) {
+            console.log("3");
+            //I am checked
+            $("#checkA2Eval").prop('checked', false);
+            $("#checkA1Eval").prop('checked', false);
+            $("#checkA4Eval").prop('checked', false);
+            $("#checkB1Eval").prop('checked', false);
+            $("#checkB2Eval").prop('checked', false);
+            $("#checkB3Eval").prop('checked', false);
+            $("#checkB4Eval").prop('checked', false);
+            checkEval = 3;
+
+        }
+    });
+    $("#checkA4Eval").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkA2Eval").prop('checked', false);
+            $("#checkA3Eval").prop('checked', false);
+            $("#checkA1Eval").prop('checked', false);
+            $("#checkB1Eval").prop('checked', false);
+            $("#checkB2Eval").prop('checked', false);
+            $("#checkB3Eval").prop('checked', false);
+            $("#checkB4Eval").prop('checked', false);
+            checkEval = 4;
+
+        }
+    });
+    $("#checkB1Eval").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkA1Eval").prop('checked', false);
+            $("#checkA2Eval").prop('checked', false);
+            $("#checkA3Eval").prop('checked', false);
+            $("#checkA4Eval").prop('checked', false);
+            $("#checkB2Eval").prop('checked', false);
+            $("#checkB3Eval").prop('checked', false);
+            $("#checkB4Eval").prop('checked', false);
+            checkEval = 5;
+        }
+    });
+    $("#checkB2Eval").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkA1Eval").prop('checked', false);
+            $("#checkA2Eval").prop('checked', false);
+            $("#checkA3Eval").prop('checked', false);
+            $("#checkA4Eval").prop('checked', false);
+            $("#checkB1Eval").prop('checked', false);
+            $("#checkB3Eval").prop('checked', false);
+            $("#checkB4Eval").prop('checked', false);
+            checkEval = 6;
+
+        }
+    });
+    $("#checkB3Eval").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkA1Eval").prop('checked', false);
+            $("#checkA2Eval").prop('checked', false);
+            $("#checkA3Eval").prop('checked', false);
+            $("#checkA4Eval").prop('checked', false);
+            $("#checkB2Eval").prop('checked', false);
+            $("#checkB1Eval").prop('checked', false);
+            $("#checkB4Eval").prop('checked', false);
+            checkEval = 7;
+
+        }
+    });
+    $("#checkB4Eval").change(function () {
+        if (this.checked) {
+            //I am checked
+            $("#checkA1Eval").prop('checked', false);
+            $("#checkA2Eval").prop('checked', false);
+            $("#checkA3Eval").prop('checked', false);
+            $("#checkA4Eval").prop('checked', false);
+            $("#checkB2Eval").prop('checked', false);
+            $("#checkB3Eval").prop('checked', false);
+            $("#checkB1Eval").prop('checked', false);
+            checkEval = 7;
+
+        }
+    });
+
+
+    function RegistrarSustento() {
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si registrar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                _RegistrarSustento();
+            }
+        })
+    }
+
+    function _RegistrarSustento(){
+        let array_plazo = [];
+        array_plazo[0] = $('#Ate_Idnumreg').val();
+        array_plazo[1] = check;
+        array_plazo[2] = $('#cbxTipoSustento').val();
+        array_plazo[3] = $('#txtDesSustento').val();
+
+        if(array_plazo[1] == 0){
+            NotificacionToastr('error', 'Seleccione el Motivo de la Solicitud de Reconsideracion', 'Campos requeridos');
+            return false;
+        }
+
+        if (array_plazo[2] == "") {
+            NotificacionToastr('error', 'Tipo de Sustento', 'Campos requeridos');
+            return false;
+        }
+        if (array_plazo[3] == "") {
+            NotificacionToastr('error', 'Descripción del Sustento', 'Campos requeridos');
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("N_ATE_IDNUMREG", array_plazo[0]);
+        formData.append("V_ATE_MOTIVOSOLICITUD", array_plazo[1]);
+        formData.append("N_ATE_IDTIPOSUSTENTO", array_plazo[2]);
+        formData.append("V_ATE_DESCRIPSUSTENTO", array_plazo[3]);
+
+        $.ajax({
+          url: '@Url.Action("RegistrarSustento", "FUA")',
+          data: formData,
+          processData: false,
+          contentType: false,
+          cache: false,
+          async: true,
+          type: 'POST',
+          success: function(response){
+              if (response.isSuccess == true) {
+                  NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                  TerminarWaitMe();
+                  CargarModalSustento()
+              }
+              else {
+                  NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                  TerminarWaitMe();
+              }
+          },
+            error: function(err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
+    }
+
+
+
+</script>

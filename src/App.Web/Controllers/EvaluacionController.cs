@@ -377,6 +377,40 @@ namespace App.Web.Controllers
             }
 
         }
+        public async Task<IActionResult> SustentoEvalID(int id)
+        {
+            try
+            {
+                var dato = await _SELReconsideraciones.ListarAteSustxID(id);
+
+                return new JsonResult(new { IsSuccess = true, result = dato });
+
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        public async Task<IActionResult> InfSoliRecSusEval(int id)
+        {
+            ViewBag.url_sis = _uRLReadFile.URL_Read_SIS;
+            var result = await _SELReconsideraciones.ListarAteSusArch(id);
+            return PartialView(result);
+        }
+        public async Task<IActionResult> InfSoliRecCostEval(int id)
+        {
+            //var result = await _SELReconsideraciones.ListarAteSusArch(id);
+            return PartialView();
+        }
+
+        public async Task<IActionResult> AccionEvaluacionV(int Id)
+        {
+
+            ViewBag.Titulo_Modal = "REGISTRO DE EVALUACIÓN";
+            //var result = await _SELReconsideraciones.ListarAteSustxID(idate);
+
+            return PartialView();
+        }
 
     }
 }
