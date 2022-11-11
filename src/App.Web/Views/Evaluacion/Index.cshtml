@@ -36,9 +36,9 @@
                                 @{
                                     if (ViewBag.RecEstado == 5)
                                     {
-                                        <button type="button" class="btn btn-dark btn-md" onclick="actualizar_datos_FUA();">
-                                            <i class="fas fa-save fs-4 me-2"></i>
-                                            Guardar
+                                        <button type="button" class="btn btn-success btn-md" onclick="CargarModal_Evaluacion();">
+                                            <i class="fas fa-tasks fs-4 me-2"></i>
+                                            Evaluar
                                         </button>
                                         <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
                                             <i class="fas fa-trash fs-4 me-2"></i>
@@ -88,6 +88,7 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="Tab0" role="tabpanel">
                         <div id="divSolicitudFUA"></div>
+                        <div id="modalEvaluacion"></div>
                     </div>
                     <div class="tab-pane fade" id="Tab1" role="tabpanel">
                         <div id="divInfGeneralFUA"></div>
@@ -371,6 +372,15 @@
         });
     }
 
+    function CargarModal_Evaluacion() {
+        let idate = $("#Ate_Idnumreg").val();
+        $.get("@Url.Content("~/Evaluacion/AccionEvaluacionV")", { id: idate })
+        .done(function (response) {
+            $('#modalEvaluacion').html(response);
+            $('#mdl_AccionEvaluacionV').modal("show");
+        });
+    }
+
     function CargarModalValMatriz() {
         let idate = $("#Ate_Idnumreg").val();
 
@@ -461,7 +471,7 @@
                     let { result } = response;
                     console.log(result);
                     CargarModalProcedimientos_Eval(tipo, IdApo);
-                    
+
                     setTimeout(function () {
                         $('#txtCodProcedimiento').val(result.aapO_CODAPO);
                         $('#txtPrescritaProc').val(result.aapO_ICANTPROCED);
@@ -479,64 +489,6 @@
     }
 
 
-    function Conf_Validacion(e) {
-        e.preventDefault();
-        Swal.fire({
-            html: '<p style="color: red;">No se podra revertir la validacion</p>',
-            title: `VALIDAR CAMBIOS?`,
-            icon: "info",
-            buttonsStyling: false,
-            showCancelButton: true,
-            confirmButtonText: "SI, Validar Ahora!",
-            cancelButtonText: 'NO, cancelar',
-            customClass: {
-                confirmButton: "btn btn-primary",
-                cancelButton: 'btn btn-danger'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Validar_Total();
-            } else if (result.isDenied) {
-                Swal.fire('', '', 'info')
-            }
-        });
-    }
-
-    async function Validar_Total() {
-        CargarWaitMe();
-        let array_data = {};
-        array_data.N_ATE_IDNUMREG = $("#Ate_Idnumreg").val();
-        let url = "@Url.Action("ValidarRcRv", "FUA")";
-        $.post(url, array_data)
-            .done(function (response) {
-                var data = response.result;
-                let { result } = response;
-                console.log(result);
-                if (response.isSuccess == true) {
-                    if (data.codigo == 0) {
-                            NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
-                            setTimeout(function () {
-
-                                console.log(array_data.N_ATE_IDNUMREG);
-
-                                Visualizar_FUA2(array_data.N_ATE_IDNUMREG);
-
-                            }, 1000);
-                    } else if (data.codigo == 1) {
-
-                            NotificacionToastr('warning', `${response.message}`, 'Mensaje de confirmación');
-                            CargarModalObsRcRv(data.idate);
-                        }
-
-
-                }
-                else {
-                    NotificacionToastr('error', `${response.message}`, 'Error...');
-                }
-                TerminarWaitMe();
-            });
-
-    }
     function Visualizar_FUA2(id) {
 
         $(".content-custom").load("@Url.Content("~/FUA/Index")", { id: id})
@@ -568,7 +520,7 @@
         e.preventDefault();
         Swal.fire({
             html: '<p style="color: red;">No se podra revertir.</p>',
-            title: `ELIMINAR LA SOLICITUD DE RECONSIDERACIÓN?`,
+            title: `ELIMINAR LA EVALUACIÓN DE RECONSIDERACIÓN?`,
             icon: "info",
             buttonsStyling: false,
             showCancelButton: true,

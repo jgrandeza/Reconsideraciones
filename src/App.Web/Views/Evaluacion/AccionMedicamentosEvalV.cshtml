@@ -81,19 +81,16 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Motivo Cambio Cantidad</label>
                             <textarea type="text" rows="3" class="form-control" id="txtMontCambCant"></textarea>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Motivo Cambio Precio</label>
-                            <textarea type="text" rows="3" class="form-control" id="txtMontCambPrecio"></textarea>
-                        </div>
-                    </div>
                 </div>
+
+                <hr style="border:3px solid" />
+
 
                 <div class="modal-footer">
                     @if (ViewBag.Tipo == "1")
@@ -121,47 +118,6 @@
     </div>
 </div>
 <script>
-    $(".date").daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        minYear: 1901,
-        parentEl: "#mdl_AccionMedicamentosFUAV .modal-body",
-        maxYear: parseInt(moment().format("YYYY"), 10) + 1,
-        "locale": {
-            "format": "DD/MM/YYYY",
-            "separator": " - ",
-            "applyLabel": "Aceptar",
-            "cancelLabel": "Cancelar",
-            "fromLabel": "From",
-            "toLabel": "To",
-            "customRangeLabel": "Custom",
-            "weekLabel": "W",
-            "daysOfWeek": [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
-            ],
-            "monthNames": [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Setiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            "firstDay": 1
-        },
-    });
     $('#txtCodMedicamento').keypress(function (event) {
         var keycode = event.keyCode || event.which;
         if (keycode == '13') {
@@ -190,14 +146,7 @@
             const { isSuccess, result } = await getData('@Url.Content("~/FUA/GetMedicamentoxMED_CODMED")', array_data);
             console.log(isSuccess, result);
             if(isSuccess){
-                $('#txtDesMedicamento').val(result.meD_NOMBRE);
-                $('#txtFormFarmace').val(result.meD_PRESEN);
-                $('#txtConcentrMed').val(result.meD_CONCEN);
-                $('#txtPetitorio').val(result.meD_PETIT);
-                $('#txtPrecio').val(result.meD_COSTO);
-                $('#txtNroDocPetitorio').val(result.meD_DOC);
-                $('#txtFechPetitorio').val(result.meD_MESALTA.substring(0, 10));
-                
+                $('#txtDesMedicamento').val(result.meD_NOMBRE);                
             }
             else{
                 NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
