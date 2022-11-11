@@ -30,24 +30,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-2">
-                            <label for="txtIPRESS" class="form-label text-wrap fw-bolder fs-4">Identificador</label>
-                            <input type="text" class="form-control form-control-solid" id="txtIPRESS" disabled />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-2">
-                            <label for="txtLote" class="form-label text-wrap fw-bolder fs-4">Lote</label>
-                            <input type="text" class="form-control form-control-solid" id="txtLote" disabled />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-2">
-                            <label for="txtFUA" class="form-label text-wrap fw-bolder fs-4">#</label>
-                            <input type="text" class="form-control form-control-solid" id="txtFUA" disabled />
+                            <label for="txtFUA" id="lblFUA" class="form-label text-wrap fw-bolder fs-4">DISA - LOTE - NUMERO</label>
+                            <input type="text" class="form-control " id="txtFUA" />
                         </div>
                     </div>
                 </div>
@@ -69,13 +53,25 @@
         </div>
     </div>
 </div>
-<script>$("#rbtnFormato").change(function () {
+<script>
+    Inputmask({
+        "mask": "999-99-99999999"
+    }).mask("#txtFUA");
+    $("#rbtnFormato").change(function () {
+        var selector = document.getElementById("txtFUA");
+
         if (this.checked) {
             //I am checked
             $("#lblFormatoFUA").html("NUEVO FORMATO");
+            $("#lblFUA").html("RENIPRESS - LOTE - NUMERO");
+            var im = new Inputmask("999999-99-99999999");
+            im.mask(selector);
         } else {
             //I'm not checked
             $("#lblFormatoFUA").html("ANTIGUO FORMATO");
+            $("#lblFUA").html("DISA - LOTE - NUMERO");
+            var im = new Inputmask("999-99-99999999");
+            im.mask(selector);
         }
     });
 

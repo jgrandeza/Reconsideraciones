@@ -1,9 +1,9 @@
 ﻿
-<div class="modal fade" id="mdl_AccionMedicamentosFUAV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_AccionMedicamentosFUAVlabel" aria-hidden="true">
+<div class="modal fade" id="mdl_AccionInsumosFUAV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_AccionInsumosFUAVlabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background:#264A74">
-                <h5 class="modal-title text-white" id="mdl_AccionMedicamentosFUAVlabel">@ViewBag.Titulo_Modal</h5>
+                <h5 class="modal-title text-white" id="mdl_AccionInsumosFUAVlabel">@ViewBag.Titulo_Modal</h5>
 
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
                      aria-label="Close">
@@ -17,7 +17,7 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" id="txtId" >
+                <input type="hidden" id="txtId">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-4">
@@ -25,8 +25,8 @@
                                 Código
                             </div>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="txtCodMedicamento" />
-                                <button onclick="GetMedicamentoxMED_CODMED()" type="button" class="btn btn-primary input-group-text" id="btnConsultarMed">
+                                <input type="text" class="form-control" id="txtCodInsumos" />
+                                <button type="button" onclick="GetInsumos_Id()" class="btn btn-primary input-group-text" id="btnConsultarInsu">
                                     <span class="indicator-label">
                                         <i class="fas fa-search fs-4"></i> Consultar
                                     </span>
@@ -41,81 +41,67 @@
                     <div class="col-md-8">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Descripción</label>
-                            <input type="text" class="form-control form-control-solid " id="txtDesMedicamento" disabled />
+                            <input type="text" class="form-control form-control-solid " id="txtDesInsumos" disabled />
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">F. Farmacéutica</label>
-                            <input type="text" class="form-control form-control-solid " id="txtFormFarmace" disabled />
+                            <label class="form-label fw-bolder fs-4">Presentación</label>
+                            <input type="text" class="form-control form-control-solid " id="txtPresentacionIns" disabled />
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Concentración</label>
-                            <input type="text" class="form-control form-control-solid " id="txtConcentrMed" disabled />
+                            <input type="text" class="form-control form-control-solid " id="txtConcentrIns" disabled />
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Petitorio</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPetitorio" disabled  />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Fecha</label>
-                            <input type="text" class="form-control form-control-solid date " id="txtFechPetitorio" disabled  />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Nro Doc.</label>
-                            <input type="text" class="form-control " id="txtNroDocPetitorio" disabled  />
-                        </div>
-                    </div>
-                </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Prescrita</label>
-                            <input type="text" class="form-control " id="txtPrescrito"  />
+                            <input type="text" class="form-control form-control-solid " id="txtPrescritoIns" />
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Entregada</label>
-                            <input type="text" class="form-control " id="txtEntregado" />
+                            <input type="text" class="form-control form-control-solid " id="txtEntregadoIns" />
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Precio (S/.)</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPrecio" disabled />
+                            <input type="text" class="form-control form-control-solid " id="txtPrecioIns" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Resultado</label>
+                            <input type="text" class="form-control form-control-solid " id="txtResultadoIns" />
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="mb-4" data-select2-id="cbxDiagnostico">
-                            <label for="cbxDiagnostico" class="form-label text-wrap fw-bolder fs-4">Diagnostico</label>
-                            <select aria-label="Seleccionar" id="cbxDiagnostico" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                        <div class="mb-4" data-select2-id="cbxDiagnosticoIns">
+                            <label for="cbxDiagnosticoIns" class="form-label text-wrap fw-bolder fs-4">Diagnostico</label>
+                            <select aria-label="Seleccionar" id="cbxDiagnosticoIns" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
                                 <option selected disabled value="">Seleccionar</option>
                                 @{ if (ViewBag.ListDX != null)
                                     {
                                         foreach (var item in ViewBag.ListDX)
                                         {
-                                                                                                                                                        <option value="@item.ADIA_INRODIA">@item.C10_NOMBRE</option>
+                                            <option value="@item.ADIA_INRODIA">@item.C10_NOMBRE</option>
                                         }
                                     }
-                                }                                
+                                }
                             </select>
                         </div>
                     </div>
@@ -123,9 +109,9 @@
                 <hr style="border:3px solid" />
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="mb-4" data-select2-id="cbxMedObsPar">
-                            <label for="cbxMedObsPar" class="form-label text-wrap fw-bolder fs-4">Codigo de Observacion *</label>
-                            <select aria-label="Seleccionar" id="cbxMedObsPar" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                        <div class="mb-4" data-select2-id="cbxInsObsPar">
+                            <label for="cbxInsObsPar" class="form-label text-wrap fw-bolder fs-4">Codigo de Observacion *</label>
+                            <select aria-label="Seleccionar" id="cbxInsObsPar" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
                                 <option selected disabled value="0">Seleccionar</option>
                                 @{ if (ViewBag.ListObs != null)
                                     {
@@ -141,26 +127,26 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <span style="color:red">(*)SOLO PARA OBSERVACIONES PARCIALES:
-                        Seleccione la observación Parcial relacionado al Item que
-                        está ingresando o modificando (servirá como sustento
-                        para la solicitud de Reconsideración)
+                        <span style="color:red">
+                            (*)SOLO PARA OBSERVACIONES PARCIALES:
+                            Seleccione la observación Parcial relacionado al Item que
+                            está ingresando o modificando (servirá como sustento
+                            para la solicitud de Reconsideración)
                         </span>
                     </div>
                 </div>
 
-
                 <div class="modal-footer">
                     @if (ViewBag.Tipo == "1")
                     {
-                        <button type="button" onclick="RegistrarATenMedicamentoRec();" class="btn btn-success">
+                        <button type="button" onclick="Conf_GuardarIns(event);" class="btn btn-success">
                             <i class="fas fa-save fs-4 me-2"></i>
                             Guardar
                         </button>
                     }
                     else if (ViewBag.Tipo == "2")
                     {
-                        <button type="button" onclick="Modificar_TramoCV();" class="btn btn-warning">
+                        <button type="button" onclick="" class="btn btn-warning">
                             <i class="fas fa-edit fs-4 me-2"></i>
                             Actualizar
                         </button>
@@ -175,12 +161,10 @@
         </div>
     </div>
 </div>
-<script>
-    $(".date").daterangepicker({
+<script>$(".date").daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
         minYear: 1901,
-        parentEl: "#mdl_AccionMedicamentosFUAV .modal-body",
         maxYear: parseInt(moment().format("YYYY"), 10) + 1,
         "locale": {
             "format": "DD/MM/YYYY",
@@ -216,45 +200,45 @@
             ],
             "firstDay": 1
         },
-    });
-    $('#txtCodMedicamento').keypress(function (event) {
+    });</script>
+<script>
+
+    $('#txtCodInsumos').keypress(function (event) {
         var keycode = event.keyCode || event.which;
         if (keycode == '13') {
-            GetMedicamentoxMED_CODMED();
+            GetInsumos_Id();
         }
     });
 
-    function Limpiar_Med(){
-        $('#txtDesMedicamento').val('');
-        $('#txtFormFarmace').val('');
-        $('#txtConcentrMed').val('');
-        $('#txtPetitorio').val('');
-        $('#txtPrecio').val('');
+    function Limpiar_Ins(){
+        $('#txtDesInsumos').val('');
+        $('#txtPresentacionIns').val('');
+        $('#txtConcentrIns').val('');
+        $('#txtPrecioIns').val('');  
     }
 
-    async function GetMedicamentoxMED_CODMED(){
+    async function GetInsumos_Id(){
         try {
             const array_data = {};
-            array_data.MED_CODMED = $('#txtCodMedicamento').val();
-            if(array_data.MED_CODMED == ""){
-                NotificacionToastr('error', `Ingrese el codigo de Medicamento.`, 'Campo requerido');
-                $('#txtCodMedicamento').focus();
+            array_data.V_INS_CODINS = $('#txtCodInsumos').val();
+            if (array_data.V_INS_CODINS == ""){
+                NotificacionToastr('error', `Ingrese el codigo de Insumo.`, 'Campo requerido');
+                $('#txtCodInsumos').focus();
                 return false;
             }
             CargarWaitMe();
-            const { isSuccess, result } = await getData('@Url.Content("~/FUA/GetMedicamentoxMED_CODMED")', array_data);
+            const { isSuccess, result } = await getData('@Url.Content("~/FUA/GetInsumosId")', array_data);
             console.log(isSuccess, result);
             if(isSuccess){
-                $('#txtDesMedicamento').val(result.meD_NOMBRE);
-                $('#txtFormFarmace').val(result.meD_PRESEN);
-                $('#txtConcentrMed').val(result.meD_CONCEN);
-                $('#txtPetitorio').val(result.meD_PETIT);
-                $('#txtPrecio').val(result.meD_COSTO);
-                $('#txtNroDocPetitorio').val(result.meD_DOC);
+
+                $('#txtDesInsumos').val(result.inS_NOMBRE);
+                $('#txtPresentacionIns').val(result.inS_UNIDAD);
+                $('#txtConcentrIns').val(result.inS_CONCEN);
+                $('#txtPrecioIns').val(result.inS_COSTO);             
             }
             else{
                 NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-                Limpiar_Med();
+                Limpiar_Ins();
             }
             TerminarWaitMe();
         } catch (err) {
@@ -267,34 +251,64 @@
         return $.get(ajaxurl, data_array );
     };
 
-    async function RegistrarATenMedicamentoRecAjax(ajaxurl, data_array) {
+    function Conf_GuardarIns(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: `GUARDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, registrar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                RegistrarATenInsumosRec();
+
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+    async function RegistrarAteInsRecAjax(ajaxurl, data_array) {
         return $.post(ajaxurl, data_array);
     }
 
-    async function RegistrarATenMedicamentoRec(){
+    async function RegistrarATenInsumosRec(){
         try{
             const array_data = {};
-            array_data.N_AMED_NUMREGATE = $("#Ate_Idnumreg").val();
-            array_data.V_AMED_CODMED = $("#txtCodMedicamento").val();
-            array_data.N_AMED_INRODIA = $("#cbxDiagnostico").val();
-            array_data.N_AMED_ICANTPRESCRITA = $("#txtPrescrito").val();
-            array_data.N_AMED_ICANTENTREGADA = $("#txtEntregado").val();
-            array_data.N_AMED_NPO = $("#txtPrecio").val();
-            array_data.N_ROBS_IDNUMREGOBS = $("#cbxMedObsPar").val();            
+            array_data.N_AINS_NUMREGATE = $("#Ate_Idnumreg").val();
 
-            if (array_data.N_AMED_NUMREGATE == "" || array_data.V_AMED_CODMED == "" || array_data.N_AMED_INRODIA == "" || array_data.N_AMED_ICANTPRESCRITA == "" || array_data.N_AMED_ICANTENTREGADA == "" || array_data.N_AMED_NPO == ""){
+            array_data.V_AINS_CODINS = $("#txtCodInsumos").val();
+            array_data.N_AINS_INRODIA = $("#cbxDiagnosticoIns").val();
+            array_data.V_AINS_CCARACT = '';
+            array_data.N_AINS_ICANTPRESCRITA = $("#txtPrescritoIns").val();
+            array_data.N_AINS_ICANTENTREGADA = $("#txtEntregadoIns").val();
+            array_data.N_AINS_ITICKET = 0;
+            array_data.N_AINS_NPO = $("#txtPrecioIns").val();
+            array_data.N_AINS_NCOSTOAPLICADO = $("#txtResultadoIns").val();
+            array_data.N_ROBS_IDNUMREGOBS = $("#cbxInsObsPar").val();            
+
+
+            if (array_data.N_AINS_NUMREGATE == "" || array_data.V_AINS_CODINS == "" ||
+                array_data.N_AINS_INRODIA == "" || array_data.N_AINS_ICANTPRESCRITA == "" ||
+                array_data.N_AINS_ICANTENTREGADA == "" || array_data.N_AINS_NPO == "") {
                 NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
-                $('#txtCodMedicamento').focus();
+                $('#txtCodInsumos').focus();
                 return false;
             }
 
-            const response = await RegistrarATenMedicamentoRecAjax('@Url.Content("~/FUA/InsertarAtenMedicamentoREc")', array_data);
+            const response = await RegistrarAteInsRecAjax('@Url.Content("~/FUA/InsertarAtenInsumosREc")', array_data);
             if(response.isSuccess){
                 NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
-                $('#mdl_AccionMedicamentosFUAV').modal('hide');
-                $('#modalMedicamentos').html('');
+                $('#mdl_AccionInsumosFUAV').modal('hide');
+                $('#modalInsumos').html('');
                 setTimeout(function () {
-                        Cargar_Medicamentos();
+                    Cargar_Insumos();
                 }, 500);
             }
             else{
@@ -302,7 +316,7 @@
             }
 
         } catch (err) {
-
+            console.log(err);
         }
     }
 </script>
