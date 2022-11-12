@@ -448,9 +448,10 @@
                         $('#txtCodMedicamento').val(result.ameD_CODMED);
                         $('#txtPrescrito').val(result.ameD_ICANTPRESCRITA);
                         $('#txtEntregado').val(result.ameD_ICANTENTREGADA);
-                        $('#cbxDiagnostico').val(result.ameD_INRODIA);
+                        $('#txtPreMedUni').val(result.ameD_NPO);
                         GetMedicamentoxMED_CODMED();
-                        $('#txtPrecio').val(result.ameD_NPO);
+                        let costo = result.ameD_ICANTENTREGADA * result.ameD_NPO;
+                        $('#txtPrecio').val(costo);
                     }, 1000);
                 }
                 else {

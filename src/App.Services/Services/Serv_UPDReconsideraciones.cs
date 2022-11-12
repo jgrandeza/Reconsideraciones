@@ -13,6 +13,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App.ViewModels.UPDReconsideraciones;
 
 namespace App.Services.Services
 {
@@ -163,6 +164,33 @@ namespace App.Services.Services
                 dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_EVALUAR_RECONS";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public async Task<Mensaje_Ins> Actualizar_CantMed_Evaluacion(setActualizarMedEval model)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("N_AMED_ICANTAPROBADAODSIS", model.N_AMED_ICANTAPROBADAODSIS, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("V_AMED_IDUSUARIOACT", model.V_AMED_IDUSUARIOACT, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("N_AMED_IDNUMREG", model.N_AMED_IDNUMREG, OracleMappingType.Decimal, ParameterDirection.Input);
+
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_UPD_ATEMED_EVAL_REC";
                 //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
 
                 var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
