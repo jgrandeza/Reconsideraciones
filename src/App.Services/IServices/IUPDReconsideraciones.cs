@@ -21,6 +21,8 @@ namespace App.Services.IServices
 
         Task<Mensaje_Ins> Actualizar_CantMed_Evaluacion(setActualizarMedEval model);
 
-
+        Task<Mensaje_Ins> Actualizar_CantApo_Evaluacion(setActualizarApoEval model);
+        Task<Mensaje_Ins> Actualizar_CantIns_Evaluacion(setActualizarInsEval model);
+        
     }
 }

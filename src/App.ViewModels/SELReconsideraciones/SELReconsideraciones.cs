@@ -248,8 +248,8 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AMED_IDNUMREG { get; set; }
         public string? AMED_CODMED { get; set; }
         public decimal? AMED_INRODIA { get; set; }
-        public decimal? AMED_ICANTPRESCRITA { get; set; }
-        public decimal? AMED_ICANTENTREGADA { get; set; }
+        public int? AMED_ICANTPRESCRITA { get; set; }
+        public int? AMED_ICANTENTREGADA { get; set; }
         public decimal? AMED_ITICKET { get; set; }
         public decimal? AMED_NPO { get; set; }
         public decimal? AMED_NCOSTOAPLICADO { get; set; }
@@ -273,8 +273,8 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AMED_MODPAGO { get; set; }
         public decimal? AMED_IDPRECIO { get; set; }
         public decimal? AMED_CANTOBS { get; set; }
-        public float? AMED_ICANTAPROBADAODSIS { get; set; }
-        public float? AMED_IPRECIOCALCULADOSIS { get; set; }
+        public int? AMED_ICANTAPROBADAODSIS { get; set; }
+        public decimal? AMED_IPRECIOCALCULADOSIS { get; set; }
         public string? AMED_PERIODO_ACEPTADO { get; set; }
         public string? AMED_MES_ACEPTADO { get; set; }
         public string? AMED_ESTADO_OBSERVACION { get; set; }
@@ -284,6 +284,12 @@ namespace App.ViewModels.SELReconsideraciones
         public string? AMED_VERREG { get; set; }
         public string? AMED_VERENV { get; set; }
         public decimal? AMED_N_ESVALORIZADO { get; set; }
+
+        public decimal? AMED_IDNUMREG_ORIGEN { get; set; }
+        public string? AMED_V_MOTIVO_CAMBIO { get; set; }
+        public string? AMED_IDUSUARIOEVAL { get; set; }
+        public DateTime? AMED_FECEVAL { get; set; }
+
         public string? C10_NOMBRE { get; set; }
 
         public string? MED_NOMBRE { get; set; }
@@ -303,8 +309,8 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AAPO_IDNUMREG { get; set; }
         public string? AAPO_CODAPO { get; set; }
         public decimal? AAPO_INRODIA { get; set; }
-        public decimal? AAPO_ICANTPROCED { get; set; }
-        public decimal? AAPO_ICANTEJECUTADA { get; set; }
+        public int? AAPO_ICANTPROCED { get; set; }
+        public int? AAPO_ICANTEJECUTADA { get; set; }
         public decimal? AAPO_ITICKET { get; set; }
         public decimal? AAPO_NPO { get; set; }
         public decimal? AAPO_NCOSTOAPLICADO { get; set; }
@@ -324,8 +330,8 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AAPO_ICANTOBS { get; set; }
         public decimal? AAPO_MODPAGO { get; set; }
         public decimal? AAPO_NCOSTOODSIS { get; set; }
-        public float? AAPO_IPRECIOCALCULADOSIS { get; set; }
-        public float? AAPO_ICANTIDADAPROBADAODSIS { get; set; }
+        public decimal? AAPO_IPRECIOCALCULADOSIS { get; set; }
+        public int? AAPO_ICANTIDADAPROBADAODSIS { get; set; }
         public string? AAPO_ESTADO_OBSERVACION { get; set; }
         public string? AAPO_PERIODO_ACEPTADO { get; set; }
         public string? AAPO_MES_ACEPTADO { get; set; }
@@ -344,6 +350,12 @@ namespace App.ViewModels.SELReconsideraciones
         public string? AAPO_NUMDOCPROFESIONAL { get; set; }
         public decimal? AAPO_N_IDCPMS { get; set; }
 
+        public string? AAPO_V_MOTIVO_CAMBIO { get; set; }
+        public string? AAPO_IDUSUARIOEVAL { get; set; }
+        public DateTime? AAPO_FECEVAL { get; set; }
+
+
+
         public string? C10_NOMBRE { get; set; }
         public string? APO_NOMBRE { get; set; }
         public decimal? APO_COSTO { get; set; }
@@ -359,8 +371,8 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AINS_INRODIA { get; set; }
         public string? AINS_CODINS { get; set; }
         public string? AINS_CCARACT { get; set; }
-        public decimal? AINS_ICANTPRESCRITA { get; set; }
-        public decimal? AINS_ICANTENTREGADA { get; set; }
+        public int? AINS_ICANTPRESCRITA { get; set; }
+        public int? AINS_ICANTENTREGADA { get; set; }
         public decimal? AINS_ITICKET { get; set; }
         public decimal? AINS_NPO { get; set; }
         public decimal? AINS_NCOSTOAPLICADO { get; set; }
@@ -384,8 +396,8 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AINS_MODPAGO { get; set; }
         public decimal? AINS_IDPRECIO { get; set; }
         public decimal? AINS_NCOSTOODSIS { get; set; }
-        public float? AINS_ICANTIDADAPROBADAODSIS { get; set; }
-        public float? AINS_IPRECIOCALCULADOSIS { get; set; }
+        public int? AINS_ICANTIDADAPROBADAODSIS { get; set; }
+        public decimal? AINS_IPRECIOCALCULADOSIS { get; set; }
         public string? AINS_ESTADO_OBSERVACION { get; set; }
         public string? AINS_PERIODO_ACEPTADO { get; set; }
         public string? AINS_MES_ACEPTADO { get; set; }
@@ -434,6 +446,11 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AMED_NPO { get; set; }
         public decimal? AMED_NCOSTOAPLICADO { get; set; }
 
+        public int? AMED_ICANTAPROBADAODSIS { get; set; }
+        public decimal? AMED_IPRECIOCALCULADOSIS { get; set; }
+        public string? AMED_V_MOTIVO_CAMBIO { get; set; }
+
+
     }
     public class GetMedicamentosxMED_CODMED
     {
@@ -462,6 +479,11 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AAPO_NPO { get; set; }
         public decimal? AAPO_NCOSTOAPLICADO { get; set; }
 
+
+        public int? AAPO_ICANTIDADAPROBADAODSIS { get; set; }
+        public decimal? AAPO_IPRECIOCALCULADOSIS { get; set; }
+        public string? AAPO_V_MOTIVO_CAMBIO { get; set; }
+
     }
     public class getAtencionesINS_Edit
     {
@@ -475,6 +497,17 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal? AINS_ITICKET { get; set; }
         public decimal? AINS_NPO { get; set; }
         public decimal? AINS_NCOSTOAPLICADO { get; set; }
+
+
+        public int? AINS_ICANTIDADAPROBADAODSIS { get; set; }
+        public decimal? AINS_IPRECIOCALCULADOSIS { get; set; }
+        public string? AINS_V_MOTIVO_CAMBIO { get; set; }
+
+
+        
+            
+            
+
     }
 
     public class GetInsumosxId

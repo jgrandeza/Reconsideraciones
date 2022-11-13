@@ -6,14 +6,21 @@
             <th style="text-align:center">Nº</th>
             <th style="text-align:center">CODIGO</th>
             <th style="text-align:center">DESCRIPCIÓN</th>
-            <th style="text-align:center">PO(S/.)</th>
+            
             <th style="text-align:center">PR</th>
             <th style="text-align:center">Carac</th>
             <th style="text-align:center">PRES</th>
             <th style="text-align:center">ENTR</th>
+
+            <th style="text-align:center">EVAL</th>
+
             <th style="text-align:center">DX</th>
             <th style="text-align:center">OBSERVACIÓN</th>
-            <th style="text-align:center">PREPOS(S/.)</th>
+            <th style="text-align:center">PO(S/.)</th>
+
+            <th style="text-align:center">PO EVAL.(S/.)</th>
+
+            <th style="text-align:center">PO REPOS.(S/.)</th>
             @if (ViewBag.RecEstado == 2 || ViewBag.RecEstado == 5)
             {
                 <th style="text-align:center"><span>ACCIÓN</span></th>
@@ -30,21 +37,60 @@
                 foreach (var item in Model)
                 {
                 <tr id="Insumos_cant">
-                    <td style="text-align: center"> @i</td>
-                    <td style="text-align: justify">@item.AINS_CODINS</td>
-                    <td style="text-align: justify">@item.INS_NOMBRE</td>
-                    <td style="text-align: center"><b>@( string.Format("{0:C2}", item.INS_COSTO))</b></td>
-                    <td style="text-align: center">@item.INS_PRESEN</td>
-                    <td style="text-align: center">@item.AINS_CCARACT</td>
-                    <td style="text-align: center">@item.AINS_ICANTPRESCRITA</td>
-                    <td style="text-align: center">@item.AINS_ICANTENTREGADA</td>
-                    <td style="text-align: justify"><span class="fw-bold" style="color:red">@item.C10_CODDIA</span>  - @item.C10_NOMBRE</td>
-                    <td style="text-align: justify">@item.ROBS_DETALLE</td>
-                    <td style="text-align: justify"></td>
+                        <td class="text-center"> @i</td>
+                    <td class="text-right">@item.AINS_CODINS</td>
+                        <td class="text-right">@item.INS_NOMBRE</td>
+                    <td class="text-center">@item.INS_PRESEN</td>
+                    <td class="text-center">@item.AINS_CCARACT</td>
+                    <td class="text-center">@item.AINS_ICANTPRESCRITA</td>
+
+                        <td class="text-center">
+
+                            <span class="badge badge-light-primary fs-base">
+                                <!--end::Svg Icon-->
+                                <!--end::Svg Icon--> @item.AINS_ICANTENTREGADA
+                            </span>
+                        </td>
+
+                        @{
+                            if (item.AINS_ICANTENTREGADA == item.AINS_ICANTIDADAPROBADAODSIS)
+                            {
+                                <td class="text-center fw-bolder">
+                                    <span class="badge badge-light-success fs-base">
+                                        <!--end::Svg Icon-->
+                                        <!--end::Svg Icon-->@item.AINS_ICANTIDADAPROBADAODSIS
+                                    </span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-center fw-bolder">
+
+                                    <span class="badge badge-light-danger fs-base">
+                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
+                                        <span class="svg-icon svg-icon-5 svg-icon-danger ms-n1">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor"></rect>
+                                                <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="currentColor"></path>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->@item.AINS_ICANTIDADAPROBADAODSIS
+                                    </span>
+
+                                </td>
+
+                            }
+                        }
+
+                        <td class="text-right"><span class="fw-bolder fs-8 text-dark">@item.C10_CODDIA</span>  - @item.C10_NOMBRE</td>
+                        <td class="text-right">@item.ROBS_DETALLE</td>
+                        <td class="text-center"><b>@(string.Format("{0:C2}", (item.AINS_NPO * item.AINS_ICANTPRESCRITA)))</b></td>
+                        <td class="text-center"><b>@(string.Format("{0:C2}", (item.AINS_NPO * item.AINS_ICANTIDADAPROBADAODSIS)))</b></td>
+                        <td class="text-right"></td>
                     @if (ViewBag.RecEstado == 2 || ViewBag.RecEstado == 5)
                     {
                         <td style="text-align: center">
-                            <a onclick="Conf_Eliminar(event,4,@item.AINS_IDNUMREG);" href="javascript:void(0);"><i style="font-size: 20px; color: #c64821;" title="Editar Insumos" class="fas fa-edit" aria-hidden="true"></i></a>
+                            <a onclick="GetAtencionINSPorId(2,@item.AINS_IDNUMREG);" href="javascript:void(0);"><i style="font-size: 20px; color: #c64821;" title="Editar Insumos" class="fas fa-edit" aria-hidden="true"></i></a>
                         </td>
                     }
 

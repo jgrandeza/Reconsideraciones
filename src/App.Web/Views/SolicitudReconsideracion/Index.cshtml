@@ -9,6 +9,9 @@
     <div id="kt_content_container" class="container-xxl">
 
         <div class="card" style="background-color:#73B8C0">
+
+            <input type="hidden" id="Periodo" value="@ViewBag.Periodo">
+
             <div class="card-body">
                 <div class="row">
                     <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
@@ -66,8 +69,8 @@
                         <div class="col-md-4">
                             <div class="mb-2" data-select2-id="cbxPeriodo">
                                 <label for="cbxPeriodo" class="form-label text-wrap fw-bolder fs-4">Periodo</label>
-                                <select aria-label="Seleccionar" id="cbxPeriodo" onchange="CargarRangoPeriodoRec()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
-                                    <option selected disabled value="">Seleccionar</option>
+                                <select aria-label="Seleccionar" id="cbxPeriodo" onchange="CargarRangoPeriodoRec()" data-control="select2" data-placeholder="Seleccionar..." class="form-select select mb-2">
+                                    <option selected disabled value="0">Seleccionar</option>
                                         @{ if (ViewBag.RecPeriodo != null)
                                             {
                                                 foreach (var item in ViewBag.RecPeriodo)
@@ -92,6 +95,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--
                     <div class="row">
                     <div class="col-md-3">
                             <div class="mb-2" data-select2-id="cbxPeriodoProd">
@@ -150,6 +154,7 @@
                             </div>
                         </div>
                     </div>
+                      -->
                     <div class="row mt-5 mb-5">
                         <div class="col-md-12">
                             <div class="form-check form-switch form-check-custom form-check-solid">
@@ -206,10 +211,17 @@
     <!--end::Container-->
 </div>
 <script>
-  //$(".table").DataTable({ "language": languaje_spanol, "info": false, "lengthChange": false, "searching":true });
     setTimeout(function () {
-        //CargarParametros();
-    }, 1000);
+        $('.select').select2();
+        let valor = $("#Periodo").val();
+        if(valor!=""){
+            $("#cbxPeriodo").val(valor);
+            $("#cbxPeriodo").change();
+            CargarParametros(1,0);
+        }
+
+    }, 100);
+
     function CargarParametros(vfiltro,vfua) {
         CargarWaitMe();
         let prd =$("#cbxPeriodo").val();
@@ -252,9 +264,11 @@
         });
     }
     function Visualizar_FUA(id) {
-      
-        $(".content-custom").load("@Url.Content("~/FUA/Index")", { id: id})
+        let periodo = $("#cbxPeriodo").val();
+        $(".content-custom").load("@Url.Content("~/FUA/Index")", { id: id, periodo:periodo })
     }
+
+
     function Formato_Fecha(fecha) {
         return fecha.substring(3, 5) + "/" + fecha.substring(0, 2) + "/" + fecha.substring(6, 10);
     }

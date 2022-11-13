@@ -8,21 +8,18 @@
     <!--begin::Container-->
     <div id="kt_content_container" class="container-xxl">
 
-        <div class="card shadow-sm mt-5">
-            <div style="background: #f5f5f1" class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible">
-                <h3 class="card-title">FILTROS GENERALES</h3>
-                <div class="card-toolbar rotate-0">
-                    <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
-                            <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="black"></path>
-                        </svg>
-                    </span>
-                </div>
-            </div>
-            <div id="kt_docs_card_collapsible" class="collapse show">
-                <div class="card-body">
-                    <div class="row">
+        <div class="card-body">
+            <div class="accordion" id="accordionPanelbusqEvalExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="PanelbusqEval-headingOne">
+                        <button class="accordion-button fw-bolder" style="background-color:#73B8C0 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#PanelbusqEval-collapseOne" aria-expanded="true" aria-controls="PanelbusqEval-collapseOne">
+                            FILTROS GENERALES
+                        </button>
+                    </h2>
+                    <div id="PanelbusqEval-collapseOne" class="accordion-collapse collapse show" aria-labelledby="PanelbusqEval-headingOne">
+                        <div class="accordion-body">
+
+                                                <div class="row">
                         <div class="col-md-4">
                             <div class="mb-4" data-select2-id="cbxDISA">
                                 <label for="cbxDISA" class="form-label text-wrap fw-bolder fs-4">DISA:</label>
@@ -56,7 +53,7 @@
                         <div class="col-md-4">
                             <div class="mb-2" data-select2-id="cbxPeriodo">
                                 <label for="cbxPeriodo" class="form-label text-wrap fw-bolder fs-4">Periodo</label>
-                                <select aria-label="Seleccionar" id="cbxPeriodo" onchange="CargarRangoPeriodoRec()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                <select aria-label="Seleccionar" id="cbxPeriodo" onchange="CargarRangoPeriodoRec()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select select2 mb-2">
                                     <option selected disabled value="">Seleccionar</option>
                                     @{ if (ViewBag.RecPeriodo != null)
                                         {
@@ -82,6 +79,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-4" data-select2-id="cbxTipoRec">
@@ -163,6 +161,8 @@
                         </div>
                     </div>
 
+
+                    -->
                     <div class="row mt-5 mb-5">
                         <div class="col-md-12">
                             <div class="form-check form-switch form-check-custom form-check-solid">
@@ -182,30 +182,26 @@
                             </button>
                         </div>
                     </div>
+
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="PanelbusqEval-headingTwo">
+                        <button class="accordion-button fw-bolder" style="background-color:#73B8C0 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#PanelbusqEval-collapseTwo" aria-expanded="false" aria-controls="PanelbusqEval-collapseTwo">
+                            RESULTADOS
+                        </button>
+                    </h2>
+                    <div id="PanelbusqEval-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="PanelbusqEval-headingTwo">
+                        <div class="accordion-body">
+                            <div class="row mt-2">
+                                <div class="col-md-12">
 
-        <div class="card shadow-sm mt-5">
-            <div style="background: #f5f5f1" class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible2">
-                <h3 class="card-title">RESULTADOS</h3>
-                <div class="card-toolbar rotate-0">
-                    <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
-                            <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="black"></path>
-                        </svg>
-                    </span>
-                </div>
-            </div>
-            <div id="kt_docs_card_collapsible2" class="collapse show">
-                <div class="card-body">
-                    <div class="row mt-2">
-                        <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <div class="mt-4" id="tabla_p">
 
-                            <div class="table-responsive">
-                                <div class="mt-4" id="tabla_p">
-
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -214,12 +210,15 @@
             </div>
         </div>
 
+
     </div>
     <!--end::Container-->
 </div>
 <script>
     setTimeout(function () {
         //CargarParametros();
+        $('.select').select2();
+
     }, 1000);
     function CargarParametros(vfiltro,vfua) {
         CargarWaitMe();

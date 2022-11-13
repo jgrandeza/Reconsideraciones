@@ -17,7 +17,7 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" id="txtId">
+                <input type="hidden" id="txtIdMed" value="@ViewBag.IdMed">
                 <input type="hidden" id="txtPreMedUni">
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
@@ -90,7 +90,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-4">
                                             <label class="form-label fw-bolder">Cant. Evaluación (S/.)</label>
-                                            <input type="number" onkeyup="Calcular_Precio_Med()" class="form-control form-control-sm fw-bolder" id="txtCantEval" />
+                                            <input type="number" min="0" onkeyup="Calcular_Precio_Med()" class="form-control form-control-sm fw-bolder" id="txtCantEval" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -105,7 +105,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-4">
                                             <label class="form-label fw-bolder">Motivo Cambio Cantidad</label>
-                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtMontCambCant"></textarea>
+                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtMotivoCambioCant"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -138,16 +138,9 @@
 
 
                 <div class="modal-footer">
-                    @if (ViewBag.Tipo == "1")
+                    @if (ViewBag.Tipo == "2")
                     {
-                        <button type="button" onclick="RegistrarATenMedicamentoRec();" class="btn btn-success">
-                            <i class="fas fa-save me-2"></i>
-                            Guardar
-                        </button>
-                    }
-                    else if (ViewBag.Tipo == "2")
-                    {
-                        <button type="button" onclick="Modificar_TramoCV();" class="btn btn-warning">
+                        <button type="button" onclick="Conf_Actualizar(event);" class="btn btn-warning">
                             <i class="fas fa-edit me-2"></i>
                             Actualizar
                         </button>
@@ -191,13 +184,6 @@
         
     }
 
-    function Limpiar_Med(){
-        $('#txtDesMedicamento').val('');
-        $('#txtFormFarmace').val('');
-        $('#txtConcentrMed').val('');
-        $('#txtPetitorio').val('');
-        $('#txtPrecio').val('');
-    }
 
     async function GetMedicamentoxMED_CODMED(){
         try {
@@ -216,7 +202,7 @@
             }
             else{
                 NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-                Limpiar_Med();
+                $('#txtDesMedicamento').val('');
             }
             TerminarWaitMe();
         } catch (err) {
@@ -229,42 +215,76 @@
         return $.get(ajaxurl, data_array );
     };
 
-    async function RegistrarATenMedicamentoRecAjax(ajaxurl, data_array) {
-        return $.post(ajaxurl, data_array);
+    function RegistrarATenMedicamentoRec() {
+        let array_plazo = [];
+        array_plazo[0] = $('#txtIdMed').val();
+        array_plazo[1] = $("#txtCantEval").val();
+        array_plazo[2] = $("#txtMotivoCambioCant").val();
+        console.log(Math.floor(array_plazo[1]));
+        if (Math.floor(array_plazo[1]) < 0) {
+            NotificacionToastr('error', 'Ingrese la Cantidad a Evaluar', 'Campos requeridos');
+            return false;
+        }
+
+        if (array_plazo[2] == "") {
+            NotificacionToastr('error', 'Ingrese el motico de cambio', 'Campos requeridos');
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("N_AMED_IDNUMREG", array_plazo[0]);
+        formData.append("N_AMED_ICANTAPROBADAODSIS", array_plazo[1]);
+        formData.append("V_AMED_V_MOTIVO_CAMBIO", array_plazo[2]);
+
+        $.ajax({
+            url: '@Url.Action("ActualizarMedEval", "Evaluacion")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            type: 'POST',
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');                    
+                    $('#mdl_AccionMedicamentosFUAV').modal('hide');
+                    $('#modalMedicamentos').html('');
+                    Cargar_Medicamentos_Eval();
+                    TerminarWaitMe();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                    TerminarWaitMe();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
     }
 
-    async function RegistrarATenMedicamentoRec(){
-        try{
-            const array_data = {};
-            array_data.N_AMED_NUMREGATE = $("#Ate_Idnumreg").val();
-            array_data.V_AMED_CODMED = $("#txtCodMedicamento").val();
-            array_data.N_AMED_INRODIA = $("#cbxDiagnostico").val();
-            array_data.N_AMED_ICANTPRESCRITA = $("#txtPrescrito").val();
-            array_data.N_AMED_ICANTENTREGADA = $("#txtEntregado").val();
-            array_data.N_AMED_NPO = $("#txtPrecio").val();
-            array_data.N_ROBS_IDNUMREGOBS = $("#cbxMedObsPar").val();            
 
-            if (array_data.N_AMED_NUMREGATE == "" || array_data.V_AMED_CODMED == "" || array_data.N_AMED_INRODIA == "" || array_data.N_AMED_ICANTPRESCRITA == "" || array_data.N_AMED_ICANTENTREGADA == "" || array_data.N_AMED_NPO == ""){
-                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
-                $('#txtCodMedicamento').focus();
-                return false;
+    function Conf_Actualizar(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: `GUARDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, registrar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
             }
-
-            const response = await RegistrarATenMedicamentoRecAjax('@Url.Content("~/FUA/InsertarAtenMedicamentoREc")', array_data);
-            if(response.isSuccess){
-                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
-                $('#mdl_AccionMedicamentosFUAV').modal('hide');
-                $('#modalMedicamentos').html('');
-                setTimeout(function () {
-                        Cargar_Medicamentos();
-                }, 500);
+        }).then((result) => {
+            if (result.isConfirmed) {
+               RegistrarATenMedicamentoRec();
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
             }
-            else{
-                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-            }
-
-        } catch (err) {
-
-        }
+        });
     }
 </script>
