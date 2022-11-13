@@ -50,7 +50,7 @@ namespace App.Web.Controllers
             _fileUploadFTP = fileUploadFTP;
             _uRLReadFile = uRLReadFile.Value;
         }
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(int id, string periodo)
         {
             ViewBag.DescDisa = "LIMA NORTE";
             ViewBag.DescUE = "HOSPITAL CARLOS LAFRNACO LA HOZ";
@@ -66,6 +66,8 @@ namespace App.Web.Controllers
 
             var result = await _SELReconsideraciones.ListarMatriz(id);
             ViewBag.Matriz = result.First().Val;
+
+            ViewBag.periodo = periodo;
 
             return PartialView();
         }

@@ -444,13 +444,20 @@
                     let { result } = response;
                     console.log(result);
                     CargarModalMedicamentos_Eval(tipo, IdMed);
-                    setTimeout(function () {
+                    setTimeout(function () {                      
                         $('#txtCodMedicamento').val(result.ameD_CODMED);
                         $('#txtPrescrito').val(result.ameD_ICANTPRESCRITA);
                         $('#txtEntregado').val(result.ameD_ICANTENTREGADA);
-                        $('#cbxDiagnostico').val(result.ameD_INRODIA);
+                        $('#txtPreMedUni').val(result.ameD_NPO);
                         GetMedicamentoxMED_CODMED();
-                        $('#txtPrecio').val(result.ameD_NPO);
+                        let costo = result.ameD_ICANTENTREGADA * result.ameD_NPO;
+                        $('#txtPrecio').val(costo);
+
+                        $('#txtCantEval').val(result.ameD_ICANTAPROBADAODSIS);
+                        $('#txtPrecioEval').val(result.ameD_IPRECIOCALCULADOSIS);
+                        $('#txtMotivoCambioCant').val(result.ameD_V_MOTIVO_CAMBIO);
+                        
+                        
                     }, 1000);
                 }
                 else {
@@ -476,8 +483,46 @@
                         $('#txtCodProcedimiento').val(result.aapO_CODAPO);
                         $('#txtPrescritaProc').val(result.aapO_ICANTPROCED);
                         $('#txtEjecutadoProc').val(result.aapO_ICANTEJECUTADA);
-                        $('#txtPrecioProc').val(result.aapO_NPO);
+                        $('#txtPreApoUni').val(result.aapO_NPO);
                         GetProcedimientoPorId();
+                        let costo = result.aapO_ICANTEJECUTADA * result.aapO_NPO;
+                        $('#txtPrecioProc').val(costo);
+
+                        $('#txtCantApoEval').val(result.aapO_ICANTIDADAPROBADAODSIS);
+                        $('#txtPrecioApoEval').val(result.aapO_IPRECIOCALCULADOSIS);
+                        $('#txtMontCambApoCant').val(result.aapO_V_MOTIVO_CAMBIO);
+                    }, 1000);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+
+    function GetAtencionINSPorId(tipo, IdIns) {
+        let id = IdIns;
+        CargarWaitMe();
+        $.get('@Url.Content("~/Evaluacion/ListarAtencionINSPorId")', { id: id })
+            .done(function (response) {
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    console.log(result);
+                    CargarModalInsumos_Eval(tipo, IdIns);
+
+                    setTimeout(function () {
+                        $('#txtCodInsumos').val(result.ainS_CODINS);
+                        $('#txtPrescritoIns').val(result.ainS_ICANTPRESCRITA);
+                        $('#txtEntregadoIns').val(result.ainS_ICANTENTREGADA);
+                        $('#txtPreApoUni').val(result.ainS_NPO);
+                        GetInsumos_Id();
+                        let costo = result.ainS_ICANTENTREGADA * result.ainS_NPO;
+                        $('#txtPrecioIns').val(costo);
+
+                        $('#txtCantInsEval').val(result.ainS_ICANTIDADAPROBADAODSIS);
+                        $('#txtPrecioInsEval').val(result.ainS_IPRECIOCALCULADOSIS);
+                        $('#txtMotivoCambioInsCant').val(result.ainS_V_MOTIVO_CAMBIO);
                     }, 1000);
                 }
                 else {
@@ -558,7 +603,7 @@
     function VoverAtras_Reconsideraciones(){
         ///SolicitudReconsideracion/Index
         CargarWaitMe();
-        $(".content-custom").load("@Url.Content("~/SolicitudReconsideracion/Index")", () => {
+        $(".content-custom").load("@Url.Content("~/BusqReconsideracionEval/Index")", () => {
             TerminarWaitMe();
         });
     }

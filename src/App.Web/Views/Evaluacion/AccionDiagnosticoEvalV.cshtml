@@ -21,19 +21,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-4">
-                            <div class="form-label fw-bolder fs-4">
+                            <div class="form-label fw-bolder">
                                 Código
                             </div>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="txtCodDiagnostico" disabled/>
-                                <button onclick="GetDiagnosticoPorId()" type="button" class="btn btn-primary input-group-text" id="btnConsultarDX" disabled>
-                                    <span class="indicator-label">
-                                        <i class="fas fa-search fs-4"></i> Consultar
-                                    </span>
-                                    <span class="indicator-progress">
-                                        Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                    </span>
-                                </button>
+                                <input type="text" class="form-control form-control-sm" id="txtCodDiagnostico" disabled/>
                             </div>
 
                         </div>
@@ -42,16 +34,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Descripción</label>
-                            <textarea type="text" rows="5" class="form-control form-control-solid " id="txtDesDiagnostico" disabled></textarea>
+                            <label class="form-label fw-bolder">Descripción</label>
+                            <textarea type="text" rows="5" class="form-control form-control-solid form-control-sm" id="txtDesDiagnostico" disabled></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-4" data-select2-id="cbxIngEgre">
-                            <label for="cbxIngEgre" class="form-label text-wrap fw-bolder fs-4">Ingreso/Egreso</label>
-                            <select aria-label="Seleccionar" id="cbxIngEgre" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4" disabled>
+                            <label for="cbxIngEgre" class="form-label text-wrap fw-bolder">Ingreso/Egreso</label>
+                            <select aria-label="Seleccionar" id="cbxIngEgre" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 form-control-sm" disabled>
                                 <option selected disabled value="">Seleccionar</option>
                                 <option value="I">INGRESO</option>
                                 <option value="E">EGRESO</option>
@@ -62,8 +54,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-4" data-select2-id="cbxTipoDx">
-                            <label for="cbxTipoDx" class="form-label text-wrap fw-bolder fs-4">Tipo DX</label>
-                            <select aria-label="Seleccionar" id="cbxTipoDx" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4" disabled>
+                            <label for="cbxTipoDx" class="form-label text-wrap fw-bolder">Tipo DX</label>
+                            <select aria-label="Seleccionar" id="cbxTipoDx" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4 form-control-sm" disabled>
                                 <option selected disabled value="">Seleccionar</option>                               
                                     @{ if (ViewBag.ListTipoDX != null)
                                     {
@@ -84,20 +76,20 @@
                     @if (ViewBag.Tipo == "1")
                     {
                         <button type="button" onclick="RegistrarATenMedicamentoRec();" class="btn btn-success">
-                            <i class="fas fa-save fs-4 me-2"></i>
+                            <i class="fas fa-save me-2"></i>
                             Guardar
                         </button>
                     }
                     else if (ViewBag.Tipo == "2")
                     {
                         <button type="button" onclick="" class="btn btn-warning">
-                            <i class="fas fa-edit fs-4 me-2"></i>
+                            <i class="fas fa-edit me-2"></i>
                             Actualizar
                         </button>
                     }
 
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                        <i class="fas fa-times fs-4 me-2"></i>
+                        <i class="fas fa-times me-2"></i>
                         Cancelar
                     </button>
                 </div>

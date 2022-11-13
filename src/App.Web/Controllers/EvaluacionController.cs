@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using App.Data;
+using App.Models;
 using App.Services.IServices;
+using App.Tools;
 using App.ViewModels;
+using App.ViewModels.INSReconsideraciones;
+using App.ViewModels.SELReconsideraciones;
+using App.ViewModels.UPDReconsideraciones;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -200,8 +207,9 @@ namespace App.Web.Controllers
             else if (Convert.ToInt32(tipo) == 2)
             {
                 ViewBag.Tipo = tipo;
-                ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL MEDICAMENTO";
+                ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL MEDICAMENTO A EVALUAR";
             }
+            ViewBag.IdMed=id;
             await ListDiag(idate);
             var codtabla = "02";
             await ListObs(idate, codtabla);
@@ -242,12 +250,12 @@ namespace App.Web.Controllers
             else if (Convert.ToInt32(tipo) == 2)
             {
                 ViewBag.Tipo = tipo;
-                ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL PROCEDIMIENTO";
+                ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL PROCEDIMIENTO A EVALUAR";
             }
             await ListDiag(idate);
             var codtabla = "04";
             await ListObs(idate, codtabla);
-            ViewBag.vbId = id;
+            ViewBag.IdApo = id;
             return PartialView();
         }
         public async Task<IActionResult> InsumosEvalV(int id, int est)
@@ -270,14 +278,14 @@ namespace App.Web.Controllers
             else if (Convert.ToInt32(tipo) == 2)
             {
                 ViewBag.Tipo = tipo;
-                ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL INSUMO";
+                ViewBag.Titulo_Modal = "ACTUALIZACIÓN DEL INSUMO A EVALUAR";
             }
 
             await ListDiag(idate);
             var codtabla = "03";
             await ListObs(idate, codtabla);
 
-            ViewBag.vbId = id;
+            ViewBag.IdIns = id;
             return PartialView();
         }
 
@@ -340,6 +348,27 @@ namespace App.Web.Controllers
             try
             {
                 var result = await _SELReconsideraciones.ListarAtencionAPO_Edit(id);
+
+                if (result != null)
+                {
+                    return new JsonResult(new { IsSuccess = true, Result = result });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+
+        }
+        public async Task<IActionResult> ListarAtencionINSPorId(int id)
+        {
+            try
+            {
+                var result = await _SELReconsideraciones.ListarAtencionINS_Edit(id);
 
                 if (result != null)
                 {
@@ -420,7 +449,103 @@ namespace App.Web.Controllers
             return PartialView(result);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ActualizarMedEval(setActualizarMedEval model)
+        {
+            try
+            {
+                var usuario = "admin";
+                var datos = new setActualizarMedEval()
+                {
+                    N_AMED_ICANTAPROBADAODSIS = model.N_AMED_ICANTAPROBADAODSIS,
+                    V_AMED_V_MOTIVO_CAMBIO = model.V_AMED_V_MOTIVO_CAMBIO,
+                    V_AMED_IDUSUARIOACT = usuario,
+                    N_AMED_IDNUMREG = model.N_AMED_IDNUMREG
 
+                };
+
+                var result = await _uPDReconsideraciones.Actualizar_CantMed_Evaluacion(datos);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> ActualizarApoEval(setActualizarApoEval model)
+        {
+            try
+            {
+                var usuario = "admin";
+                var datos = new setActualizarApoEval()
+                {
+                    N_AAPO_ICANTAPROBADAODSIS = model.N_AAPO_ICANTAPROBADAODSIS,
+                    V_AAPO_V_MOTIVO_CAMBIO = model.V_AAPO_V_MOTIVO_CAMBIO,
+                    V_AAPO_IDUSUARIOACT = usuario,
+                    N_AAPO_IDNUMREG = model.N_AAPO_IDNUMREG
+
+                };
+
+                var result = await _uPDReconsideraciones.Actualizar_CantApo_Evaluacion(datos);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> ActualizarInsEval(setActualizarInsEval model)
+        {
+            try
+            {
+                var usuario = "admin";
+                var datos = new setActualizarInsEval()
+                {
+                    N_AINS_ICANTIDADAPROBADAODSIS = model.N_AINS_ICANTIDADAPROBADAODSIS,
+                    V_AINS_V_MOTIVO_CAMBIO = model.V_AINS_V_MOTIVO_CAMBIO,
+                    V_AINS_IDUSUARIOACT = usuario,
+                    N_AINS_IDNUMREG = model.N_AINS_IDNUMREG
+
+                };
+
+                var result = await _uPDReconsideraciones.Actualizar_CantIns_Evaluacion(datos);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+            }
+
+        }
+        
     }
 }
 

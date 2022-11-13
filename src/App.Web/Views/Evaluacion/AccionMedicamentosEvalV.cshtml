@@ -17,99 +17,137 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" id="txtId">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <div class="form-label fw-bolder fs-4">
-                                Código
+                <input type="hidden" id="txtIdMed" value="@ViewBag.IdMed">
+                <input type="hidden" id="txtPreMedUni">
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                1. Datos Generales del Medicamento
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                            <div class="accordion-body">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <div class="form-label fw-bolder">
+                                                Código
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control form-control-sm" id="txtCodMedicamento" disabled />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Descripción</label>
+                                            <textarea type="text" class="form-control form-control-sm form-control-solid" rows="1" id="txtDesMedicamento" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Prescrita</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtPrescrito" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Entregada</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtEntregado" disabled />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Precio (S/.)</label>
+                                            <input type="text" class="form-control form-control-solid form-control-sm" id="txtPrecio" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                            
                             </div>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="txtCodMedicamento" disabled />
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                            2. Datos para la Evaluación:
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+                            <div class="accordion-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Cant. Evaluación (S/.)</label>
+                                            <input type="number" min="0" onkeyup="Calcular_Precio_Med()" class="form-control form-control-sm fw-bolder" id="txtCantEval" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Precio de Evaluación (S/.)</label>
+                                            <input type="text" style="color:darkred" class="form-control form-control-solid form-control-sm fw-bolder" id="txtPrecioEval" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Motivo Cambio Cantidad</label>
+                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtMotivoCambioCant"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Descripción</label>
-                            <textarea type="text" class="form-control form-control-solid" rows="1" id="txtDesMedicamento" disabled></textarea>
-                        </div>
-                    </div>
-                </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                3. Detalle de la Reconsideración Parcial:
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThree">
+                            <div class="accordion-body">
 
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-4">
+                                            <label class="form-label text-wrap fw-bolder">Observado por:</label>
+                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtObsParcialEval" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Prescrita</label>
-                            <input type="text" class="form-control " id="txtPrescrito" disabled />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Entregada</label>
-                            <input type="text" class="form-control " id="txtEntregado" disabled />
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Precio (S/.)</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPrecio" disabled />
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <hr style="border:3px solid" />
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Cant. Evaluación (S/.)</label>
-                            <input type="text" class="form-control" id="txtCantEval" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Precio de Evaluación (S/.)</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPrecioEval" disabled />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Motivo Cambio Cantidad</label>
-                            <textarea type="text" rows="3" class="form-control" id="txtMontCambCant"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <hr style="border:3px solid" />
 
 
                 <div class="modal-footer">
-                    @if (ViewBag.Tipo == "1")
+                    @if (ViewBag.Tipo == "2")
                     {
-                        <button type="button" onclick="RegistrarATenMedicamentoRec();" class="btn btn-success">
-                            <i class="fas fa-save fs-4 me-2"></i>
-                            Guardar
-                        </button>
-                    }
-                    else if (ViewBag.Tipo == "2")
-                    {
-                        <button type="button" onclick="Modificar_TramoCV();" class="btn btn-warning">
-                            <i class="fas fa-edit fs-4 me-2"></i>
+                        <button type="button" onclick="Conf_Actualizar(event);" class="btn btn-warning">
+                            <i class="fas fa-edit me-2"></i>
                             Actualizar
                         </button>
                     }
 
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                        <i class="fas fa-times fs-4 me-2"></i>
+                        <i class="fas fa-times me-2"></i>
                         Cancelar
                     </button>
                 </div>
@@ -125,13 +163,27 @@
         }
     });
 
-    function Limpiar_Med(){
-        $('#txtDesMedicamento').val('');
-        $('#txtFormFarmace').val('');
-        $('#txtConcentrMed').val('');
-        $('#txtPetitorio').val('');
-        $('#txtPrecio').val('');
+    function Calcular_Precio_Med(){
+        let costo = 0;
+        let cantidad = 0;
+        let calculo = 0;
+        let entregado=0;
+        entregado = $("#txtEntregado").val();
+        costo=$('#txtPreMedUni').val();
+        cantidad = $('#txtCantEval').val();
+        if (parseInt(cantidad, 10) <= parseInt(entregado, 10)) {
+            calculo = costo * cantidad;
+            $('#txtPrecioEval').val(calculo);
+            $('#txtCantEval').focus();
+        }else{
+            $('#txtPrecioEval').val('');
+            $('#txtCantEval').val('');
+            NotificacionToastr('error', `La cantidad ingresada es superior a la entregada (${cantidad} > ${entregado} ).`, 'Verifique!!!');
+            $('#txtCantEval').focus();
+        }
+        
     }
+
 
     async function GetMedicamentoxMED_CODMED(){
         try {
@@ -150,7 +202,7 @@
             }
             else{
                 NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-                Limpiar_Med();
+                $('#txtDesMedicamento').val('');
             }
             TerminarWaitMe();
         } catch (err) {
@@ -163,42 +215,76 @@
         return $.get(ajaxurl, data_array );
     };
 
-    async function RegistrarATenMedicamentoRecAjax(ajaxurl, data_array) {
-        return $.post(ajaxurl, data_array);
+    function RegistrarATenMedicamentoRec() {
+        let array_plazo = [];
+        array_plazo[0] = $('#txtIdMed').val();
+        array_plazo[1] = $("#txtCantEval").val();
+        array_plazo[2] = $("#txtMotivoCambioCant").val();
+        console.log(Math.floor(array_plazo[1]));
+        if (Math.floor(array_plazo[1]) < 0) {
+            NotificacionToastr('error', 'Ingrese la Cantidad a Evaluar', 'Campos requeridos');
+            return false;
+        }
+
+        if (array_plazo[2] == "") {
+            NotificacionToastr('error', 'Ingrese el motico de cambio', 'Campos requeridos');
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("N_AMED_IDNUMREG", array_plazo[0]);
+        formData.append("N_AMED_ICANTAPROBADAODSIS", array_plazo[1]);
+        formData.append("V_AMED_V_MOTIVO_CAMBIO", array_plazo[2]);
+
+        $.ajax({
+            url: '@Url.Action("ActualizarMedEval", "Evaluacion")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            type: 'POST',
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');                    
+                    $('#mdl_AccionMedicamentosFUAV').modal('hide');
+                    $('#modalMedicamentos').html('');
+                    Cargar_Medicamentos_Eval();
+                    TerminarWaitMe();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                    TerminarWaitMe();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
     }
 
-    async function RegistrarATenMedicamentoRec(){
-        try{
-            const array_data = {};
-            array_data.N_AMED_NUMREGATE = $("#Ate_Idnumreg").val();
-            array_data.V_AMED_CODMED = $("#txtCodMedicamento").val();
-            array_data.N_AMED_INRODIA = $("#cbxDiagnostico").val();
-            array_data.N_AMED_ICANTPRESCRITA = $("#txtPrescrito").val();
-            array_data.N_AMED_ICANTENTREGADA = $("#txtEntregado").val();
-            array_data.N_AMED_NPO = $("#txtPrecio").val();
-            array_data.N_ROBS_IDNUMREGOBS = $("#cbxMedObsPar").val();            
 
-            if (array_data.N_AMED_NUMREGATE == "" || array_data.V_AMED_CODMED == "" || array_data.N_AMED_INRODIA == "" || array_data.N_AMED_ICANTPRESCRITA == "" || array_data.N_AMED_ICANTENTREGADA == "" || array_data.N_AMED_NPO == ""){
-                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
-                $('#txtCodMedicamento').focus();
-                return false;
+    function Conf_Actualizar(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: `GUARDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, registrar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
             }
-
-            const response = await RegistrarATenMedicamentoRecAjax('@Url.Content("~/FUA/InsertarAtenMedicamentoREc")', array_data);
-            if(response.isSuccess){
-                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
-                $('#mdl_AccionMedicamentosFUAV').modal('hide');
-                $('#modalMedicamentos').html('');
-                setTimeout(function () {
-                        Cargar_Medicamentos();
-                }, 500);
+        }).then((result) => {
+            if (result.isConfirmed) {
+               RegistrarATenMedicamentoRec();
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
             }
-            else{
-                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-            }
-
-        } catch (err) {
-
-        }
+        });
     }
 </script>

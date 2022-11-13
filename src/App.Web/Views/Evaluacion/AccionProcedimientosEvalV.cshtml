@@ -17,99 +17,132 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" id="txtId" value="@ViewBag.vbId">
-                <input type="hidden" id="txtApoId">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <div class="form-label fw-bolder fs-4">
-                                Código
+                <input type="hidden" id="txtIdApo" value="@ViewBag.IdApo">
+                <input type="hidden" id="txtPreApoUni">
+
+                <div class="accordion" id="acordionApoEval">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelApoEval">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#panelApoEvalCollapse" aria-expanded="true" aria-controls="panelApoEvalCollapse">
+                                1. Datos Generales del Procedimiento
+                            </button>
+                        </h2>
+                        <div id="panelApoEvalCollapse" class="accordion-collapse collapse show" aria-labelledby="panelApoEval">
+                            <div class="accordion-body">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <div class="form-label fw-bolder ">
+                                                Código
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control  form-control-sm" id="txtCodProcedimiento" disabled />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder ">Descripción</label>
+                                            <textarea type="text" rows="1" class="form-control form-control-solid form-control-sm" id="txtDesProcedimiento" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder ">Prescrita</label>
+                                            <input type="number" min="0" max="999" maxlength="3" class="form-control form-control-sm" id="txtPrescritaProc" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder ">Ejecutada</label>
+                                            <input type="number" min="0" max="999" maxlength="3" class="form-control form-control-sm" id="txtEjecutadoProc" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder ">Precio (S/.)</label>
+                                            <input type="text" class="form-control form-control-solid form-control-sm" disabled id="txtPrecioProc" />
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="txtCodProcedimiento" disabled />
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelApoEval2">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#panelApoEvalCollapse2" aria-expanded="false" aria-controls="panelApoEvalCollapse2">
+                                2. Datos para la Evaluación:
+                            </button>
+                        </h2>
+                        <div id="panelApoEvalCollapse2" class="accordion-collapse collapse show" aria-labelledby="panelApoEval2">
+                            <div class="accordion-body">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder ">Cant. Evaluación (S/.)</label>
+                                            <input type="number" onkeyup="Calcular_Precio_APO()" class="form-control form-control-sm" id="txtCantApoEval" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder ">Precio de Evaluación (S/.)</label>
+                                            <input type="text" class="form-control form-control-solid form-control-sm" id="txtPrecioApoEval" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder ">Motivo Cambio Cantidad</label>
+                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtMontCambApoCant"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelApoEval3">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#panelApoEvalCollapse3" aria-expanded="false" aria-controls="panelApoEvalCollapse3">
+                                3. Detalle de la Reconsideración Parcial:
+                            </button>
+                        </h2>
+                        <div id="panelApoEvalCollapse3" class="accordion-collapse collapse show" aria-labelledby="panelApoEval3">
+                            <div class="accordion-body">
 
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Descripción</label>
-                            <textarea type="text" rows="1" class="form-control form-control-solid " id="txtDesProcedimiento" disabled></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Prescrita</label>
-                            <input type="number" min="0" max="999" maxlength="3" class="form-control " id="txtPrescritaProc" disabled />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Ejecutada</label>
-                            <input type="number" min="0" max="999" maxlength="3" class="form-control" id="txtEjecutadoProc" disabled />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Precio (S/.)</label>
-                            <input type="text" class="form-control form-control-solid" disabled id="txtPrecioProc" />
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-4">
+                                            <label class="form-label text-wrap fw-bolder">Observado por:</label>
+                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtObsParcialApoEval" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <hr style="border:3px solid" />
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Cant. Evaluación (S/.)</label>
-                            <input type="text" class="form-control" id="txtCantEval" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Precio de Evaluación (S/.)</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPrecioEval" disabled />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Motivo Cambio Cantidad</label>
-                            <textarea type="text" rows="3" class="form-control" id="txtMontCambCant"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Motivo Cambio Precio</label>
-                            <textarea type="text" rows="3" class="form-control" id="txtMontCambPrecio"></textarea>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="modal-footer">
-                    @if (ViewBag.Tipo == "1")
+                    @if (ViewBag.Tipo == "2")
                     {
-                        <button type="button" onclick="Conf_GuardarApo(event);" class="btn btn-success">
-                            <i class="fas fa-save fs-4 me-2"></i>
-                            Guardar
-                        </button>
-                    }
-                    else if (ViewBag.Tipo == "2")
-                    {
-                        <button type="button" onclick="" class="btn btn-warning">
-                            <i class="fas fa-edit fs-4 me-2"></i>
+                        <button type="button" onclick="Conf_Actualizar_Apo(event)" class="btn btn-warning">
+                            <i class="fas fa-edit me-2"></i>
                             Actualizar
                         </button>
                     }
 
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                        <i class="fas fa-times fs-4 me-2"></i>
+                        <i class="fas fa-times me-2"></i>
                         Cancelar
                     </button>
                 </div>
@@ -125,6 +158,27 @@
             GetProcedimientoPorId();
         }
     });
+
+    function Calcular_Precio_APO() {
+        let costo = 0;
+        let cantidad = 0;
+        let calculo = 0;
+        let entregado = 0;
+        entregado = $("#txtEjecutadoProc").val();
+        costo = $('#txtPreApoUni').val();
+        cantidad = $('#txtCantApoEval').val();
+        if (parseInt(cantidad, 10) <= parseInt(entregado, 10)) {
+            calculo = costo * cantidad;
+            $('#txtPrecioApoEval').val(calculo);
+            $('#txtCantApoEval').focus();
+        } else {
+            $('#txtPrecioApoEval').val('');
+            $('#txtCantApoEval').val('');
+            NotificacionToastr('error', `La cantidad ingresada es superior a la entregada (${cantidad} > ${entregado} ).`, 'Verifique!!!');
+            $('#txtCantApoEval').focus();
+        }
+
+    }
 
     function GetProcedimientoPorId() {
         let id = $('#txtCodProcedimiento').val();
@@ -144,21 +198,66 @@
                 }
                 else {
                     NotificacionToastr('warning', `El procedimiento ingresado es incorrecto.`, 'Error...');
-                    Limpiar_datos();
+                           $('#txtDesProcedimiento').val('');
 
                 }
                 TerminarWaitMe();
 
             });
     }
-   function Limpiar_datos(){
-       $('#txtDesProcedimiento').val('');
-       $('#txtGrupoProc').val('');
-       $('#txtSubGrupoProc').val('');
+
+    function RegistrarATeProcedimientosRec() {
+        let array_plazo = [];
+        array_plazo[0] = $('#txtIdApo').val();
+        array_plazo[1] = $("#txtCantApoEval").val();
+        array_plazo[2] = $("#txtMontCambApoCant").val();
+        console.log(Math.floor(array_plazo[1]));
+        if (Math.floor(array_plazo[1]) < 0) {
+            NotificacionToastr('error', 'Ingrese la Cantidad a Evaluar', 'Campos requeridos');
+            return false;
+        }
+
+        if (array_plazo[2] == "") {
+            NotificacionToastr('error', 'Ingrese el motico de cambio', 'Campos requeridos');
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("N_AAPO_IDNUMREG", array_plazo[0]);
+        formData.append("N_AAPO_ICANTAPROBADAODSIS", array_plazo[1]);
+        formData.append("V_AAPO_V_MOTIVO_CAMBIO", array_plazo[2]);
+
+        $.ajax({
+            url: '@Url.Action("ActualizarApoEval", "Evaluacion")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            type: 'POST',
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                    $('#mdl_AccionProcedimientosFUAV').modal('hide');
+                    $('#modalProcedimientos').html('');
+                    Cargar_Procedimientos_Eval();
+                    TerminarWaitMe();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                    TerminarWaitMe();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
     }
 
 
-    function Conf_GuardarApo(e) {
+    function Conf_Actualizar_Apo(e) {
         e.preventDefault();
         Swal.fire({
             title: `GUARDAR CAMBIOS?`,
@@ -173,58 +272,10 @@
             }
         }).then((result) => {
             if (result.isConfirmed) {
-               RegistrarATenProcedimientoRec();
-               
+                RegistrarATeProcedimientosRec();
             } else if (result.isDenied) {
                 Swal.fire('', '', 'info')
             }
         });
-    }
-
-    async function RegistrarAteProcRecAjax(ajaxurl, data_array) {
-        return $.post(ajaxurl, data_array);
-    }
-
-    async function RegistrarATenProcedimientoRec(){
-        try{
-            const array_data = {};
-            array_data.N_AAPO_NUMREGATE = $("#Ate_Idnumreg").val();
-
-            array_data.N_AAPO_CODAPO = $("#txtCodProcedimiento").val();
-            array_data.V_AAPO_INRODIA = $("#cbxDiagnosticoProc").val();
-            array_data.N_AAPO_ICANTPROCED = $("#txtPrescritaProc").val();
-            array_data.N_AAPO_ICANTEJECUTADA = $("#txtEjecutadoProc").val();
-            array_data.N_AAPO_ITICKET = 0;
-            array_data.N_AAPO_NPO = $("#txtPrecioProc").val();
-            array_data.N_AAPO_NCOSTOAPLICADO = $("#txtResultadoProc").val();
-            array_data.N_AAPO_APO_ID = $("#txtApoId").val();
-            array_data.N_ROBS_IDNUMREGOBS = $("#cbxApoObsPar").val();            
-
-            
-
-            if (array_data.N_AAPO_NUMREGATE == "" || array_data.V_AAPO_INRODIA == "" ||
-                array_data.N_AAPO_ICANTPROCED == "" || array_data.N_AAPO_ICANTEJECUTADA == "" ||
-                array_data.N_AAPO_NPO == "" || array_data.N_AAPO_APO_ID == "") {
-                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
-                $('#txtCodProcedimiento').focus();
-                return false;
-            }
-
-            const response = await RegistrarAteProcRecAjax('@Url.Content("~/FUA/InsertarAtenProcedimientoREc")', array_data);
-            if(response.isSuccess){
-                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
-                $('#mdl_AccionProcedimientosFUAV').modal('hide');
-                $('#modalProcedimientos').html('');
-                setTimeout(function () {
-                    Cargar_Procedimientos();
-                }, 500);
-            }
-            else{
-                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-            }
-
-        } catch (err) {
-            console.log(err);
-        }
     }
 </script>

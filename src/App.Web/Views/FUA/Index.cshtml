@@ -10,6 +10,8 @@
         <input type="hidden" id="Ate_Idnumreg" value="@ViewBag.ATE_IDNUMREG" />
         <input type="hidden" id="MatrizCant" value="@ViewBag.Matriz" />
         <input type="hidden" id="RecEstado" value="@ViewBag.RecEstado" />
+        <input type="hidden" id="Solperiodo" value="@ViewBag.periodo" />
+
         <div class="row">
             <div class="col-md-4">
                 <div class="card" style="background-color:#73B8C0">
@@ -645,8 +647,9 @@
 
     function VoverAtras_Reconsideraciones(){
         ///SolicitudReconsideracion/Index
+        let valor = $("#Solperiodo").val();
         CargarWaitMe();
-        $(".content-custom").load("@Url.Content("~/SolicitudReconsideracion/Index")", () => {
+        $(".content-custom").load("@Url.Content("~/SolicitudReconsideracion/Index")",{periodo: valor}, () => {
             TerminarWaitMe();
         });
     }

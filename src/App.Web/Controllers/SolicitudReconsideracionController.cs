@@ -27,7 +27,7 @@ namespace App.Web.Controllers
 
 
         // GET: /<controller>/
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string periodo)
         {
             ViewBag.DescDisa = "LIMA NORTE";
             ViewBag.DescUE = "HOSPITAL CARLOS LAFRNACO LA HOZ";
@@ -48,6 +48,8 @@ namespace App.Web.Controllers
             ViewBag.TipoObservacion = TipoObservacion;
             var EstadosRecon = await _IReadSolicitudRecon.GetEstadoReconsideracion();
             ViewBag.EstadosRecon = EstadosRecon;
+
+            ViewBag.Periodo = periodo;
 
             return PartialView();
         }

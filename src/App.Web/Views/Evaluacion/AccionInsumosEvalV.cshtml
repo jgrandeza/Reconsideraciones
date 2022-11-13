@@ -17,136 +17,132 @@
             </div>
 
             <div class="modal-body">
-                <input type="hidden" id="txtId">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <div class="form-label fw-bolder fs-4">
-                                Código
+                <input type="hidden" id="txtIdIns" value="@ViewBag.IdIns">
+                <input type="hidden" id="txtPreInsUni">
+
+
+                <div class="accordion" id="accordionInsumoEval">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="PanelInsumo-headingOne">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#PanelInsumo-collapseOne" aria-expanded="true" aria-controls="PanelInsumo-collapseOne">
+                                1. Datos Generales del Insumo
+                            </button>
+                        </h2>
+                        <div id="PanelInsumo-collapseOne" class="accordion-collapse collapse show" aria-labelledby="PanelInsumo-headingOne">
+                            <div class="accordion-body">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <div class="form-label fw-bolder">
+                                                Código
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control form-control-sm" id="txtCodInsumos" disabled />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Descripción</label>
+                                            <textarea type="text" class="form-control form-control-sm form-control-solid" rows="1" id="txtDesInsumos" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Prescrita</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtPrescritoIns" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Entregada</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtEntregadoIns" disabled />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Precio (S/.)</label>
+                                            <input type="text" class="form-control form-control-solid form-control-sm" id="txtPrecioIns" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="txtCodInsumos" />
-                                <button type="button" onclick="GetInsumos_Id()" class="btn btn-primary input-group-text" id="btnConsultarInsu">
-                                    <span class="indicator-label">
-                                        <i class="fas fa-search fs-4"></i> Consultar
-                                    </span>
-                                    <span class="indicator-progress">
-                                        Esepere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                    </span>
-                                </button>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="PanelInsumo-headingTwo">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#PanelInsumo-collapseTwo" aria-expanded="false" aria-controls="PanelInsumo-collapseTwo">
+                                2. Datos para la Evaluación:
+                            </button>
+                        </h2>
+                        <div id="PanelInsumo-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="PanelInsumo-headingTwo">
+                            <div class="accordion-body">
+
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Cant. Evaluación (S/.)</label>
+                                            <input type="number" min="0" onkeyup="Calcular_Precio_INS()" class="form-control form-control-sm fw-bolder" id="txtCantInsEval" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Precio de Evaluación (S/.)</label>
+                                            <input type="text" style="color:darkred" class="form-control form-control-solid form-control-sm fw-bolder" id="txtPrecioInsEval" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Motivo Cambio Cantidad</label>
+                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtMotivoCambioInsCant"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="PanelInsumo-headingThree">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#PanelInsumo-collapseThree" aria-expanded="false" aria-controls="PanelInsumo-collapseThree">
+                                3. Detalle de la Reconsideración Parcial:
+                            </button>
+                        </h2>
+                        <div id="PanelInsumo-collapseThree" class="accordion-collapse collapse show" aria-labelledby="PanelInsumo-headingThree">
+                            <div class="accordion-body">
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-4">
+                                            <label class="form-label text-wrap fw-bolder">Observado por:</label>
+                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtObsParcialInsEval" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Descripción</label>
-                            <input type="text" class="form-control form-control-solid " id="txtDesInsumos" disabled />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Presentación</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPresentacionIns" disabled />
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Concentración</label>
-                            <input type="text" class="form-control form-control-solid " id="txtConcentrIns" disabled />
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Prescrita</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPrescritoIns" />
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Entregada</label>
-                            <input type="text" class="form-control form-control-solid " id="txtEntregadoIns" />
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Precio (S/.)</label>
-                            <input type="text" class="form-control form-control-solid " id="txtPrecioIns" />
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Resultado</label>
-                            <input type="text" class="form-control form-control-solid " id="txtResultadoIns" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-4" data-select2-id="cbxDiagnosticoIns">
-                            <label for="cbxDiagnosticoIns" class="form-label text-wrap fw-bolder fs-4">Diagnostico</label>
-                            <select aria-label="Seleccionar" id="cbxDiagnosticoIns" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
-                                <option selected disabled value="">Seleccionar</option>
-                                @{ if (ViewBag.ListDX != null)
-                                    {
-                                        foreach (var item in ViewBag.ListDX)
-                                        {
-                                            <option value="@item.ADIA_INRODIA">@item.C10_NOMBRE</option>
-                                        }
-                                    }
-                                }
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <hr style="border:3px solid" />
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-4" data-select2-id="cbxInsObsPar">
-                            <label for="cbxInsObsPar" class="form-label text-wrap fw-bolder fs-4">Codigo de Observacion *</label>
-                            <select aria-label="Seleccionar" id="cbxInsObsPar" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
-                                <option selected disabled value="0">Seleccionar</option>
-                                @{ if (ViewBag.ListObs != null)
-                                    {
-                                        foreach (var item in ViewBag.ListObs)
-                                        {
-                                            <option value="@item.Id">RVAL @item.ROBS_CODIGO_OBSERVACION - @item.TABLA - @item.ROBS_DESCRIPCION</option>
-                                        }
-                                    }
-                                }
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <span style="color:red">
-                            (*)SOLO PARA OBSERVACIONES PARCIALES:
-                            Seleccione la observación Parcial relacionado al Item que
-                            está ingresando o modificando (servirá como sustento
-                            para la solicitud de Reconsideración)
-                        </span>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    @if (ViewBag.Tipo == "1")
+                    @if (ViewBag.Tipo == "2")
                     {
-                        <button type="button" onclick="Conf_GuardarIns(event);" class="btn btn-success">
-                            <i class="fas fa-save fs-4 me-2"></i>
-                            Guardar
-                        </button>
-                    }
-                    else if (ViewBag.Tipo == "2")
-                    {
-                        <button type="button" onclick="" class="btn btn-warning">
+                        <button type="button" onclick="Conf_Actualizar_Ins(event)" class="btn btn-warning">
                             <i class="fas fa-edit fs-4 me-2"></i>
                             Actualizar
                         </button>
@@ -161,46 +157,6 @@
         </div>
     </div>
 </div>
-<script>$(".date").daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        minYear: 1901,
-        maxYear: parseInt(moment().format("YYYY"), 10) + 1,
-        "locale": {
-            "format": "DD/MM/YYYY",
-            "separator": " - ",
-            "applyLabel": "Aceptar",
-            "cancelLabel": "Cancelar",
-            "fromLabel": "From",
-            "toLabel": "To",
-            "customRangeLabel": "Custom",
-            "weekLabel": "W",
-            "daysOfWeek": [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
-            ],
-            "monthNames": [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Setiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            "firstDay": 1
-        },
-    });</script>
 <script>
 
     $('#txtCodInsumos').keypress(function (event) {
@@ -210,11 +166,25 @@
         }
     });
 
-    function Limpiar_Ins(){
-        $('#txtDesInsumos').val('');
-        $('#txtPresentacionIns').val('');
-        $('#txtConcentrIns').val('');
-        $('#txtPrecioIns').val('');  
+    function Calcular_Precio_INS() {
+        let costo = 0;
+        let cantidad = 0;
+        let calculo = 0;
+        let entregado = 0;
+        entregado = $("#txtEntregadoIns").val();
+        costo = $('#txtPreInsUni').val();
+        cantidad = $('#txtCantInsEval').val();
+        if (parseInt(cantidad, 10) <= parseInt(entregado, 10)) {
+            calculo = costo * cantidad;
+            $('#txtPrecioInsEval').val(calculo);
+            $('#txtCantInsEval').focus();
+        } else {
+            $('#txtPrecioInsEval').val('');
+            $('#txtCantInsEval').val('');
+            NotificacionToastr('error', `La cantidad ingresada es superior a la entregada (${cantidad} > ${entregado} ).`, 'Verifique!!!');
+            $('#txtCantInsEval').focus();
+        }
+
     }
 
     async function GetInsumos_Id(){
@@ -231,14 +201,11 @@
             console.log(isSuccess, result);
             if(isSuccess){
 
-                $('#txtDesInsumos').val(result.inS_NOMBRE);
-                $('#txtPresentacionIns').val(result.inS_UNIDAD);
-                $('#txtConcentrIns').val(result.inS_CONCEN);
-                $('#txtPrecioIns').val(result.inS_COSTO);             
+                $('#txtDesInsumos').val(result.inS_NOMBRE);          
             }
             else{
                 NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-                Limpiar_Ins();
+                $('#txtDesInsumos').val('');
             }
             TerminarWaitMe();
         } catch (err) {
@@ -251,7 +218,58 @@
         return $.get(ajaxurl, data_array );
     };
 
-    function Conf_GuardarIns(e) {
+    function RegistrarATeInsumosRec() {
+        let array_plazo = [];
+        array_plazo[0] = $('#txtIdIns').val();
+        array_plazo[1] = $("#txtCantInsEval").val();
+        array_plazo[2] = $("#txtMotivoCambioInsCant").val();
+        console.log(Math.floor(array_plazo[1]));
+        if (Math.floor(array_plazo[1]) < 0) {
+            NotificacionToastr('error', 'Ingrese la Cantidad a Evaluar', 'Campos requeridos');
+            return false;
+        }
+
+        if (array_plazo[2] == "") {
+            NotificacionToastr('error', 'Ingrese el motico de cambio', 'Campos requeridos');
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("N_AINS_IDNUMREG", array_plazo[0]);
+        formData.append("N_AINS_ICANTIDADAPROBADAODSIS", array_plazo[1]);
+        formData.append("V_AINS_V_MOTIVO_CAMBIO", array_plazo[2]);
+
+        $.ajax({
+            url: '@Url.Action("ActualizarInsEval", "Evaluacion")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            type: 'POST',
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                    $('#mdl_AccionInsumosFUAV').modal('hide');
+                    $('#modalInsumos').html('');
+                    Cargar_Insumos_Eval();
+                    TerminarWaitMe();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                    TerminarWaitMe();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
+    }
+
+
+    function Conf_Actualizar_Ins(e) {
         e.preventDefault();
         Swal.fire({
             title: `GUARDAR CAMBIOS?`,
@@ -266,57 +284,13 @@
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                RegistrarATenInsumosRec();
-
+                RegistrarATeInsumosRec();
             } else if (result.isDenied) {
                 Swal.fire('', '', 'info')
             }
         });
     }
 
-    async function RegistrarAteInsRecAjax(ajaxurl, data_array) {
-        return $.post(ajaxurl, data_array);
-    }
-
-    async function RegistrarATenInsumosRec(){
-        try{
-            const array_data = {};
-            array_data.N_AINS_NUMREGATE = $("#Ate_Idnumreg").val();
-
-            array_data.V_AINS_CODINS = $("#txtCodInsumos").val();
-            array_data.N_AINS_INRODIA = $("#cbxDiagnosticoIns").val();
-            array_data.V_AINS_CCARACT = '';
-            array_data.N_AINS_ICANTPRESCRITA = $("#txtPrescritoIns").val();
-            array_data.N_AINS_ICANTENTREGADA = $("#txtEntregadoIns").val();
-            array_data.N_AINS_ITICKET = 0;
-            array_data.N_AINS_NPO = $("#txtPrecioIns").val();
-            array_data.N_AINS_NCOSTOAPLICADO = $("#txtResultadoIns").val();
-            array_data.N_ROBS_IDNUMREGOBS = $("#cbxInsObsPar").val();            
 
 
-            if (array_data.N_AINS_NUMREGATE == "" || array_data.V_AINS_CODINS == "" ||
-                array_data.N_AINS_INRODIA == "" || array_data.N_AINS_ICANTPRESCRITA == "" ||
-                array_data.N_AINS_ICANTENTREGADA == "" || array_data.N_AINS_NPO == "") {
-                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
-                $('#txtCodInsumos').focus();
-                return false;
-            }
-
-            const response = await RegistrarAteInsRecAjax('@Url.Content("~/FUA/InsertarAtenInsumosREc")', array_data);
-            if(response.isSuccess){
-                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
-                $('#mdl_AccionInsumosFUAV').modal('hide');
-                $('#modalInsumos').html('');
-                setTimeout(function () {
-                    Cargar_Insumos();
-                }, 500);
-            }
-            else{
-                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-            }
-
-        } catch (err) {
-            console.log(err);
-        }
-    }
 </script>
