@@ -32,6 +32,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.Configure<SchemaOracle>(Configuration.GetSection("SchemaOracle"));
 builder.Services.Configure<FTPSettings>(Configuration.GetSection("FTPSettings"));
 builder.Services.Configure<URLReadFile>(Configuration.GetSection("URLReadFile"));
+builder.Services.Configure<Auth>(Configuration.GetSection("Auth"));
 builder.Services.AddTransient<IFileUploadFTP, FileUploadFTP>();
 builder.Services.AddTransient<IReadSolicitudRecon, RecSolicitud>();
 builder.Services.AddTransient<IAuxiliares, Serv_Auxiliares>();
