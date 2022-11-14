@@ -47,9 +47,9 @@
         <!--begin::Page-->
         <div class="page d-flex flex-row flex-column-fluid">
             <!--begin::Wrapper-->
-            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper" style="padding-top: 70px !important;">
                 <!--begin::Header-->
-                <div id="kt_header" class="header" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
+                <div id="kt_header" class="header" data-kt-sticky="true" data-kt-sticky-name="header" style="height: 70px !important;" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
                     <!--begin::Header top-->
                     <div class="header-top d-flex align-items-stretch flex-grow-1">
                         <!--begin::Container-->
@@ -167,13 +167,13 @@
                                     <div class="btn btn-flex align-items-center bg-hover-white bg-hover-opacity-10 py-2 px-2 px-md-3" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                                         <!--begin::Name-->
                                         <div class="d-none d-md-flex flex-column align-items-end justify-content-center me-2 me-md-4">
-                                            <span class="text-white opacity-75 fs-8 fw-semibold lh-1 mb-1">Max</span>
-                                            <span class="text-white fs-8 fw-bold lh-1">UX Designer</span>
+                                            <span class="text-white opacity-75 fs-8 fw-semibold lh-1 mb-1">@ViewBag.USU_USUARIO</span>
+                                            <span class="text-white fs-8 fw-bold lh-1">@ViewBag.LUGARTRAB_DESC</span>
                                         </div>
                                         <!--end::Name-->
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-30px symbol-md-40px">
-                                            <img src="assets/media/avatars/300-1.jpg" alt="image" />
+                                            <img src="assets/media/avatars/blank.png" alt="image" />
                                         </div>
                                         <!--end::Symbol-->
                                     </div>
@@ -185,35 +185,25 @@
                                             <div class="menu-content d-flex align-items-center px-3">
                                                 <!--begin::Avatar-->
                                                 <div class="symbol symbol-50px me-5">
-                                                    <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
+                                                    <img alt="Logo" src="assets/media/avatars/blank.png" />
                                                 </div>
                                                 <!--end::Avatar-->
                                                 <!--begin::Username-->
                                                 <div class="d-flex flex-column">
                                                     <div class="fw-bold d-flex align-items-center fs-5">
-                                                        Max Smith
-                                                        <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span>
+                                                        @ViewBag.USU_NOMBREUSUARIO
                                                     </div>
-                                                    <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                                    <a href="javascript: void(0)" class="fw-semibold text-muted text-hover-primary fs-7">@ViewBag.USU_DNI</a>
                                                 </div>
                                                 <!--end::Username-->
                                             </div>
                                         </div>
-                                        <!--end::Menu item-->
                                         <!--begin::Menu separator-->
                                         <div class="separator my-2"></div>
                                         <!--end::Menu separator-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
-                                            <a href="../../demo20/dist/account/overview.html" class="menu-link px-5">My Profile</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu separator-->
-                                        <div class="separator my-2"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-5">
-                                            <a href="../../demo20/dist/authentication/flows/basic/sign-in.html" class="menu-link px-5">Sign Out</a>
+                                            <a href="~/Account/Logout" class="menu-link px-5">Cerrar Sesión</a>
                                         </div>
                                         <!--end::Menu item-->
                                     </div>
@@ -228,38 +218,11 @@
                         <!--end::Container-->
                     </div>
                     <!--end::Header top-->
-                    <!--begin::Header navs-->
-                    <div class="header-navs d-flex align-items-stretch flex-stack h-lg-70px w-100 py-5 py-lg-0" id="kt_header_navs" data-kt-drawer="true" data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_header_navs_toggle" data-kt-swapper="true" data-kt-swapper-mode="append" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header'}">
-                        <!--begin::Container-->
-                        <div class="d-lg-flex container-xxl w-100">
-                            <!--begin::Wrapper-->
-                            <div class="d-lg-flex flex-column justify-content-lg-center w-100" id="kt_header_navs_wrapper">
-                                <!--begin::Header tab content-->
-                                <div class="tab-content" data-kt-scroll="true" data-kt-scroll-activate="{default: true, lg: false}" data-kt-scroll-height="auto" data-kt-scroll-offset="70px">
 
-                                    <!--begin::Tab panel-->
-                                    <div class="tab-pane fade active show" id="kt_header_navs_tab_2">
-                                        <!--begin::Wrapper-->
-                                        <div class="d-flex flex-column flex-lg-row flex-lg-stack flex-wrap gap-2 px-4 px-lg-0">
-                                            <div class="d-flex flex-column flex-lg-row gap-2">
-                                                <a class="btn btn-sm btn-light-primary fw-bold" href="javascript:void(0)" onclick="CargarForm('/SolicitudReconsideracion/Index')">Solicitud Reconsidereción</a>
-                                                <a class="btn btn-sm btn-light-danger fw-bold" href="javascript:void(0)" onclick="CargarForm('/BusqReconsideracionEval/Index')">Busqueda Reconsidereción Evaluador</a>
-                                                 @*<a class="btn btn-sm btn-light-primary fw-bold" href="javascript:void(0)" onclick="CargarForm('/Reconsideraciones/SolicitudReconsideracion/Index')">Solicitud Reconsidereción</a>
-    <a class="btn btn-sm btn-light-danger fw-bold" href="javascript:void(0)" onclick="CargarForm('/Reconsideraciones/BusqReconsideracionEval/Index')">Busqueda Reconsidereción Evaluador</a>*@
 
-                                            </div>
-    </div>
-    <!--end::Wrapper-->
-                                            </div>
-                                    <!--end::Tab panel-->
-                                </div>
-                                <!--end::Header tab content-->
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
-                        <!--end::Container-->
-                    </div>
-                    <!--end::Header navs-->
+
+
+
                 </div>
                 <!--end::Header-->
                 <!--begin::Container-->
