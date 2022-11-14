@@ -30,44 +30,46 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index(string token)
     {
-        //string sToken = HttpContext.Request.Query["token"].ToString();
-        string sToken = "OEWZEHWCX017583BQ26D3Q4K7";
-
-
-        //if (!HttpContext.User.Identity.IsAuthenticated)
-        //    return Redirect(_auth.entorno);
-
-        // 1.1. Web Service
-        string sServicio = "/Token";
-        // 1.2. Parametros
-        string sParametro1 = "?token=" + sToken;
-
-        WebRequest oRequest = WebRequest.Create(_auth.RutaWSESeguridad + sServicio + sParametro1);
-        // 'Err.Text = "línea 82 : consulta a seguridad"
-
-        WebResponse oResponse = oRequest.GetResponse();
-        // Err.text = "línea 84 : pasa consulta seguridad"
-        // 1.4. Lectura de respuesta
-        // 'Err.Text = "línea 86 : inicia oResponse.GetResponseStream"
-        Stream oDataStream = oResponse.GetResponseStream();
-        // ' Err.Text = "línea 88 : pasa oResponse.GetResponseStream"
-        StreamReader oReader = new StreamReader(oDataStream);
-        var sDatos = oReader.ReadToEnd();
-        // 1.5. Liberar
-        oReader.Close();
-        oResponse.Close();
-
-        // 2.1. convertir Jason a Objeto
-        //var oJSS = new JavaScriptSerializer();
-
-        var oResultado = JsonConvert.DeserializeObject<AuthResponseDto>(sDatos);
-
-        if (oResultado is not null)
+        try
         {
-            if (oResultado.ID_RESULTADO.Equals("1"))
-            {
+            //string sToken = HttpContext.Request.Query["token"].ToString();
+            string sToken = "ZIJH37BNH8175889IWU4JP0QR";
 
-                var claims = new List<Claim>
+
+            //if (!HttpContext.User.Identity.IsAuthenticated)
+            //    return Redirect(_auth.entorno);
+
+            // 1.1. Web Service
+            string sServicio = "/Token";
+            // 1.2. Parametros
+            string sParametro1 = "?token=" + sToken;
+
+            WebRequest oRequest = WebRequest.Create(_auth.RutaWSESeguridad + sServicio + sParametro1);
+            // 'Err.Text = "línea 82 : consulta a seguridad"
+
+            WebResponse oResponse = oRequest.GetResponse();
+            // Err.text = "línea 84 : pasa consulta seguridad"
+            // 1.4. Lectura de respuesta
+            // 'Err.Text = "línea 86 : inicia oResponse.GetResponseStream"
+            Stream oDataStream = oResponse.GetResponseStream();
+            // ' Err.Text = "línea 88 : pasa oResponse.GetResponseStream"
+            StreamReader oReader = new StreamReader(oDataStream);
+            var sDatos = oReader.ReadToEnd();
+            // 1.5. Liberar
+            oReader.Close();
+            oResponse.Close();
+
+            // 2.1. convertir Jason a Objeto
+            //var oJSS = new JavaScriptSerializer();
+
+            var oResultado = JsonConvert.DeserializeObject<AuthResponseDto>(sDatos);
+
+            if (oResultado is not null)
+            {
+                if (oResultado.ID_RESULTADO.Equals("1"))
+                {
+
+                    var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, oResultado.USU_ID.ToString()),
                     new Claim(ClaimTypes.Name, oResultado.USU_USUARIO),
@@ -91,22 +93,28 @@ public class HomeController : Controller
                     //UnidadEjecutoraId
                     //eso falta agregar al claims
                 };
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var authProperties = new AuthenticationProperties
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var authProperties = new AuthenticationProperties
+                    {
+                        AllowRefresh = true,
+                        IsPersistent = true
+                    };
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity), authProperties);
+                    _logger.LogInformation("User {Email} logged in at {Time}.", oResultado.USU_ID, DateTime.UtcNow);
+
+
+                    ViewBag.USU_USUARIO = oResultado.USU_USUARIO;
+                    ViewBag.USU_DNI = oResultado.USU_DNI;
+                    ViewBag.LUGARTRAB_DESC = oResultado.LUGARTRAB_DESC;
+                    ViewBag.USU_NOMBREUSUARIO = oResultado.USU_NOMBREUSUARIO;
+                    return RedirectToAction(nameof(ModulosController.Index), "Modulos");
+
+                }
+                else
                 {
-                    AllowRefresh = true,
-                    IsPersistent = true
-                };
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity), authProperties);
-                _logger.LogInformation("User {Email} logged in at {Time}.", oResultado.USU_ID, DateTime.UtcNow);
-
-
-                ViewBag.USU_USUARIO = oResultado.USU_USUARIO;
-                ViewBag.USU_DNI = oResultado.USU_DNI;
-                ViewBag.LUGARTRAB_DESC = oResultado.LUGARTRAB_DESC;
-                ViewBag.USU_NOMBREUSUARIO = oResultado.USU_NOMBREUSUARIO;
-                return RedirectToAction(nameof(ModulosController.Index), "Modulos");
+                    return Redirect(_auth.entorno);
+                }
 
             }
             else
@@ -114,13 +122,13 @@ public class HomeController : Controller
                 return Redirect(_auth.entorno);
             }
 
+            return View();
         }
-        else
+        catch (Exception ex)
         {
-          return  Redirect(_auth.entorno);
+            return Redirect(_auth.entorno);
         }
 
-        return View();
     }
 
 
