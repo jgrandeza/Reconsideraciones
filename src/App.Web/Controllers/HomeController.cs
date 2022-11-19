@@ -30,10 +30,12 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index(string token)
     {
-        try
+        Boolean bProduccion = false;
+        if (bProduccion == true)
         {
-            //string sToken = HttpContext.Request.Query["token"].ToString();
-            string sToken = "ZIJH37BNH8175889IWU4JP0QR";
+
+            string sToken = HttpContext.Request.Query["token"].ToString();
+            //  string sToken = "N2U02EZSUU17589LF0A7VZM11";
 
 
             //if (!HttpContext.User.Identity.IsAuthenticated)
@@ -87,9 +89,9 @@ public class HomeController : Controller
                     new Claim("USU_DNI",oResultado.USU_DNI),
                     new Claim("USU_EMAILINSTITUCIONAL",oResultado.USU_EMAILINSTITUCIONAL),
                     new Claim("V_V_USU_EMAIL",oResultado.V_V_USU_EMAIL),
-                     new Claim("LUGARTRAB_DESC",oResultado.LUGARTRAB_DESC),
-                     new Claim("TOKENSESION",oResultado.TOKENSESION),
-                      new Claim("TOKENSALIDA",oResultado.TOKENSALIDA),
+                    new Claim("LUGARTRAB_DESC",oResultado.LUGARTRAB_DESC),
+                    new Claim("TOKENSESION",oResultado.TOKENSESION),
+                    new Claim("TOKENSALIDA",oResultado.TOKENSALIDA),
                     //UnidadEjecutoraId
                     //eso falta agregar al claims
                 };
@@ -122,15 +124,59 @@ public class HomeController : Controller
                 return Redirect(_auth.entorno);
             }
 
-            return View();
         }
-        catch (Exception ex)
+        else
         {
-            return Redirect(_auth.entorno);
+
+
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, "8610"),
+                    new Claim(ClaimTypes.Name, "RLOPEZV"),
+                    new Claim("USU_NOMBREUSUARIO", "LOPEZ\tVASQUEZ\tROSA MARIBEL"),
+                    new Claim("IDROL", "329"),
+                    new Claim("ROL_DESCRIPCION", "SOLICITANTE"),
+                    new Claim("USU_PPDD", ""),
+                    new Claim("Foto",  "user.png"),
+                    new Claim("ID_SUBMODULO", ""),
+                    new Claim("USU_DISA",""),
+                    new Claim("USU_UE",""),
+                    new Claim("EESS_CODIGOSIS",""),
+                    new Claim("USU_ODSIS", ""),
+                    new Claim("ID_MACROREGION",""),
+                    new Claim("USU_DNI",""),
+                    new Claim("USU_EMAILINSTITUCIONAL",""),
+                    new Claim("V_V_USU_EMAIL",""),
+                    new Claim("LUGARTRAB_DESC",""),
+                    new Claim("TOKENSESION",""),
+                    new Claim("TOKENSALIDA",""),
+                    //UnidadEjecutoraId
+                    //eso falta agregar al claims
+                };
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                IsPersistent = true
+            };
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity), authProperties);
+            _logger.LogInformation("User {Email} logged in at {Time}.", "8610", DateTime.UtcNow);
+
+
+            ViewBag.USU_USUARIO = "ROLEZV";
+            ViewBag.USU_DNI = "";
+            ViewBag.LUGARTRAB_DESC = "";
+            ViewBag.USU_NOMBREUSUARIO = "";
+            return RedirectToAction(nameof(ModulosController.Index), "Modulos");
+
+
+
         }
 
-    }
 
+        return View();
+    }
 
 
     public IActionResult Privacy()
