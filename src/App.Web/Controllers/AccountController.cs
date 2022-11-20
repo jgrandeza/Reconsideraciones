@@ -7,6 +7,7 @@ using App.Models;
 using App.Tools.Services;
 using App.ViewModels;
 using Microsoft.Extensions.Options;
+using ServiceStack;
 
 namespace App.Web.Controllers
 {
@@ -34,5 +35,7 @@ namespace App.Web.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect(_auth.entorno);
         }
+
+       
     }
 }

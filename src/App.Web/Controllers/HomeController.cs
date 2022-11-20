@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Security;
 using App.Models;
+using Microsoft.AspNetCore.Session;
 
 namespace App.Web.Controllers;
 
@@ -30,44 +31,48 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index(string token)
     {
-        //string sToken = HttpContext.Request.Query["token"].ToString();
-        string sToken = "OEWZEHWCX017583BQ26D3Q4K7";
-
-
-        //if (!HttpContext.User.Identity.IsAuthenticated)
-        //    return Redirect(_auth.entorno);
-
-        // 1.1. Web Service
-        string sServicio = "/Token";
-        // 1.2. Parametros
-        string sParametro1 = "?token=" + sToken;
-
-        WebRequest oRequest = WebRequest.Create(_auth.RutaWSESeguridad + sServicio + sParametro1);
-        // 'Err.Text = "línea 82 : consulta a seguridad"
-
-        WebResponse oResponse = oRequest.GetResponse();
-        // Err.text = "línea 84 : pasa consulta seguridad"
-        // 1.4. Lectura de respuesta
-        // 'Err.Text = "línea 86 : inicia oResponse.GetResponseStream"
-        Stream oDataStream = oResponse.GetResponseStream();
-        // ' Err.Text = "línea 88 : pasa oResponse.GetResponseStream"
-        StreamReader oReader = new StreamReader(oDataStream);
-        var sDatos = oReader.ReadToEnd();
-        // 1.5. Liberar
-        oReader.Close();
-        oResponse.Close();
-
-        // 2.1. convertir Jason a Objeto
-        //var oJSS = new JavaScriptSerializer();
-
-        var oResultado = JsonConvert.DeserializeObject<AuthResponseDto>(sDatos);
-
-        if (oResultado is not null)
+        Boolean bProduccion = false;
+        if (bProduccion == true)
         {
-            if (oResultado.ID_RESULTADO.Equals("1"))
-            {
 
-                var claims = new List<Claim>
+            string sToken = HttpContext.Request.Query["token"].ToString();
+            //  string sToken = "N2U02EZSUU17589LF0A7VZM11";
+
+
+            //if (!HttpContext.User.Identity.IsAuthenticated)
+            //    return Redirect(_auth.entorno);
+
+            // 1.1. Web Service
+            string sServicio = "/Token";
+            // 1.2. Parametros
+            string sParametro1 = "?token=" + sToken;
+
+            WebRequest oRequest = WebRequest.Create(_auth.RutaWSESeguridad + sServicio + sParametro1);
+            // 'Err.Text = "línea 82 : consulta a seguridad"
+
+            WebResponse oResponse = oRequest.GetResponse();
+            // Err.text = "línea 84 : pasa consulta seguridad"
+            // 1.4. Lectura de respuesta
+            // 'Err.Text = "línea 86 : inicia oResponse.GetResponseStream"
+            Stream oDataStream = oResponse.GetResponseStream();
+            // ' Err.Text = "línea 88 : pasa oResponse.GetResponseStream"
+            StreamReader oReader = new StreamReader(oDataStream);
+            var sDatos = oReader.ReadToEnd();
+            // 1.5. Liberar
+            oReader.Close();
+            oResponse.Close();
+
+            // 2.1. convertir Jason a Objeto
+            //var oJSS = new JavaScriptSerializer();
+
+            var oResultado = JsonConvert.DeserializeObject<AuthResponseDto>(sDatos);
+
+            if (oResultado is not null)
+            {
+                if (oResultado.ID_RESULTADO.Equals("1"))
+                {
+
+                    var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, oResultado.USU_ID.ToString()),
                     new Claim(ClaimTypes.Name, oResultado.USU_USUARIO),
@@ -85,9 +90,66 @@ public class HomeController : Controller
                     new Claim("USU_DNI",oResultado.USU_DNI),
                     new Claim("USU_EMAILINSTITUCIONAL",oResultado.USU_EMAILINSTITUCIONAL),
                     new Claim("V_V_USU_EMAIL",oResultado.V_V_USU_EMAIL),
-                     new Claim("LUGARTRAB_DESC",oResultado.LUGARTRAB_DESC),
-                     new Claim("TOKENSESION",oResultado.TOKENSESION),
-                      new Claim("TOKENSALIDA",oResultado.TOKENSALIDA),
+                    new Claim("LUGARTRAB_DESC",oResultado.LUGARTRAB_DESC),
+                    new Claim("TOKENSESION",oResultado.TOKENSESION),
+                    new Claim("TOKENSALIDA",oResultado.TOKENSALIDA),
+                    //UnidadEjecutoraId
+                    //eso falta agregar al claims
+                };
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var authProperties = new AuthenticationProperties
+                    {
+                        AllowRefresh = true,
+                        IsPersistent = true
+                    };
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity), authProperties);
+                    _logger.LogInformation("User {Email} logged in at {Time}.", oResultado.USU_ID, DateTime.UtcNow);
+
+
+                    ViewBag.USU_USUARIO = oResultado.USU_USUARIO;
+                    ViewBag.USU_DNI = oResultado.USU_DNI;
+                    ViewBag.LUGARTRAB_DESC = oResultado.LUGARTRAB_DESC;
+                    ViewBag.USU_NOMBREUSUARIO = oResultado.USU_NOMBREUSUARIO;
+                    return RedirectToAction(nameof(ModulosController.Index), "Modulos");
+
+                }
+                else
+                {
+                    return Redirect(_auth.entorno);
+                }
+
+            }
+            else
+            {
+                return Redirect(_auth.entorno);
+            }
+
+        }
+        else {
+            
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, "8610"),
+                    new Claim(ClaimTypes.Name, "RLOPEZV"),
+                    new Claim("USU_NOMBREUSUARIO", "LOPEZ\tVASQUEZ\tROSA MARIBEL"),
+                    new Claim("IDROL", "329"),
+                    new Claim("ROL_DESCRIPCION", "SOLICITANTE"),
+                    new Claim("USU_PPDD", ""),
+                    new Claim("Foto",  "user.png"),
+                    new Claim("ID_SUBMODULO", ""),
+                    new Claim("USU_DISA",""),
+                    new Claim("USU_UE",""),
+                    new Claim("EESS_CODIGOSIS",""),
+                    new Claim("USU_ODSIS", ""),
+                    new Claim("ID_MACROREGION",""),
+                    new Claim("USU_DNI",""),
+                    new Claim("USU_EMAILINSTITUCIONAL",""),
+                    new Claim("V_V_USU_EMAIL",""),
+                    new Claim("LUGARTRAB_DESC",""),
+                    new Claim("TOKENSESION",""),
+                    new Claim("TOKENSALIDA",""),
                     //UnidadEjecutoraId
                     //eso falta agregar al claims
                 };
@@ -99,26 +161,34 @@ public class HomeController : Controller
                 };
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity), authProperties);
-                _logger.LogInformation("User {Email} logged in at {Time}.", oResultado.USU_ID, DateTime.UtcNow);
+                _logger.LogInformation("User {Email} logged in at {Time}.", "8610", DateTime.UtcNow);
 
 
-                ViewBag.USU_USUARIO = oResultado.USU_USUARIO;
-                ViewBag.USU_DNI = oResultado.USU_DNI;
-                ViewBag.LUGARTRAB_DESC = oResultado.LUGARTRAB_DESC;
-                ViewBag.USU_NOMBREUSUARIO = oResultado.USU_NOMBREUSUARIO;
+                ViewBag.USU_USUARIO = "ROLEZV";
+                ViewBag.USU_DNI = "";
+                ViewBag.LUGARTRAB_DESC = "";
+                ViewBag.USU_NOMBREUSUARIO = "";
                 return RedirectToAction(nameof(ModulosController.Index), "Modulos");
 
-            }
-            else
-            {
-                return Redirect(_auth.entorno);
-            }
+             
 
         }
-        else
+
+        var builder = WebApplication.CreateBuilder();
+
+        builder.Services.AddRazorPages();
+        builder.Services.AddControllersWithViews();
+
+        builder.Services.AddDistributedMemoryCache();
+
+        builder.Services.AddSession(options =>
         {
-          return  Redirect(_auth.entorno);
-        }
+            options.IdleTimeout = TimeSpan.FromSeconds(10);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
+
+ 
 
         return View();
     }

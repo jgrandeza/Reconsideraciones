@@ -1,4 +1,5 @@
 ﻿using App.ViewModels.Auxiliares;
+using App.ViewModels.INSReconsideraciones;
 using App.ViewModels.SELReconsideraciones;
 using System;
 using System.Collections.Generic;
@@ -44,5 +45,9 @@ namespace App.Services.IServices
         Task<IEnumerable<getAteSustentoArch>> ListarAteSusArch(int N_ATE_IDNUMREG);
 
         Task<IEnumerable<getAteSustentoArch>> ListarAteSusArchxID(int N_ASUS_IDNUMREG);
+        //Task<GetPeriodo> ListPeriodo();
+        Task<IEnumerable<GetPeriodo>> ListPeriodo();
+        Task<GetPeriodo> ConsultarPeriodoxID(int id); 
+        Task<Mensaje_Ins> InsertarPeriodo(GetPeriodo model, string usuario);
     }
 }

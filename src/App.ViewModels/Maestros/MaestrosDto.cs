@@ -89,4 +89,6 @@ namespace App.ViewModels.Maestros
         public int? APO_ESTADO { get; set; }
 
     }
+
+    
 }
