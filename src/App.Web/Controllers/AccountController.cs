@@ -7,6 +7,8 @@ using App.Models;
 using App.Tools.Services;
 using App.ViewModels;
 using Microsoft.Extensions.Options;
+using App.Tools;
+using Microsoft.AspNetCore.Http;
 
 namespace App.Web.Controllers
 {
@@ -34,5 +36,20 @@ namespace App.Web.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect(_auth.entorno);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Salir_Menu()
+        {
+            _logger.LogInformation("User {Name} logged out at {Time}.",
+                User.Identity.Name, DateTime.UtcNow);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+
+            return Redirect(_auth.entorno + "/sisAcceso/Retorno?sts=" + usuario.TOKENSALIDA);
+        }
+
+
     }
 }

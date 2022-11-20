@@ -23,8 +23,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-4" data-select2-id="cbxTipoSustento">
-                            <label for="cbxTipoSustento" class="form-label text-wrap fw-bolder fs-4">Estado de la Evaluación de la Reconsideración:</label>
-                            <select aria-label="Seleccionar" id="cbxTipoSustento" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                            <label for="cbxTipoSustentoEval" class="form-label text-wrap fw-bolder fs-4">Estado de la Evaluación de la Reconsideración:</label>
+                            <select aria-label="Seleccionar" id="cbxTipoSustentoEval" onchange="CambioEstado()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
                                 <option value="4">RECONSIDERADO</option>
                                 <option value="3">RECHAZADO</option>
                             </select>
@@ -41,50 +41,50 @@
                     <!--begin::Label-->
                     <div class="col-lg-8 d-flex align-items-center">
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input"  data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" type="checkbox" value="1" id="checkA1Eval" />
-                            <label class="form-check-label"  data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" for="checkA1Eval">
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Prestación ingresada en el aplicativo dentro del plazo establecido para solicitar reconsideración" type="checkbox" value="Prestación ingresada en el aplicativo dentro del plazo establecido para solicitar reconsideración" id="checkA1Eval" />
+                            <label class="form-check-label"  data-bs-toggle="tooltip" data-bs-placement="top" title="Prestación ingresada en el aplicativo dentro del plazo establecido para solicitar reconsideración" for="checkA1Eval">
                                 (A1)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" type="checkbox" value="2" id="checkA2Eval" />
-                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" for="checkA2Eval">
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Prestación presentada con el sustento respectivo en físico" type="checkbox" value="Prestación presentada con el sustento respectivo en físico" id="checkA2Eval" />
+                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Prestación presentada con el sustento respectivo en físico" for="checkA2Eval">
                                 (A2)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" type="checkbox" value="3" id="checkA3Eval" />
-                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" for="checkA3Eval">
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Formatos SIS sin enmendaduras ni borrones y llenados según Norma." type="checkbox" value="Formatos SIS sin enmendaduras ni borrones y llenados según Norma." id="checkA3Eval" />
+                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Formatos SIS sin enmendaduras ni borrones y llenados según Norma." for="checkA3Eval">
                                 (A3)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" type="checkbox" value="4" id="checkA4Eval" />
-                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" for="checkA4Eval">
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title=" Documentos de sustento según corresponda con letra legible y llenados de acuerdo a normamitividad vigente." type="checkbox" value="Documentos de sustento según corresponda con letra legible y llenados de acuerdo a normamitividad vigente." id="checkA4Eval" />
+                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title=" Documentos de sustento según corresponda con letra legible y llenados de acuerdo a normamitividad vigente." for="checkA4Eval">
                                 (A4)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" type="checkbox" value="5" id="checkB1Eval" />
-                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" for="checkB1Eval">
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Concordancia entre los datos del paciente (sexo, edad, condición de internamiento o no, tiempo de hospitalización, otros) con el diagnóstico y/o el tratamiento" type="checkbox" value="Concordancia entre los datos del paciente (sexo, edad, condición de internamiento o no, tiempo de hospitalización, otros) con el diagnóstico y/o el tratamiento" id="checkB1Eval" />
+                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Concordancia entre los datos del paciente (sexo, edad, condición de internamiento o no, tiempo de hospitalización, otros) con el diagnóstico y/o el tratamiento" for="checkB1Eval">
                                 (B1)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" type="checkbox" value="6" id="checkB2Eval" />
-                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" for="checkB2Eval">
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Concordancia entre el diagnóstico y el tratamietno (medicamento elegido)" type="checkbox" value="Concordancia entre el diagnóstico y el tratamietno (medicamento elegido)" id="checkB2Eval" />
+                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Concordancia entre el diagnóstico y el tratamietno (medicamento elegido)" for="checkB2Eval">
                                 (B2)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" type="checkbox" value="7" id="checkB3Eval" />
-                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" for="checkB3Eval">
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Concordancia entre el dianóstico y los procedimientos realizados." type="checkbox" value="Concordancia entre el dianóstico y los procedimientos realizados." id="checkB3Eval" />
+                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Concordancia entre el dianóstico y los procedimientos realizados." for="checkB3Eval">
                                 (B3)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" type="checkbox" value="8" id="checkB4Eval" />
-                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" for="checkB4Eval">
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Concordancia entre el dianóstico y los procedimientos realizados." type="checkbox" value="Concordancia entre el dianóstico y los procedimientos realizados." id="checkB4Eval" />
+                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Concordancia entre el dianóstico y los procedimientos realizados." for="checkB4Eval">
                                 (B4)
                             </label>
                         </div>
@@ -112,10 +112,24 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success">
-                        <i class="fas fa-paper-plane fs-4 me-2"></i>
-                        Guardar
-                    </button>
+
+                       @{
+                                if (ViewBag.RecEstado ==5)
+                                {
+                                        <button type="button" class="btn btn-success" onclick="RegistrarSustentoEval(event)">
+                                            <i class="fas fa-paper-plane fs-4 me-2"></i>
+                                            Guardar
+                                        </button>
+                                }else{
+                                        <button type="button" onclick="EliminarEvaluacion(event);" class="btn btn-warning">
+                                            <i class="fas fa-save fs-4 me-2"></i>
+                                            Eliminar Evaluación
+                                        </button>
+                                }
+                            }
+
+
+
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                         <i class="fas fa-times fs-4 me-2"></i>
                         Cancelar
@@ -128,122 +142,171 @@
 
 <script>
 
-    var checkEval = 0;
-    $("#checkA1Eval").change(function () {
-        if (this.checked) {
-            console.log("1");
-            //I am checked
-            $("#checkA2Eval").prop('checked', false);
-            $("#checkA3Eval").prop('checked', false);
-            $("#checkA4Eval").prop('checked', false);
-            $("#checkB1Eval").prop('checked', false);
-            $("#checkB2Eval").prop('checked', false);
-            $("#checkB3Eval").prop('checked', false);
-            $("#checkB4Eval").prop('checked', false);
-            checkEval = 1;
-        }
-    });
-    $("#checkA2Eval").change(function () {
-        if (this.checked) {
-            console.log("2");
-            //I am checked
-            $("#checkA1Eval").prop('checked', false);
-            $("#checkA3Eval").prop('checked', false);
-            $("#checkA4Eval").prop('checked', false);
-            $("#checkB1Eval").prop('checked', false);
-            $("#checkB2Eval").prop('checked', false);
-            $("#checkB3Eval").prop('checked', false);
-            $("#checkB4Eval").prop('checked', false);
-            checkEval = 2;
-        }
-    });
-    $("#checkA3Eval").change(function () {
-        if (this.checked) {
-            console.log("3");
-            //I am checked
-            $("#checkA2Eval").prop('checked', false);
-            $("#checkA1Eval").prop('checked', false);
-            $("#checkA4Eval").prop('checked', false);
-            $("#checkB1Eval").prop('checked', false);
-            $("#checkB2Eval").prop('checked', false);
-            $("#checkB3Eval").prop('checked', false);
-            $("#checkB4Eval").prop('checked', false);
-            checkEval = 3;
+    //var checkEval = 0;
+    //$("#checkA1Eval").change(function () {
+    //    if (this.checked) {
+    //        console.log("1");
+    //        //I am checked
+    //        $("#checkA2Eval").prop('checked', false);
+    //        $("#checkA3Eval").prop('checked', false);
+    //        $("#checkA4Eval").prop('checked', false);
+    //        $("#checkB1Eval").prop('checked', false);
+    //        $("#checkB2Eval").prop('checked', false);
+    //        $("#checkB3Eval").prop('checked', false);
+    //        $("#checkB4Eval").prop('checked', false);
+    //        checkEval = 1;
+    //    }
+    //});
+    //$("#checkA2Eval").change(function () {
+    //    if (this.checked) {
+    //        console.log("2");
+    //        //I am checked
+    //        $("#checkA1Eval").prop('checked', false);
+    //        $("#checkA3Eval").prop('checked', false);
+    //        $("#checkA4Eval").prop('checked', false);
+    //        $("#checkB1Eval").prop('checked', false);
+    //        $("#checkB2Eval").prop('checked', false);
+    //        $("#checkB3Eval").prop('checked', false);
+    //        $("#checkB4Eval").prop('checked', false);
+    //        checkEval = 2;
+    //    }
+    //});
+    //$("#checkA3Eval").change(function () {
+    //    if (this.checked) {
+    //        console.log("3");
+    //        //I am checked
+    //        $("#checkA2Eval").prop('checked', false);
+    //        $("#checkA1Eval").prop('checked', false);
+    //        $("#checkA4Eval").prop('checked', false);
+    //        $("#checkB1Eval").prop('checked', false);
+    //        $("#checkB2Eval").prop('checked', false);
+    //        $("#checkB3Eval").prop('checked', false);
+    //        $("#checkB4Eval").prop('checked', false);
+    //        checkEval = 3;
 
-        }
-    });
-    $("#checkA4Eval").change(function () {
-        if (this.checked) {
-            //I am checked
-            $("#checkA2Eval").prop('checked', false);
-            $("#checkA3Eval").prop('checked', false);
-            $("#checkA1Eval").prop('checked', false);
-            $("#checkB1Eval").prop('checked', false);
-            $("#checkB2Eval").prop('checked', false);
-            $("#checkB3Eval").prop('checked', false);
-            $("#checkB4Eval").prop('checked', false);
-            checkEval = 4;
+    //    }
+    //});
+    //$("#checkA4Eval").change(function () {
+    //    if (this.checked) {
+    //        //I am checked
+    //        $("#checkA2Eval").prop('checked', false);
+    //        $("#checkA3Eval").prop('checked', false);
+    //        $("#checkA1Eval").prop('checked', false);
+    //        $("#checkB1Eval").prop('checked', false);
+    //        $("#checkB2Eval").prop('checked', false);
+    //        $("#checkB3Eval").prop('checked', false);
+    //        $("#checkB4Eval").prop('checked', false);
+    //        checkEval = 4;
 
-        }
-    });
-    $("#checkB1Eval").change(function () {
-        if (this.checked) {
-            //I am checked
-            $("#checkA1Eval").prop('checked', false);
-            $("#checkA2Eval").prop('checked', false);
-            $("#checkA3Eval").prop('checked', false);
-            $("#checkA4Eval").prop('checked', false);
-            $("#checkB2Eval").prop('checked', false);
-            $("#checkB3Eval").prop('checked', false);
-            $("#checkB4Eval").prop('checked', false);
-            checkEval = 5;
-        }
-    });
-    $("#checkB2Eval").change(function () {
-        if (this.checked) {
-            //I am checked
-            $("#checkA1Eval").prop('checked', false);
-            $("#checkA2Eval").prop('checked', false);
-            $("#checkA3Eval").prop('checked', false);
-            $("#checkA4Eval").prop('checked', false);
-            $("#checkB1Eval").prop('checked', false);
-            $("#checkB3Eval").prop('checked', false);
-            $("#checkB4Eval").prop('checked', false);
-            checkEval = 6;
+    //    }
+    //});
+    //$("#checkB1Eval").change(function () {
+    //    if (this.checked) {
+    //        //I am checked
+    //        $("#checkA1Eval").prop('checked', false);
+    //        $("#checkA2Eval").prop('checked', false);
+    //        $("#checkA3Eval").prop('checked', false);
+    //        $("#checkA4Eval").prop('checked', false);
+    //        $("#checkB2Eval").prop('checked', false);
+    //        $("#checkB3Eval").prop('checked', false);
+    //        $("#checkB4Eval").prop('checked', false);
+    //        checkEval = 5;
+    //    }
+    //});
+    //$("#checkB2Eval").change(function () {
+    //    if (this.checked) {
+    //        //I am checked
+    //        $("#checkA1Eval").prop('checked', false);
+    //        $("#checkA2Eval").prop('checked', false);
+    //        $("#checkA3Eval").prop('checked', false);
+    //        $("#checkA4Eval").prop('checked', false);
+    //        $("#checkB1Eval").prop('checked', false);
+    //        $("#checkB3Eval").prop('checked', false);
+    //        $("#checkB4Eval").prop('checked', false);
+    //        checkEval = 6;
 
+    //    }
+    //});
+    //$("#checkB3Eval").change(function () {
+    //    if (this.checked) {
+    //        //I am checked
+    //        $("#checkA1Eval").prop('checked', false);
+    //        $("#checkA2Eval").prop('checked', false);
+    //        $("#checkA3Eval").prop('checked', false);
+    //        $("#checkA4Eval").prop('checked', false);
+    //        $("#checkB2Eval").prop('checked', false);
+    //        $("#checkB1Eval").prop('checked', false);
+    //        $("#checkB4Eval").prop('checked', false);
+    //        checkEval = 7;
+
+    //    }
+    //});
+    //$("#checkB4Eval").change(function () {
+    //    if (this.checked) {
+    //        //I am checked
+    //        $("#checkA1Eval").prop('checked', false);
+    //        $("#checkA2Eval").prop('checked', false);
+    //        $("#checkA3Eval").prop('checked', false);
+    //        $("#checkA4Eval").prop('checked', false);
+    //        $("#checkB2Eval").prop('checked', false);
+    //        $("#checkB3Eval").prop('checked', false);
+    //        $("#checkB1Eval").prop('checked', false);
+    //        checkEval = 8;
+
+    //    }
+    //});
+   setTimeout(function () {
+        InabilitarCheck();
+        VisualizaEvaluacion();
+    }, 500);
+    
+    function LimpiarCheck(){
+
+        $("#checkA1Eval").prop('checked', false);
+        $("#checkA2Eval").prop('checked', false);
+        $("#checkA3Eval").prop('checked', false);
+        $("#checkA4Eval").prop('checked', false);
+        $("#checkB1Eval").prop('checked', false);
+        $("#checkB2Eval").prop('checked', false);
+        $("#checkB3Eval").prop('checked', false);
+        $("#checkB4Eval").prop('checked', false);
+    }
+
+    function InabilitarCheck(){
+        $("#checkA1Eval").attr("disabled", true);
+        $("#checkA2Eval").attr("disabled", true);
+        $("#checkA3Eval").attr("disabled", true);
+        $("#checkA4Eval").attr("disabled", true);
+        $("#checkB1Eval").attr("disabled", true);
+        $("#checkB2Eval").attr("disabled", true);
+        $("#checkB3Eval").attr("disabled", true);
+        $("#checkB4Eval").attr("disabled", true);
+
+
+    }
+    function HabiliatCheck(){
+        $("#checkA1Eval").attr("disabled", false);
+        $("#checkA2Eval").attr("disabled", false);
+        $("#checkA3Eval").attr("disabled", false);
+        $("#checkA4Eval").attr("disabled", false);
+        $("#checkB1Eval").attr("disabled", false);
+        $("#checkB2Eval").attr("disabled", false);
+        $("#checkB3Eval").attr("disabled", false);
+        $("#checkB4Eval").attr("disabled", false);
+    }
+    
+    function CambioEstado(){
+        let dato = $("#cbxTipoSustentoEval").val();
+        if (dato==3){
+            HabiliatCheck();
+        }else{
+            InabilitarCheck();
+            LimpiarCheck();
         }
-    });
-    $("#checkB3Eval").change(function () {
-        if (this.checked) {
-            //I am checked
-            $("#checkA1Eval").prop('checked', false);
-            $("#checkA2Eval").prop('checked', false);
-            $("#checkA3Eval").prop('checked', false);
-            $("#checkA4Eval").prop('checked', false);
-            $("#checkB2Eval").prop('checked', false);
-            $("#checkB1Eval").prop('checked', false);
-            $("#checkB4Eval").prop('checked', false);
-            checkEval = 7;
 
-        }
-    });
-    $("#checkB4Eval").change(function () {
-        if (this.checked) {
-            //I am checked
-            $("#checkA1Eval").prop('checked', false);
-            $("#checkA2Eval").prop('checked', false);
-            $("#checkA3Eval").prop('checked', false);
-            $("#checkA4Eval").prop('checked', false);
-            $("#checkB2Eval").prop('checked', false);
-            $("#checkB3Eval").prop('checked', false);
-            $("#checkB1Eval").prop('checked', false);
-            checkEval = 8;
-
-        }
-    });
-
-
-    function RegistrarSustento() {
+    }
+    
+    function RegistrarSustentoEval() {
         Swal.fire({
             title: '¿Está seguro?',
             text: "¡No podrás revertir esto!",
@@ -255,40 +318,127 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                _RegistrarSustento();
+                _RegistrarSustentoEval();
             }
         })
     }
 
-    function _RegistrarSustento(){
-        let array_plazo = [];
-        array_plazo[0] = $('#Ate_Idnumreg').val();
-        array_plazo[1] = check;
-        array_plazo[2] = $('#cbxTipoSustento').val();
-        array_plazo[3] = $('#txtDesSustento').val();
+    function _RegistrarSustentoEval(){
+        let array_sustento = [];
+        array_sustento[0] = $('#Ate_Idnumreg').val();        
+        array_sustento[1] = $('#cbxTipoSustentoEval').val();
+        array_sustento[2] = $('#txtObsGeneralEval').val();
+        array_sustento[3] = $('#txtObsDetalleEval').val();
+        //chechss
+        var indicador = 0;
 
-        if(array_plazo[1] == 0){
-            NotificacionToastr('error', 'Seleccione el Motivo de la Solicitud de Reconsideracion', 'Campos requeridos');
+        if ($("#checkA1Eval").is(':checked')){
+            indicador = 1;
+            array_sustento[4] = $('#checkA1Eval').val();
+       } else {
+            array_sustento[4] = "";
+        }
+
+        if ($("#checkA2Eval").is(':checked'))
+           {
+            indicador = 1;
+            array_sustento[5] = $('#checkA2Eval').val();
+           }
+        else {
+            array_sustento[5] = "";
+        }
+
+        if ($("#checkA3Eval").is(':checked'))
+           {
+            indicador = 1;
+            array_sustento[6] = $('#checkA3Eval').val();
+           }
+            else {
+            array_sustento[6] = "";
+        }
+
+        if ($("#checkA4Eval").is(':checked'))
+{
+            indicador = 1;
+            array_sustento[7] = $('#checkA4Eval').val();
+}
+            else {
+            array_sustento[7] = "";
+        }
+
+        if ($("#checkB1Eval").is(':checked'))
+        {
+            indicador = 1;
+            array_sustento[8] = $('#checkB1Eval').val();
+        }
+            else {
+            array_sustento[8] = "";
+        }
+
+        if ($("#checkB2Eval").is(':checked'))
+        {
+            indicador = 1;
+            array_sustento[9] = $('#checkB2Eval').val();
+        }
+            else {
+            array_sustento[9] = "";
+        }
+
+        if ($("#checkB3Eval").is(':checked'))
+{
+                indicador = 1;
+        array_sustento[10] = $('#checkB3Eval').val();
+}
+                else {
+            array_sustento[10] = "";
+        }
+
+        if ($("#checkB4Eval").is(':checked'))
+{
+            indicador = 1;
+            array_sustento[11] = $('#checkB4Eval').val();
+}
+                else {
+            array_sustento[11] = "";
+        }
+
+
+        if (array_sustento[1] == 0) {
+            NotificacionToastr('error', 'Seleccione el Estado de la Reconsideración', 'Campos requeridos');
             return false;
         }
 
-        if (array_plazo[2] == "") {
-            NotificacionToastr('error', 'Tipo de Sustento', 'Campos requeridos');
+        if (array_sustento[2] == "") {
+            NotificacionToastr('error', 'Ingrese la Observacion General', 'Campos requeridos');
             return false;
         }
-        if (array_plazo[3] == "") {
-            NotificacionToastr('error', 'Descripción del Sustento', 'Campos requeridos');
+        if (array_sustento[3] == "") {
+            NotificacionToastr('error', 'Ingrese el Detalle de la Observacion', 'Campos requeridos');
             return false;
+        }
+        if (array_sustento[1] == 3) {
+            if(indicador==0){
+                NotificacionToastr('error', 'Marque los Criterios que no cumple la reconsideración', 'Campos requeridos');
+            return false;
+            }
         }
 
         var formData = new FormData();
-        formData.append("N_ATE_IDNUMREG", array_plazo[0]);
-        formData.append("V_ATE_MOTIVOSOLICITUD", array_plazo[1]);
-        formData.append("N_ATE_IDTIPOSUSTENTO", array_plazo[2]);
-        formData.append("V_ATE_DESCRIPSUSTENTO", array_plazo[3]);
+        formData.append("P_I_IDATENCION", array_sustento[0]);
+        formData.append("P_N_ESTADOREC", array_sustento[1]);
+        formData.append("P_V_OBSGENERAL", array_sustento[2]);
+        formData.append("P_V_OBSDETALLE", array_sustento[3]);
+        formData.append("P_V_CRITERIOA1", array_sustento[4]);
+        formData.append("P_V_CRITERIOA2", array_sustento[5]);
+        formData.append("P_V_CRITERIOA3", array_sustento[6]);
+        formData.append("P_V_CRITERIOA4", array_sustento[7]);
+        formData.append("P_V_CRITERIOB1", array_sustento[8]);
+        formData.append("P_V_CRITERIOB2", array_sustento[9]);
+        formData.append("P_V_CRITERIOB3", array_sustento[10]);
+        formData.append("P_V_CRITERIOB4", array_sustento[11]);
 
         $.ajax({
-          url: '@Url.Action("RegistrarSustento", "FUA")',
+            url: '@Url.Action("RegistrarSustentoEval", "Evaluacion")',
           data: formData,
           processData: false,
           contentType: false,
@@ -298,8 +448,13 @@
           success: function(response){
               if (response.isSuccess == true) {
                   NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
-                  TerminarWaitMe();
-                  CargarModalSustento()
+                    $('#mdl_AccionEvaluacionV').modal("hide");
+                    setTimeout(function () {
+                        TerminarWaitMe();
+                        VoverAtras_Reconsideraciones();
+                    }, 2000);
+                TerminarWaitMe();
+
               }
               else {
                   NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
@@ -314,6 +469,133 @@
 
     }
 
+       function VisualizaEvaluacion() {
+       let id = $("#Ate_Idnumreg").val();
+       CargarWaitMe();
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("EvaluacionId")",
+            data: {id: id},
+            dataType: "json",
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    console.log(response);
+                    console.log(response.result);
+                    setTimeout(() => {
 
+                        
+                        $("#cbxTipoSustentoEval").val(response.result.rreC_ID_ESTADOREC);
+                        $("#txtObsGeneralEval").val(response.result.rreC_V_OBSGENERAL);
+                        $("#txtObsDetalleEval").val(response.result.rreC_V_OBSDETALLE);                       
+                        
+                        let A1 = response.result.a1;
+                        let A2 = response.result.a2;
+                        let A3 = response.result.a3;
+                        let A4 = response.result.a4;
+                        let B1 = response.result.b1;
+                        let B2 = response.result.b2;
+                        let B3 = response.result.b3;
+                        let B4 = response.result.b4;
+                        if ( A1== 1) {
+                            $('#checkA1Eval').prop('checked', true);
+                        }else{
+                            $('#checkA1Eval').prop('checked', false);
+
+                        }
+                        if ( A2== 1) {
+                            $('#checkA2Eval').prop('checked', true);
+                        }else{
+                            $('#checkA2Eval').prop('checked', false);
+
+                        }
+                        if ( A3== 1) {
+                            $('#checkA3Eval').prop('checked', true);
+                        }else{
+                            $('#checkA3Eval').prop('checked', false);
+
+                        }
+                        if ( A4== 1) {
+                            $('#checkA4Eval').prop('checked', true);
+                        }else{
+                            $('#checkA4Eval').prop('checked', false);
+
+                        }
+                        if (B1 == 1) {
+                            $('#checkB1Eval').prop('checked', true);
+                        } else {
+                            $('#checkB1Eval').prop('checked', false);
+
+                        }
+                        if (B2 == 1) {
+                            $('#checkB2Eval').prop('checked', true);
+                        } else {
+                            $('#checkB2Eval').prop('checked', false);
+
+                        }
+                        if (B3 == 1) {
+                            $('#checkB3Eval').prop('checked', true);
+                        } else {
+                            $('#checkB3Eval').prop('checked', false);
+
+                        }
+                        if (B4 == 1) {
+                            $('#checkB4Eval').prop('checked', true);
+                        } else {
+                            $('#checkB4Eval').prop('checked', false);
+
+                        }
+                  }, 500);
+                }
+                else {
+                    NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
+                }
+                 TerminarWaitMe();
+            },
+            error: function (req, status, error) {
+                 TerminarWaitMe();
+            }
+        });
+        
+    }
+
+    function EliminarEvaluacion() {
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si Eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                _EliminarEvaluacion();
+            }
+        })
+    }
+
+    function _EliminarEvaluacion(){
+        let array_data = {};
+        array_data.P_I_IDATENCION = $("#Ate_Idnumreg").val();
+        let url = "@Url.Action("EliminarEvaluacion", "Evaluacion")";
+        $.post(url, array_data)
+            .done(function (response) {
+                console.log(response);
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                    $('#mdl_AccionEvaluacionV').modal("hide");
+                    setTimeout(function () {
+                        TerminarWaitMe();
+                        VoverAtras_Reconsideraciones();
+                    }, 2000);
+                    TerminarWaitMe();
+
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+            });
+    }
 
 </script>

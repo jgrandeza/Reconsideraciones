@@ -40,7 +40,7 @@
 
 
             <div class="modal-footer">
-                <button type="button" onclick="Confirmar_StatusEjecFinan(event);" class="btn btn-primary">
+                <button type="button" onclick="BusquedaXFuaEval(3);" class="btn btn-primary">
                     <i class="fas fa-search fs-4 me-2"></i>
                     Buscar
                 </button>
@@ -78,4 +78,11 @@
     function CerrarModalFiltroFUA() {
         $('#mdl_FiltroFuaReconsEvalV').modal("hide");
         $('#rbtnFiltroFUA').prop('checked', false);
-    }</script>
+    }
+    function BusquedaXFuaEval(filtro) {
+        let dato = $("#txtFUA").val();
+        CargarParametros(filtro, dato);
+        CerrarModalFiltroFUA();
+    }
+
+</script>

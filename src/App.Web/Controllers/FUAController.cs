@@ -10,7 +10,6 @@ using App.ViewModels;
 using App.ViewModels.INSReconsideraciones;
 using App.ViewModels.SELReconsideraciones;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using static App.ViewModels.DELReconsideraciones.DELReconsideraciones;
 
@@ -32,11 +31,13 @@ namespace App.Web.Controllers
         private readonly IValRcRvRecosideraciones _IvalRcRvRecosideraciones;
         private readonly IFileUploadFTP _fileUploadFTP;
         private readonly URLReadFile _uRLReadFile;
+        private readonly Auth _auth;
 
         public FUAController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros,
             ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones,
             IINSReconsideraciones iNSReconsideraciones, IDELReconsideraciones dELReconsideraciones,
-            IValRcRvRecosideraciones valRcRvRecosideraciones, IFileUploadFTP fileUploadFTP, IOptions<URLReadFile> uRLReadFile)
+            IValRcRvRecosideraciones valRcRvRecosideraciones, IFileUploadFTP fileUploadFTP, 
+            IOptions<URLReadFile> uRLReadFile, IOptions<Auth> auth)
 
         {
             _dbContext = dbContext;
@@ -49,6 +50,7 @@ namespace App.Web.Controllers
             _IvalRcRvRecosideraciones = valRcRvRecosideraciones;
             _fileUploadFTP = fileUploadFTP;
             _uRLReadFile = uRLReadFile.Value;
+            _auth = auth.Value;
         }
         public async Task<IActionResult> Index(int id, string periodo)
         {
@@ -773,7 +775,7 @@ namespace App.Web.Controllers
            
             ViewBag.Titulo_Modal = "REGISTRO DEL SUSTENTO";
             var result = await _SELReconsideraciones.ListarAteSustxID(idate);
-
+            await RecEstado(idate);
             return PartialView(result);
         }
 
@@ -789,6 +791,9 @@ namespace App.Web.Controllers
         {
             ViewBag.url_sis = _uRLReadFile.URL_Read_SIS;
             var result = await _SELReconsideraciones.ListarAteSusArch(id);
+            ViewBag.Archivo = _auth.Archivo;
+            await RecEstado(id);
+
             return PartialView(result);
         }
 

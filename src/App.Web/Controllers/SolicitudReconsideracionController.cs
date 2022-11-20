@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Models;
 using App.Services.IServices;
 using App.Tools;
 using App.ViewModels;
+using App.ViewModels.Maestros;
 using App.ViewModels.SolicitudRecon;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,28 +20,47 @@ namespace App.Web.Controllers
         private readonly IReadSolicitudRecon _IReadSolicitudRecon;
         private readonly IResumenRec _ResumenRec;
         private readonly IINSReconsideraciones _INSReconsideraciones;
-        public SolicitudReconsideracionController(IReadSolicitudRecon ReadSolicitudRecon, IResumenRec resumenRec, IINSReconsideraciones reconsideraciones)
+        private readonly IMaestros _Maestros;
+        public SolicitudReconsideracionController(IReadSolicitudRecon ReadSolicitudRecon, IResumenRec resumenRec, 
+            IINSReconsideraciones reconsideraciones, IMaestros maestros)
         {
             _IReadSolicitudRecon = ReadSolicitudRecon;
             _ResumenRec = resumenRec;
             _INSReconsideraciones = reconsideraciones;
+            _Maestros = maestros;
         }
 
 
         // GET: /<controller>/
         public async Task<IActionResult> Index(string periodo)
         {
-            ViewBag.DescDisa = "LIMA NORTE";
-            ViewBag.DescUE = "HOSPITAL CARLOS LAFRNACO LA HOZ";
-            ViewBag.DesEESS = "222222222-HOSPITALLANFRANCO";
+
+            var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+
+            ViewBag.DescDisa = usuario.DISA_DESCRIPCION;
+            ViewBag.DescUE = usuario.UE_DESCRIPCION;
+            ViewBag.DesEESS = usuario.ESTABLECIMIENTO_DESC;
             ViewBag.Titulo = "SOLICITUD DE RECONSIDERACIÓN";
 
             var Periodos = new SetPeriodosDISAEESS()
             {
                 V_TIPO_CONSULTA = "1",
-                V_DISA = "035",
-                V_EESS = ""
+                V_DISA = usuario.USU_DISA,
+                V_EESS = usuario.EESS_IDESTABLECIMIENTO
             };
+
+            var Filtro_EESS  = new setEESSXUE()
+            {
+                P_V_DISA= usuario.USU_DISA,
+                P_V_UE = usuario.USU_UE,
+                P_V_IDEESS = usuario.EESS_IDESTABLECIMIENTO,
+                P_V_TIPO="SOL"
+            };
+
+            var EESS = await _Maestros.ListarESSXUE(Filtro_EESS);
+            ViewBag.EESS = EESS;
+
+
             var result = await _IReadSolicitudRecon.GetPeriodosDISAEESS(Periodos);
             ViewBag.RecPeriodo = result;
             var TipoTarifario = await _IReadSolicitudRecon.GetTipoTarifario();
@@ -78,9 +99,41 @@ namespace App.Web.Controllers
             }
         }
 
-        public async Task<IActionResult> GetReconsideracionesEESSV( string periodo, int filtro, string fua)
+        public async Task<IActionResult> CargarPeriodo(string eess)
         {
-            var V_IDEESS = "0000011470";
+            try
+            {
+                var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+                var Periodos = new SetPeriodosDISAEESS()
+                {
+                    V_TIPO_CONSULTA = "1",
+                    V_DISA = usuario.USU_DISA,
+                    V_EESS = eess
+                };
+
+                var Periodo =  await _IReadSolicitudRecon.GetPeriodosDISAEESS(Periodos); ;
+
+                if (Periodo != null)
+                {
+                    return new JsonResult(new Response { IsSuccess = true, Result = Periodo });
+                }
+                else
+                {
+                    return new JsonResult(new Response { IsSuccess = false });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        
+
+        public async Task<IActionResult> GetReconsideracionesEESSV( string periodo, int filtro, string fua, string eess)
+        {
+            var V_IDEESS = eess;
 
             var anio = periodo.Substring(0, 4);
             var mes = "";
@@ -115,12 +168,11 @@ namespace App.Web.Controllers
         {
             try
             {
-                //var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
-                var usuario = "";
+                var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
                 var fecha_reg = DateTime.Now;
 
 
-                var AteTotal = await _INSReconsideraciones.InsertarAtencionTotal(id, usuario);
+                var AteTotal = await _INSReconsideraciones.InsertarAtencionTotal(id, usuario.Name);
 
                 if (AteTotal.OK==1)
                 {

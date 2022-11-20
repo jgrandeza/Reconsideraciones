@@ -145,5 +145,32 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+
+        public async Task<IEnumerable<getEESSXUE>> ListarESSXUE(setEESSXUE model)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_V_DISA", model.P_V_DISA, OracleMappingType.NVarchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_UE", model.P_V_UE, OracleMappingType.NVarchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_IDEESS", model.P_V_IDEESS, OracleMappingType.NVarchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_TIPO", model.P_V_TIPO, OracleMappingType.NVarchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_EESSXUE";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryAsync<getEESSXUE>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
     }
 }

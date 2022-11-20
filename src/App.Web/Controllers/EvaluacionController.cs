@@ -82,7 +82,7 @@ namespace App.Web.Controllers
 
 
 
-            public async Task<IActionResult> InfGeneralEvalV(int id)
+        public async Task<IActionResult> InfGeneralEvalV(int id)
         {
             try
             {
@@ -428,8 +428,8 @@ namespace App.Web.Controllers
         }
         public async Task<IActionResult> InfSoliRecCostEval(int id)
         {
-            //var result = await _SELReconsideraciones.ListarAteSusArch(id);
-            return PartialView();
+            var result = await _SELReconsideraciones.ListarCostosxEVAL(id);
+            return PartialView(result);
         }
 
         public async Task<IActionResult> AccionEvaluacionV(int Id)
@@ -545,7 +545,82 @@ namespace App.Web.Controllers
             }
 
         }
-        
+
+        public async Task<IActionResult> RegistrarSustentoEval(SetInsertarEvaluacion datos)
+        {
+            try
+            {
+                var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+
+                var sustento = new SetInsertarEvaluacion()
+                {
+                    P_I_IDATENCION= datos.P_I_IDATENCION,
+                    P_V_USUARIO   = usuario.Name,
+                    P_V_OBSGENERAL= datos.P_V_OBSGENERAL,
+                    P_V_OBSDETALLE= datos.P_V_OBSDETALLE,
+                    P_N_ESTADOREC = datos.P_N_ESTADOREC,
+                    P_V_CRITERIOA1= datos.P_V_CRITERIOA1,
+                    P_V_CRITERIOA2= datos.P_V_CRITERIOA2,
+                    P_V_CRITERIOA3= datos.P_V_CRITERIOA3,
+                    P_V_CRITERIOA4= datos.P_V_CRITERIOA4,
+                    P_V_CRITERIOB1= datos.P_V_CRITERIOB1,
+                    P_V_CRITERIOB2= datos.P_V_CRITERIOB2,
+                    P_V_CRITERIOB3= datos.P_V_CRITERIOB3,
+                    P_V_CRITERIOB4= datos.P_V_CRITERIOB4
+
+                 };
+
+                var result = await _uPDReconsideraciones.ActualizarAteEvaluacion(sustento);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+
+        public async Task<IActionResult> EvaluacionId(int id)
+        {
+            try
+            {
+                var dato = await _SELReconsideraciones.ListarEvaluacionxID(id);
+
+                return new JsonResult(new { IsSuccess = true, result = dato });
+
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
+        public async Task<IActionResult> EliminarEvaluacion(int P_I_IDATENCION)
+        {
+            try
+            {
+                var result = await _dELReconsideraciones.EliminarEvaluacion(P_I_IDATENCION);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception)
+            {
+                return new JsonResult(new { IsSuccess = false });
+            }
+        }
     }
 }
 

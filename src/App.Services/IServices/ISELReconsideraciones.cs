@@ -44,5 +44,10 @@ namespace App.Services.IServices
         Task<IEnumerable<getAteSustentoArch>> ListarAteSusArch(int N_ATE_IDNUMREG);
 
         Task<IEnumerable<getAteSustentoArch>> ListarAteSusArchxID(int N_ASUS_IDNUMREG);
+
+        Task<getCostosXEVAL> ListarCostosxEVAL(int P_I_IDATENCION);
+
+        Task<GetEvaluacionID> ListarEvaluacionxID(int P_I_IDATENCION);
+
     }
 }

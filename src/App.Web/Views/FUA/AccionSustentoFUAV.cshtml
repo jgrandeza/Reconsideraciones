@@ -43,45 +43,45 @@
                     <!--begin::Label-->
                     <!--begin::Label-->
                     <div class="col-lg-8 d-flex align-items-center">
-                        <div class="form-check form-check-custom form-check-solid me-10" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
-                            <input class="form-check-input" type="checkbox" value="1" id="checkA" />
-                            <label class="form-check-label" for="checkA">
+                        <div class="form-check form-check-custom form-check-solid me-10" >
+                            <input class="form-check-input"   data-bs-toggle="tooltip" data-bs-placement="top" title="Datos digitados diferentes a los registrados en el FUA físico" type="checkbox" value="1" id="checkA" />
+                            <label class="form-check-label"   data-bs-toggle="tooltip" data-bs-placement="top" title="Datos digitados diferentes a los registrados en el FUA físico" for="checkA">
                                 (a)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" type="checkbox" value="2" id="checkB" />
-                            <label class="form-check-label" for="checkB">
+                            <input class="form-check-input"   data-bs-toggle="tooltip" data-bs-placement="top" title="Omisión de datos en la digitación" type="checkbox" value="2" id="checkB" />
+                            <label class="form-check-label"   data-bs-toggle="tooltip" data-bs-placement="top" title="Omisión de datos en la digitación" for="checkB">
                                 (b)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" type="checkbox" value="3" id="checkC" />
-                            <label class="form-check-label" for="checkC">
+                            <input class="form-check-input"  data-bs-toggle="tooltip" data-bs-placement="top" title="Registros errados en el FUA en físico" type="checkbox" value="3" id="checkC" />
+                            <label class="form-check-label"  data-bs-toggle="tooltip" data-bs-placement="top" title="Registros errados en el FUA en físico" for="checkC">
                                 (c)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" type="checkbox" value="4" id="checkD" />
-                            <label class="form-check-label" for="checkD">
+                            <input class="form-check-input"  data-bs-toggle="tooltip" data-bs-placement="top" title="Registros incompletos en el FUA en físico" type="checkbox" value="4" id="checkD" />
+                            <label class="form-check-label"  data-bs-toggle="tooltip" data-bs-placement="top" title="Registros incompletos en el FUA en físico" for="checkD">
                                 (d)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" type="checkbox" value="5" id="checkE" />
-                            <label class="form-check-label" for="checkE">
+                            <input class="form-check-input"  data-bs-toggle="tooltip" data-bs-placement="top" title="No conformidad con el motivo de la observación sin requerir modificación del registro en el FUA físico o el registro en el aplicativo (no incluye duplicadas)" type="checkbox" value="5" id="checkE" />
+                            <label class="form-check-label"  data-bs-toggle="tooltip" data-bs-placement="top" title="No conformidad con el motivo de la observación sin requerir modificación del registro en el FUA físico o el registro en el aplicativo (no incluye duplicadas)" for="checkE">
                                 (e)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" type="checkbox" value="6" id="checkF" />
-                            <label class="form-check-label" for="checkF">
+                            <input class="form-check-input"  data-bs-toggle="tooltip" data-bs-placement="top" title="FUAS duplicadas" type="checkbox" value="6" id="checkF" />
+                            <label class="form-check-label"  data-bs-toggle="tooltip" data-bs-placement="top" title="FUAS duplicadas" for="checkF">
                                 (f)
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" type="checkbox" value="7" id="checkRM" />
-                            <label class="form-check-label" for="checkRM">
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="RM-725" type="checkbox" value="7" id="checkRM" disabled/>
+                            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="RM-725" for="checkRM">
                                 RM-725
                             </label>
                         </div>
@@ -90,7 +90,7 @@
                 </div>
 
                 <div class="row mt-5">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <div class="mb-4" data-select2-id="cbxTipoSustento">
                             <label for="cbxTipoSustento" class="form-label text-wrap fw-bolder fs-4">Tipo Sustento</label>
                             <select aria-label="Seleccionar" id="cbxTipoSustento" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
@@ -100,33 +100,38 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <label class="form-label fw-bolder fs-4">Descripción</label>
-                            <input type="text" class="form-control" id="txtDesSustento" value="" />
-                        </div>
-                    </div>
+
                     <div class="col-md-4 mt-10" style="text-align:center">
                         <div class="mb-4">
                             @{
-                                if (Model.ATE_SUSTENTO == 0 || Model.ATE_SUSTENTO == null)
+                                if (ViewBag.RecEstado != 2)
                                 {
-                                    <button type="button" onclick="RegistrarSustento();" class="btn btn-success">
-                                        <i class="fas fa-save fs-4 me-2"></i>
-                                        Guardar Sustento
-                                    </button>
+                                    if (Model.ATE_SUSTENTO == 0 || Model.ATE_SUSTENTO == null)
+                                    {
+                                        <button type="button" onclick="RegistrarSustento();" class="btn btn-success">
+                                            <i class="fas fa-save fs-4 me-2"></i>
+                                            Guardar Sustento
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" onclick="RegistrarSustento();" class="btn btn-warning">
+                                            <i class="fas fa-save fs-4 me-2"></i>
+                                            Actualizar Sustento
+                                        </button>
+                                    }
                                 }
-                                else
-                                {
-                                    <button type="button" onclick="RegistrarSustento();" class="btn btn-warning">
-                                        <i class="fas fa-save fs-4 me-2"></i>
-                                        Actualizar Sustento
-                                    </button>
-                                }
-
-
                             }
 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Descripción</label>
+                            <textarea type="text" rows="3" class="form-control" id="txtDesSustento" value="" ></textarea>
                         </div>
                     </div>
                 </div>

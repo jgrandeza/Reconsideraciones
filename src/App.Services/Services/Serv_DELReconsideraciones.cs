@@ -138,6 +138,29 @@ namespace App.Services.Services
             }
         }
 
+        public async Task<Mensaje_Del> EliminarEvaluacion(int P_I_IDATENCION)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_I_IDATENCION", P_I_IDATENCION, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_DEL_EVALUA";
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Del>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
         public async Task<Mensaje_Del> EliminarSustento(int N_ASUS_IDNUMREG)
         {
             try

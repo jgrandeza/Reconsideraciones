@@ -213,6 +213,8 @@ namespace App.ViewModels.SELReconsideraciones
         public decimal ATE_VALOR_NETO_SME { get; set; }
         public string ATE_IDFTEFTO { get; set; }
         public decimal ATE_IDMECANISMOPAGO { get; set; }
+
+        public decimal RREC_N_COSTO_SOL { get; set; }
     }
 
     public class getAtencionesDIAxID{
@@ -606,6 +608,45 @@ namespace App.ViewModels.SELReconsideraciones
         public DateTime asus_v_fecedita { get; set; }
         public string? asus_b_estado { get; set; }
         public string? asus_v_archivodescr { get; set; }
+    }
+
+    public class getCostosXEVAL
+    {
+
+        public decimal? TCOSTO_OBS { get; set; }
+        public decimal? PROCEDIMIENTO_COSTO_OBS { get; set; }
+        public decimal? INSUMO_COSTO_OBS { get; set; }
+        public decimal? MEDICAMENTO_COSTO_OBS { get; set; }
+        public decimal? SERVICIO_COSTO_OBS { get; set; }
+        public decimal? TCOSTO_SOL { get; set; }
+        public decimal? PROCEDIMIENTO_COSTO_SOL { get; set; }
+        public decimal? INSUMO_COSTO_SOL { get; set; }
+        public decimal? MEDICAMENTO_COSTO_SOL { get; set; }
+        public decimal? SERVICIO_COSTO_SOL { get; set; }
+        public decimal? TCOSTO_EVAL { get; set; }
+        public decimal? PROCEDIMIENTO_COSTO_EVAL { get; set; }
+        public decimal? INSUMO_COSTO_EVAL { get; set; }
+        public decimal? MEDICAMENTO_COSTO_EVAL { get; set; }
+        public decimal? SERVICIO_COSTO_EVAL { get; set; }
+
+    }
+    public class GetEvaluacionID
+    {
+
+        public int RREC_ID_ESTADOREC { get; set; }
+        public string RREC_V_USUEVALUA { get; set; }
+        public string RREC_V_OBSGENERAL { get; set; }
+
+        public string RREC_V_OBSDETALLE { get; set; }
+
+        public int A1 { get; set; }
+        public int A2 { get; set; }
+        public int A3 { get; set; }
+        public int A4 { get; set; }
+        public int B1 { get; set; }
+        public int B2 { get; set; }
+        public int B3 { get; set; }
+        public int B4 { get; set; }
     }
 
 }
