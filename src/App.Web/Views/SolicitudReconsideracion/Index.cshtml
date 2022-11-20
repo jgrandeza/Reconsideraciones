@@ -1,10 +1,19 @@
 ﻿
 
-<h1 class="display-6 mt-5 mb-8" style="text-align:center">BÚSQUEDA DE RECONSIDERACIONES A SOLICITAR</h1>
 
+<div class="container-xxl">
+ <div class="row">
+        <div class="col-md-10">
+            <h1 class="display-6 mt-5 mb-8" style="text-align:center">BÚSQUEDA DE RECONSIDERACIONES A SOLICITAR</h1>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-warning fw-bold mt-3" href="~/Account/Salir_Menu"><i class="fas fa-arrow-left me-2"></i> Atras</a>
+        </div>
+ </div>
+</div>
 
 <!--begin::Post-->
-<div class="post d-flex flex-column-fluid" id="kt_post">
+<div class="post d-flex flex-column-fluid mt-3" id="kt_post">
     <!--begin::Container-->
     <div id="kt_content_container" class="container-xxl">
 
@@ -33,7 +42,22 @@
                                             <tr>
                                                 <td class="fw-bold text-center">@ViewBag.DescDisa</td>
                                                 <td class="fw-bold text-center">@ViewBag.DescUE</td>
-                                                <td class="fw-bold text-center">@ViewBag.DesEESS</td>
+                                                <td class="fw-bold text-center">
+
+                                                <select aria-label="Seleccionar" id="cbxEESS" onchange="CargarPeriodo()" data-control="select2" data-placeholder="Seleccionar..." class="form-select select mb-2">
+
+                                                    @{
+                                                        if (ViewBag.EESS != null)
+                                                        {
+                                                            foreach (var item in ViewBag.EESS)
+                                                            {
+                                                                <option value="@item.IDEESS">@item.ESTABLECIMIENTO</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+
+                                                </td>
                                             </tr>
 
                                             <!--end::Date-->
@@ -167,12 +191,10 @@
                     </div>
                     <div id="modalFiltroFUA"></div>
                     <div class="row mt-2">
-                        <div class="col-md-4 d-grid gap-2">
-                            <a class="btn btn-light-warning fw-bold" href="javascript:void(0)" onclick="CargarForm('/Modulos/AccionesModulos')"><i class="fas fa-arrow-left me-2"></i> Atras</a>
-                        </div>
-                        <div class="col-md-8 d-grid gap-2">
-                            <button type="button" onclick="CargarParametros(1,0);" href="javascript:void(0);" id="btnConsultar" class="btn btn-light-primary fw-bold">
-                                <i class="fas fa-search fs-4 me-2"></i>
+
+                        <div class="col-md-12 d-grid gap-2">
+                            <button type="button" onclick="CargarParametros(1,0);" href="javascript:void(0);" id="btnConsultar" class="btn btn-primary fw-bold fs-1">
+                                <i class="fas fa-search fs-1 me-2"></i>
                                 Consultar
                             </button>
                         </div>
@@ -228,14 +250,14 @@
     function CargarParametros(vfiltro,vfua) {
         CargarWaitMe();
         let prd =$("#cbxPeriodo").val();
+        let Establecimiento =$("#cbxEESS").val();
                console.log(prd);
         if (prd == "" || prd == null) {
-
             NotificacionToastr('error', 'Debe ingresar el Periodo para inciar la busqueda', 'Oops...');
             $("#cbxPeriodo").focus();
             TerminarWaitMe();
         } else {
-            $("#tabla_p").load("@Url.Content("~/SolicitudReconsideracion/GetReconsideracionesEESSV")", { periodo: prd, filtro: vfiltro, fua: vfua }, function() {
+            $("#tabla_p").load("@Url.Content("~/SolicitudReconsideracion/GetReconsideracionesEESSV")", { periodo: prd, filtro: vfiltro, fua: vfua, eess: Establecimiento }, function () {
 
                 if ($("#RecEESS_cant").length == 1) {
                     $('#tblRecEESS').DataTable({
@@ -275,6 +297,31 @@
     function Formato_Fecha(fecha) {
         return fecha.substring(3, 5) + "/" + fecha.substring(0, 2) + "/" + fecha.substring(6, 10);
     }
+
+    function CargarPeriodo(){
+
+       let eess =$("#cbxEESS").val();
+       
+        $.get("@Url.Content("~/SolicitudReconsideracion/CargarPeriodo")", { eess : eess })
+        .done(function (response) {            
+            if (response.isSuccess != false) {  
+                let data = response.result;
+                console.log(data);
+                    Limpiar_Periodo();
+                data.forEach((element, index) => {
+                     // create the option
+                    var opt = $("<option>").val(element.periodo).text(element.periodo);
+                    //append option to the select element
+                    $("#cbxPeriodo").append(opt);
+                })
+
+            }
+            else {
+                NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
+            }
+        });   
+    }
+
    function CargarRangoPeriodoRec() {
        let cV_PERIODO =$("#cbxPeriodo").val();
        
@@ -302,6 +349,10 @@
                 NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
             }
         });      
+    }
+
+    function Limpiar_Periodo() {
+        $('option', '#cbxPeriodo').remove();
     }
 
     function Limpiar_PeriProd(){

@@ -104,4 +104,22 @@ namespace App.ViewModels.INSReconsideraciones
         public string V_asus_v_usuariocrea { get; set; }
         public string V_ASUS_V_ARCHIVODESCR { get; set; }
     }
+
+    public class SetInsertarEvaluacion
+    {
+        public decimal P_I_IDATENCION { get; set; }
+        public string P_V_USUARIO { get; set; }
+        public string P_V_OBSGENERAL { get; set; }
+        public string P_V_OBSDETALLE { get; set; }
+        public string P_N_ESTADOREC { get; set; }
+        public string P_V_CRITERIOA1 { get; set; }
+        public string P_V_CRITERIOA2 { get; set; }
+        public string P_V_CRITERIOA3 { get; set; }
+        public string P_V_CRITERIOA4 { get; set; }
+        public string P_V_CRITERIOB1 { get; set; }
+        public string P_V_CRITERIOB2 { get; set; }
+        public string P_V_CRITERIOB3 { get; set; }
+        public string P_V_CRITERIOB4 { get; set; }
+    }
+
 }

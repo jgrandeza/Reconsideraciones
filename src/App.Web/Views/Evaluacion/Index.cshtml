@@ -34,15 +34,11 @@
                                     Atras
                                 </button>
                                 @{
-                                    if (ViewBag.RecEstado == 5)
+                                    if (ViewBag.RecEstado == 5 || ViewBag.RecEstado==3 || ViewBag.RecEstado==4)
                                     {
                                         <button type="button" class="btn btn-success btn-md" onclick="CargarModal_Evaluacion();">
                                             <i class="fas fa-tasks fs-4 me-2"></i>
                                             Evaluar
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
-                                            <i class="fas fa-trash fs-4 me-2"></i>
-                                            Eliminar
                                         </button>
                                     }
 

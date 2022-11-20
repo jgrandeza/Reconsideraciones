@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -89,4 +91,25 @@ namespace App.ViewModels.Maestros
         public int? APO_ESTADO { get; set; }
 
     }
+
+    public class setEESSXUE
+    {
+        public string P_V_DISA { get; set; }
+        public string P_V_UE { get; set; }
+        public string P_V_IDEESS { get; set; }
+        public string P_V_TIPO { get; set; }
+
+    }
+    public class getEESSXUE
+    {
+        public string IDEESS { get; set; }
+        public string ESTABLECIMIENTO { get; set; }
+
+        public string IDDISA { get; set; }
+        public string DISA { get; set; }
+        public string IDEJECUTORA { get; set; }
+        public string EJECUTORA { get; set; }
+
+    }
+
 }

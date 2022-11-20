@@ -42,10 +42,10 @@ namespace App.ViewModels.SolicitudRecon
 		public string? RREC_ODSIS { get; set; }
 		public decimal? RREC_VALOR_BRUTO { get; set; }
 		public decimal? RREC_VALOR_NETO { get; set; }
-		public decimal? RREC_IDMECANISMOPAGO { get; set; }
+		public string? RREC_IDMECANISMOPAGO { get; set; }
 		public decimal? RREC_OBSPSA { get; set; }
 		public decimal? RREC_OBSSME { get; set; }
-		public decimal? RREC_N_ESOBSTOTAL { get; set; }
+		public string? RREC_N_ESOBSTOTAL { get; set; }
 		public decimal? RREC_TIPO_PAGO_PCPP { get; set; }
 		public decimal? RREC_N_IDPERIODOVAL { get; set; }
 		public decimal? RREC_N_VBTOTAL { get; set; }

@@ -258,5 +258,43 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+
+        public async Task<Mensaje_Ins> ActualizarAteEvaluacion(SetInsertarEvaluacion model)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_I_IDATENCION", model.P_I_IDATENCION, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("P_V_USUARIO", model.P_V_USUARIO, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_OBSGENERAL", model.P_V_OBSGENERAL, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_OBSDETALLE", model.P_V_OBSDETALLE, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_N_ESTADOREC", model.P_N_ESTADOREC, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_CRITERIOA1", model.P_V_CRITERIOA1, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_CRITERIOA2", model.P_V_CRITERIOA2, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_CRITERIOA3", model.P_V_CRITERIOA3, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_CRITERIOA4", model.P_V_CRITERIOA4, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_CRITERIOB1", model.P_V_CRITERIOB1, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_CRITERIOB2", model.P_V_CRITERIOB2, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_CRITERIOB3", model.P_V_CRITERIOB3, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_CRITERIOB4", model.P_V_CRITERIOB4, OracleMappingType.Varchar2, ParameterDirection.Input);
+
+
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_UPD_EVALUA";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
     }
 }

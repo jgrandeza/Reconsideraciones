@@ -138,11 +138,11 @@ public class HomeController : Controller
                     new Claim("ROL_DESCRIPCION", "SOLICITANTE"),
                     new Claim("USU_PPDD", ""),
                     new Claim("Foto",  "user.png"),
-                    new Claim("ID_SUBMODULO", ""),
-                    new Claim("USU_DISA",""),
+                    new Claim("ID_SUBMODULO", "391"),
+                    new Claim("USU_DISA","190"),
                     new Claim("USU_UE",""),
                     new Claim("EESS_CODIGOSIS",""),
-                    new Claim("USU_ODSIS", ""),
+                    new Claim("USU_ODSIS", "021"),
                     new Claim("ID_MACROREGION",""),
                     new Claim("USU_DNI",""),
                     new Claim("USU_EMAILINSTITUCIONAL",""),
@@ -150,6 +150,11 @@ public class HomeController : Controller
                     new Claim("LUGARTRAB_DESC",""),
                     new Claim("TOKENSESION",""),
                     new Claim("TOKENSALIDA",""),
+                    new Claim("EESS_IDESTABLECIMIENTO",""),
+                    new Claim("DISA_DESCRIPCION", "PRUEBA DISA"),
+                    new Claim("UE_DESCRIPCION", "PRUEBA UNIDAD EJECUTORA"),
+                    new Claim("ESTABLECIMIENTO_DESC"," ESTABLECIMIENTO PRUEBA"),
+
                     //UnidadEjecutoraId
                     //eso falta agregar al claims
                 };
