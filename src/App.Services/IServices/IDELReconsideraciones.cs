@@ -14,7 +14,9 @@ namespace App.Services.IServices
         Task<Mensaje_Del> EliminarAtencionTotal(int N_ATE_IDNUMREG);
 
         Task<Mensaje_Del> EliminarSustento(int N_ASUS_IDNUMREG);
+        Task<Mensaje_Del> EliminarEvaluacion(int P_I_IDATENCION);
 
+        Task<Mensaje_Del> EliminarPeriodo(int N_ADIA_IDNUMREG);
     }
 }
 

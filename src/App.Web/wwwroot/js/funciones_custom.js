@@ -1,5 +1,5 @@
 ﻿var estado_ajax = false;
-function CargarForm(frm) {
+function CargarForm(frm) { 
     try {
         CargarWaitMe();
         $(".content-custom").html("");
@@ -8,7 +8,7 @@ function CargarForm(frm) {
         $(".content-custom").stop();
         //$(".content").html("").hide("fade");
         $(".content-custom").hide("fade");
-        var form = frm;
+        var form =  frm; 
         setTimeout(function () {
             xhr_p = $.ajax({
                 url: form,

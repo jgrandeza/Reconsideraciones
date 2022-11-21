@@ -463,6 +463,7 @@ namespace App.Services.Services
             }
         }
 
+ 
         public   Task<IEnumerable<GetPeriodo>> ListPeriodo()
         {
             try
@@ -515,6 +516,7 @@ namespace App.Services.Services
             try
             {
                 var conn = new OracleConnection(_connectionString);
+ 
                 var dyParam = new OracleDynamicParameters();
                 dyParam.Add("P_V_PERIODO", model.periodo!, OracleMappingType.Decimal, ParameterDirection.Input);
                 dyParam.Add("P_V_MES", model.mes!, OracleMappingType.Varchar2, ParameterDirection.Input);
@@ -539,7 +541,50 @@ namespace App.Services.Services
 
             }
         }
+       public async Task<getCostosXEVAL> ListarCostosxEVAL(int P_I_IDATENCION)
+ 
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString); 
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_I_IDATENCION", P_I_IDATENCION, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_COSTOSXID";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
 
+                var result = await SqlMapper.QueryFirstAsync<getCostosXEVAL>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<GetEvaluacionID> ListarEvaluacionxID(int P_I_IDATENCION)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_I_IDATENCION", P_I_IDATENCION, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_EVALUA";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryFirstAsync<GetEvaluacionID>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+ 
     }
 }

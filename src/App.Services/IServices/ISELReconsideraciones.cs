@@ -1,4 +1,5 @@
 ﻿using App.ViewModels.Auxiliares;
+using App.ViewModels.DELReconsideraciones;
 using App.ViewModels.INSReconsideraciones;
 using App.ViewModels.SELReconsideraciones;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static App.ViewModels.DELReconsideraciones.DELReconsideraciones;
 
 namespace App.Services.IServices
 {
@@ -45,9 +47,16 @@ namespace App.Services.IServices
         Task<IEnumerable<getAteSustentoArch>> ListarAteSusArch(int N_ATE_IDNUMREG);
 
         Task<IEnumerable<getAteSustentoArch>> ListarAteSusArchxID(int N_ASUS_IDNUMREG);
+
         //Task<GetPeriodo> ListPeriodo();
         Task<IEnumerable<GetPeriodo>> ListPeriodo();
         Task<GetPeriodo> ConsultarPeriodoxID(int id); 
         Task<Mensaje_Ins> InsertarPeriodo(GetPeriodo model, string usuario);
+
+
+        Task<getCostosXEVAL> ListarCostosxEVAL(int P_I_IDATENCION);
+
+        Task<GetEvaluacionID> ListarEvaluacionxID(int P_I_IDATENCION);
+      
     }
 }

@@ -37,7 +37,11 @@ namespace App.Tools
                 usuario.LUGARTRAB_DESC = currentUser.User.Claims.FirstOrDefault(c => c.Type == "LUGARTRAB_DESC").Value;
                 usuario.TOKENSESION = currentUser.User.Claims.FirstOrDefault(c => c.Type == "TOKENSESION").Value;
                 usuario.TOKENSALIDA = currentUser.User.Claims.FirstOrDefault(c => c.Type == "TOKENSALIDA").Value;
-
+                usuario.EESS_IDESTABLECIMIENTO = currentUser.User.Claims.FirstOrDefault(c => c.Type == "EESS_IDESTABLECIMIENTO").Value;
+                usuario.DISA_DESCRIPCION = currentUser.User.Claims.FirstOrDefault(c => c.Type == "DISA_DESCRIPCION").Value;
+                usuario.UE_DESCRIPCION = currentUser.User.Claims.FirstOrDefault(c => c.Type == "UE_DESCRIPCION").Value;
+                usuario.ESTABLECIMIENTO_DESC = currentUser.User.Claims.FirstOrDefault(c => c.Type == "ESTABLECIMIENTO_DESC").Value;
+                usuario.PROGRAMADOR = currentUser.User.Claims.FirstOrDefault(c => c.Type == "PROGRAMADOR").Value;
 
             }
             catch (Exception ex)

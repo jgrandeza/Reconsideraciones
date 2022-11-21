@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\AccountController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\App.Data\App.Data.csproj" />
     <ProjectReference Include="..\App.Models\App.Models.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>

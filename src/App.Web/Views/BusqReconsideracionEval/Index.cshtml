@@ -1,7 +1,15 @@
 ﻿
 
-<h1 class="display-6 mt-5 mb-8" style="text-align:center">@ViewBag.Titulo</h1>
-
+<div class="container-xxl">
+ <div class="row">
+        <div class="col-md-10">
+            <h1 class="display-6 mt-5 mb-8" style="text-align:center">BÚSQUEDA DE RECONSIDERACIONES A SOLICITAR</h1>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-warning fw-bold mt-3" href="~/Account/SalirMenu"><i class="fas fa-arrow-left me-2"></i> Atras</a>
+        </div>
+ </div>
+</div>
 
 <!--begin::Post-->
 <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -23,17 +31,32 @@
                         <div class="col-md-4">
                             <div class="mb-4" data-select2-id="cbxDISA">
                                 <label for="cbxDISA" class="form-label text-wrap fw-bolder fs-4">DISA:</label>
-                                <select aria-label="Seleccionar" id="cbxDISA" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
-                                   @* <option selected disabled value="">Seleccionar</option>*@
-                                            <option selected value=035>LIMA NORTE</option>
+                                <select aria-label="Seleccionar" id="cbxDISA" onchange="CargarUE()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                            @{
+                                                if (ViewBag.DISA != null)
+                                                {
+                                                    foreach (var item in ViewBag.DISA)
+                                                    {
+                                                        <option value="@item.IDDISA">@item.DISA</option>
+                                                    }
+                                                }
+                                            }
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-8">
                             <div class="mb-4" data-select2-id="cbxUE">
                                 <label for="cbxUE" class="form-label text-wrap fw-bolder fs-4">UND. EJEC.:</label>
-                                <select aria-label="Seleccionar" id="cbxUE" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
-                                            <option selected value=0522>HOSPITAL CARLOS LANFRANCO LA HOZ</option>
+                                        <select aria-label="Seleccionar" id="cbxUE" onchange="CargarEESS()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
+                                            @{
+                                                if (ViewBag.UE != null)
+                                                {
+                                                    foreach (var item in ViewBag.UE)
+                                                    {
+                                                        <option value="@item.IDEJECUTORA">@item.EJECUTORA</option>
+                                                    }
+                                                }
+                                            }
                                 </select>
                             </div>
                         </div>
@@ -43,8 +66,16 @@
                         <div class="col-md-12">
                             <div class="mb-4" data-select2-id="cbxEESS">
                                 <label for="cbxEESS" class="form-label text-wrap fw-bolder fs-4">EESS:</label>
-                                <select aria-label="Seleccionar" id="cbxEESS" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-2">
-                                            <option selected value=150125A101>150125A101-HOSPITAL CARLOS LANFRANCO LA HOZ</option>
+                                        <select aria-label="Seleccionar" id="cbxEESS" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select select mb-2">
+                                            @{
+                                                if (ViewBag.EESS != null)
+                                                {
+                                                    foreach (var item in ViewBag.EESS)
+                                                    {
+                                                        <option value="@item.IDEESS">@item.ESTABLECIMIENTO</option>
+                                                    }
+                                                }
+                                            }
                                 </select>
                             </div>
                         </div>
@@ -54,7 +85,7 @@
                         <div class="col-md-4">
                             <div class="mb-2" data-select2-id="cbxPeriodo">
                                 <label for="cbxPeriodo" class="form-label text-wrap fw-bolder fs-4">Periodo</label>
-                                <select aria-label="Seleccionar" id="cbxPeriodo" onchange="CargarRangoPeriodoRec()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select select2 mb-2">
+                                        <select aria-label="Seleccionar" id="cbxPeriodo" onchange="CargarRangoPeriodoRec()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select select mb-2">
                                     <option selected disabled value="">Seleccionar</option>
                                     @{ if (ViewBag.RecPeriodo != null)
                                         {
@@ -176,12 +207,10 @@
                     </div>
                     <div id="modalFiltroFUA"></div>
                     <div class="row mt-2">
-                        <div class="col-md-4 d-grid gap-2">
-                            <a class="btn btn-light-warning fw-bold" href="javascript:void(0)" onclick="CargarForm('/Modulos/AccionesModulos')"><i class="fas fa-arrow-left me-2"></i> Atras</a>
-                        </div>
-                        <div class="col-md-8 d-grid gap-2">
-                                    <button type="button" onclick="CargarParametros(2,0);" href="javascript:void(0);" id="btnConsultar" class="btn btn-light-primary">
-                                <i class="fas fa-search fs-4 me-2"></i>
+
+                        <div class="col-md-12 d-grid gap-2">
+                                    <button type="button" onclick="CargarParametros(2,0);" href="javascript:void(0);" id="btnConsultar" class="btn btn-primary fs-1">
+                                <i class="fas fa-search fs-1 me-2"></i>
                                 Consultar
                             </button>
                         </div>
@@ -222,19 +251,85 @@
     setTimeout(function () {
         //CargarParametros();
         $('.select').select2();
-
+        CargarUE();
     }, 1000);
+
+    function Limpiar_UE() {
+        $('option', '#cbxUE').remove();
+    }
+
+    function CargarUE(){
+
+        let cDISA = $("#cbxDISA").val();
+       
+        $.get("@Url.Content("~/BusqReconsideracionEval/CargarUE")", { DISA: cDISA })
+        .done(function (response) {            
+            if (response.isSuccess != false) {  
+                let data = response.result;
+                console.log(data);
+                    Limpiar_UE();
+                data.forEach((element, index) => {
+                     // create the option
+                        var opt = $("<option>").val(element.idejecutora).text(element.ejecutora);
+                    //append option to the select element
+                        $("#cbxUE").append(opt);
+                })
+                CargarEESS();
+            }
+            else {
+                NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
+            }
+        });   
+    }
+
+    function Limpiar_EESS() {
+        $('option', '#cbxEESS').remove();
+    }
+
+    function CargarEESS(){
+
+        let cDISA = $("#cbxDISA").val();
+        let cUE = $("#cbxUE").val();
+       
+        $.get("@Url.Content("~/BusqReconsideracionEval/CargarEESS")", { DISA: cDISA, UE: cUE })
+        .done(function (response) {            
+            if (response.isSuccess != false) {  
+                let data = response.result;
+                console.log(data);
+                    Limpiar_EESS();
+                data.forEach((element, index) => {
+                     // create the option
+                        var opt = $("<option>").val(element.ideess).text(element.establecimiento);
+                    //append option to the select element
+                        $("#cbxEESS").append(opt);
+                })
+
+            }
+            else {
+                NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
+            }
+        });   
+    }
+
     function CargarParametros(vfiltro,vfua) {
         CargarWaitMe();
         let prd =$("#cbxPeriodo").val();
+        let Establecimiento = $("#cbxEESS").val();
                console.log(prd);
         if (prd == "" || prd == null) {
 
             NotificacionToastr('error', 'Debe ingresar el Periodo para inciar la busqueda', 'Oops...');
             $("#cbxPeriodo").focus();
             TerminarWaitMe();
+
+        }else if (Establecimiento == "" || Establecimiento ==null) {
+            
+            NotificacionToastr('error', 'Debe ingresar el Establecimiento para inciar la busqueda', 'Oops...');
+            $("#cbxEESS").focus();
+            TerminarWaitMe();
+
         } else {
-            $("#tabla_p").load("@Url.Content("~/BusqReconsideracionEval/GetReconsideracionesEvalV")", { periodo: prd, filtro: vfiltro, fua: vfua }, function() {
+            $("#tabla_p").load("@Url.Content("~/BusqReconsideracionEval/GetReconsideracionesEvalV")", { periodo: prd, filtro: vfiltro, fua: vfua, eess: Establecimiento }, function() {
 
                 if ($("#tblRecEval_cant").length == 1) {
                     $('#tblRecEval').DataTable({
@@ -252,6 +347,8 @@
             });
         }
     }
+
+
     $("#rbtnFiltroFUA").change(function () {
         if (this.checked) {
             Visualizar_Filtro_FUA();

@@ -34,15 +34,11 @@
                                     Atras
                                 </button>
                                 @{
-                                    if (ViewBag.RecEstado == 5)
+                                    if (ViewBag.RecEstado == 5 || ViewBag.RecEstado==3 || ViewBag.RecEstado==4)
                                     {
                                         <button type="button" class="btn btn-success btn-md" onclick="CargarModal_Evaluacion();">
                                             <i class="fas fa-tasks fs-4 me-2"></i>
                                             Evaluar
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
-                                            <i class="fas fa-trash fs-4 me-2"></i>
-                                            Eliminar
                                         </button>
                                     }
 
@@ -68,7 +64,7 @@
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#Tab1"><i class="fas fa-clinic-medical fs-4 me-2"></i> INFORMACIÓN GENERAL</a>
                     </li>
-                    <li class="nav-item">
+@*                    <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#Tab2"><i class="fas fa-file-medical fs-4 me-2"></i> DIAGNOSTICOS</a>
                     </li>
                     <li class="nav-item">
@@ -83,7 +79,7 @@
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#Tab6"><i class="fas fa-baby fs-4 me-2"></i> SERVICIO MATERNO</a>
                     </li>
-                </ul>
+                </ul>*@
 
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="Tab0" role="tabpanel">
@@ -92,8 +88,6 @@
                     </div>
                     <div class="tab-pane fade" id="Tab1" role="tabpanel">
                         <div id="divInfGeneralFUA"></div>
-                    </div>
-                    <div class="tab-pane fade" id="Tab2" role="tabpanel">
                         <div id="modalDiagnostico"></div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -102,8 +96,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="Tab3" role="tabpanel">
                         <div id="modalMedicamentos"></div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -112,8 +104,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="Tab4" role="tabpanel">
                         <div id="modalProcedimientos"></div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -123,8 +113,6 @@
                             </div>
                         </div>
 
-                    </div>
-                    <div class="tab-pane fade" id="Tab5" role="tabpanel">
                         <div id="modalInsumos"></div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -133,10 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="Tab6" role="tabpanel">
                         <div id="tabla_Infantil"></div>
-                    </div>
                 </div>
 
             </div>

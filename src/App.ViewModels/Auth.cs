@@ -11,5 +11,11 @@ namespace App.ViewModels
         public string RutaWSESeguridad { get; set; }
         public string entorno { get; set; }
 
+        public bool Archivo { get; set; }
+
+        public string Depura { get; set; }
+
     }
+
+  
 }

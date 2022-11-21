@@ -5,15 +5,21 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using App.Tools;
 using App.ViewModels;
+using App.ViewModels.DELReconsideraciones;
+using static App.ViewModels.DELReconsideraciones.DELReconsideraciones;
 
 namespace App.Web.Controllers
 {
 
     public class PeriodoController : Controller
     {
-        private readonly ISELReconsideraciones _SELReconsideraciones; 
-        public PeriodoController(ISELReconsideraciones sELReconsideraciones) {
-            _SELReconsideraciones = sELReconsideraciones; 
+        private readonly ISELReconsideraciones _SELReconsideraciones;
+        private readonly IDELReconsideraciones _DELReconsideraciones;
+        
+        public PeriodoController(ISELReconsideraciones sELReconsideraciones, 
+            IDELReconsideraciones dELReconsideraciones) {
+            _SELReconsideraciones = sELReconsideraciones;
+            _DELReconsideraciones = dELReconsideraciones;
         }
 
         public async Task<IActionResult> Index() 
@@ -97,5 +103,31 @@ namespace App.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Eliminar( int id)
+        {
+            try
+            {
+                var result = new Mensaje_Del();
+
+                result = await _DELReconsideraciones.EliminarPeriodo(id);
+
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+
+            }
+
+        }
     }
 }

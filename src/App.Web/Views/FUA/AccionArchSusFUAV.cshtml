@@ -1,22 +1,29 @@
 ﻿@model IEnumerable<App.ViewModels.SELReconsideraciones.getAteSustentoArch>
 
-<div class="row mt-5">
-    <div class="col-md-8">
-        <div class="mb-4" data-select2-id="select2-data-65-fd6n">
-            <label for="file" class="form-label">Cargar Archivo Sustentario <small class="text-danger">Archivo formato .pdf .xls .xlsx .png .jpg</small></label>
-            <input type="file" onchange="ValidateSize(this)" class="form-control" id="fileSus" />
+@{
+    if (ViewBag.RecEstado != 2)
+    {
+        <div class="row mt-5">
+            <div class="col-md-8">
+                <div class="mb-4" data-select2-id="select2-data-65-fd6n">
+                    <label for="file" class="form-label">Cargar Archivo Sustentario <small class="text-danger">Archivo formato .pdf .xls .xlsx .png .jpg</small></label>
+                    <input type="file" onchange="ValidateSize(this)" class="form-control" id="fileSus" />
+                </div>
+            </div>
+            <div class="col-md-4 mt-10" style="text-align:center">
+                <div class="mb-4">
+
+                    <button type="button" onclick="RegistrarArchiSustento();" class="btn btn-primary">
+                        <i class="fas fa-plus fs-4 me-2"></i>
+                        Agregar Documento
+                    </button>
+
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="col-md-4 mt-10" style="text-align:center">
-        <div class="mb-4">
-            <button type="button" onclick="RegistrarArchiSustento();" class="btn btn-primary">
-                <i class="fas fa-plus fs-4 me-2"></i>
-                Agregar Documento
-            </button>
-        </div>
-    </div>
-</div>
-<div class="row">
+    }
+ }
+    <div class="row">
     <div class="col-md-12">
         <table class="table align-middle border rounded table-row-dashed fs-6 g-5 display responsive" id="tbl_ArchObsSus" style="font-size: 10px !important">
             <thead class="text-center" style="background-color: #000000; border-width: 2px; color: white; vertical-align: middle; ">
@@ -61,16 +68,18 @@
     </div>
 </div>
 @{
-    if (Model.Count() > 0)
+    if (ViewBag.RecEstado != 2)
     {
-        <div class="row mt-5">
-            <button type="button" onclick="Enviar_Solicitud();" class="btn btn-success">
-                <i class="fas fa-paper-plane fs-4 me-2"></i>
-                Enviar Solicitud
-            </button>
-        </div>
+        if (Model.Count() > 0 || @ViewBag.Archivo==false)
+        {
+            <div class="row mt-5">
+                <button type="button" onclick="Enviar_Solicitud();" class="btn btn-success">
+                    <i class="fas fa-paper-plane fs-4 me-2"></i>
+                    Enviar Solicitud
+                </button>
+            </div>
+        }
     }
-
 }
 
 <script>
@@ -206,6 +215,7 @@
     }
 
     async function _Enviar_Solicitud() {
+        CargarWaitMe();
         let array_data = {};
         array_data.N_ATE_IDNUMREG = $('#Ate_Idnumreg').val();
         let url = "@Url.Action("RegistrarEnvioSolicitud", "FUA")";
@@ -215,7 +225,12 @@
                 if (response.isSuccess == true) {
                     NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
                     $('#mdl_AccionSustentoFUAV').modal("hide");
-                    VoverAtras_Reconsideraciones();
+                        setTimeout(function () {
+                             TerminarWaitMe();
+                            VoverAtras_Reconsideraciones();
+                        }, 2000);
+                  TerminarWaitMe();
+
                 }
                 else {
                     NotificacionToastr('error', `${response.message}`, 'Error...');

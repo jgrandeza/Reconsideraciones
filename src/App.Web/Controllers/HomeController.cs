@@ -14,7 +14,13 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Security;
 using App.Models;
-using Microsoft.AspNetCore.Session;
+using App.Services.IServices;
+using App.ViewModels.Maestros;
+using System.Security.Cryptography;
+using System.Data;
+using NuGet.Protocol;
+using Microsoft.CodeAnalysis.Options;
+using Newtonsoft.Json.Linq;
 
 namespace App.Web.Controllers;
 
@@ -22,11 +28,12 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly Auth _auth;
-
-    public HomeController(ILogger<HomeController> logger, IOptions<Auth> auth)
+    private readonly IMaestros _Maestros;
+    public HomeController(ILogger<HomeController> logger, IOptions<Auth> auth,IMaestros maestros)
     {
         _logger = logger;
         _auth = auth.Value;
+        _Maestros = maestros;
     }
 
     public async Task<IActionResult> Index(string token)
@@ -40,12 +47,12 @@ public class HomeController : Controller
 
 
             //if (!HttpContext.User.Identity.IsAuthenticated)
-            //    return Redirect(_auth.entorno);
-
+            //    return Redirect(_auth.entorno); 
             // 1.1. Web Service
             string sServicio = "/Token";
             // 1.2. Parametros
             string sParametro1 = "?token=" + sToken;
+
 
             WebRequest oRequest = WebRequest.Create(_auth.RutaWSESeguridad + sServicio + sParametro1);
             // 'Err.Text = "línea 82 : consulta a seguridad"
@@ -72,6 +79,52 @@ public class HomeController : Controller
                 if (oResultado.ID_RESULTADO.Equals("1"))
                 {
 
+                    var Filtro_DISA = new setEESSXUE()
+                    {
+                        P_V_DISA = oResultado.USU_DISA,
+                        P_V_UE = "",
+                        P_V_IDEESS = "",
+                        P_V_TIPO = "DATOS"
+                    };
+
+
+                    var y1 = await _Maestros.ListarESSXUE(Filtro_DISA);
+                    var udisa = "";
+                    foreach (var item in y1)
+                    {
+                        udisa = @item.DISA;
+                    }
+
+                    var Filtro_UE = new setEESSXUE()
+                    {
+                        P_V_DISA = oResultado.USU_DISA,
+                        P_V_UE = oResultado.USU_UE,
+                        P_V_IDEESS = "",
+                        P_V_TIPO = "DATOS"
+                    };
+
+                    var y2 = await _Maestros.ListarESSXUE(Filtro_UE);
+                    var uejecutora = "";
+                    foreach (var item in y2)
+                    {
+                        uejecutora = @item.EJECUTORA;
+                    }
+
+                    var Filtro_EESS = new setEESSXUE()
+                    {
+                        P_V_DISA = oResultado.USU_DISA,
+                        P_V_UE = oResultado.USU_UE,
+                        P_V_IDEESS = oResultado.EESS_CODIGOSIS,
+                        P_V_TIPO = "DATOS"
+                    };
+                    var y3 = await _Maestros.ListarESSXUE(Filtro_DISA);
+                    var establecimiento = "";
+                    foreach (var item in y3)
+                    {
+                        establecimiento = @item.ESTABLECIMIENTO;
+                    }
+
+
                     var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, oResultado.USU_ID.ToString()),
@@ -93,6 +146,10 @@ public class HomeController : Controller
                     new Claim("LUGARTRAB_DESC",oResultado.LUGARTRAB_DESC),
                     new Claim("TOKENSESION",oResultado.TOKENSESION),
                     new Claim("TOKENSALIDA",oResultado.TOKENSALIDA),
+                    new Claim("DISA_DESCRIPCION", udisa),
+                    new Claim("UE_DESCRIPCION",uejecutora),
+                    new Claim("ESTABLECIMIENTO_DESC",establecimiento),
+                    new Claim("PROGRAMADOR",_auth.Depura), 
                     //UnidadEjecutoraId
                     //eso falta agregar al claims
                 };
@@ -111,6 +168,7 @@ public class HomeController : Controller
                     ViewBag.USU_DNI = oResultado.USU_DNI;
                     ViewBag.LUGARTRAB_DESC = oResultado.LUGARTRAB_DESC;
                     ViewBag.USU_NOMBREUSUARIO = oResultado.USU_NOMBREUSUARIO;
+
                     return RedirectToAction(nameof(ModulosController.Index), "Modulos");
 
                 }
@@ -126,10 +184,61 @@ public class HomeController : Controller
             }
 
         }
-        else {
-            
+        else
+        {
 
-                var claims = new List<Claim>
+            var disau = "190";
+            var ejecu = "1422";
+            var eessu = "0000011470";
+            var odsisu = "021";
+            var usbmodulo = "1";//395,39x
+
+            var Filtro_DISA = new setEESSXUE()
+            {
+                P_V_DISA = disau,
+                P_V_UE = "",
+                P_V_IDEESS = "",
+                P_V_TIPO = "DATOS"
+            };
+
+
+            var p1 = await _Maestros.ListarESSXUE(Filtro_DISA);
+            var udisap = "";
+            foreach (var item in p1)
+            {
+                udisap = @item.DISA;
+            }
+
+            var Filtro_UE = new setEESSXUE()
+            {
+                P_V_DISA = disau,
+                P_V_UE = ejecu,
+                P_V_IDEESS = "",
+                P_V_TIPO = "DATOS"
+            };
+
+            var p2 = await _Maestros.ListarESSXUE(Filtro_UE);
+            var uejecutorap = "";
+            foreach (var item in p2)
+            {
+                uejecutorap = @item.EJECUTORA;
+            }
+
+            var Filtro_EESS = new setEESSXUE()
+            {
+                P_V_DISA = disau,
+                P_V_UE = ejecu,
+                P_V_IDEESS = eessu,
+                P_V_TIPO = "DATOS"
+            };
+            var p3 = await _Maestros.ListarESSXUE(Filtro_EESS);
+            var establecimientop = "";
+            foreach (var item in p3)
+            {
+                establecimientop = @item.ESTABLECIMIENTO;
+            }
+
+            var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, "8610"),
                     new Claim(ClaimTypes.Name, "RLOPEZV"),
@@ -138,62 +247,66 @@ public class HomeController : Controller
                     new Claim("ROL_DESCRIPCION", "SOLICITANTE"),
                     new Claim("USU_PPDD", ""),
                     new Claim("Foto",  "user.png"),
-                    new Claim("ID_SUBMODULO", ""),
-                    new Claim("USU_DISA",""),
-                    new Claim("USU_UE",""),
-                    new Claim("EESS_CODIGOSIS",""),
-                    new Claim("USU_ODSIS", ""),
+                    new Claim("ID_SUBMODULO", usbmodulo),//395,39x
+                    new Claim("USU_DISA",disau),
+                    new Claim("USU_UE",ejecu),
+                    new Claim("EESS_CODIGOSIS",eessu),
+                    new Claim("USU_ODSIS", odsisu),
                     new Claim("ID_MACROREGION",""),
                     new Claim("USU_DNI",""),
                     new Claim("USU_EMAILINSTITUCIONAL",""),
                     new Claim("V_V_USU_EMAIL",""),
-                    new Claim("LUGARTRAB_DESC",""),
-                    new Claim("TOKENSESION",""),
-                    new Claim("TOKENSALIDA",""),
+                    new Claim("LUGARTRAB_DESC",""), 
+                    new Claim("EESS_IDESTABLECIMIENTO",""),
+                    new Claim("TOKENSESION","000001"),
+                    new Claim("TOKENSALIDA","000002"),
+                    new Claim("DISA_DESCRIPCION", udisap),
+                    new Claim("UE_DESCRIPCION",uejecutorap),
+                    new Claim("ESTABLECIMIENTO_DESC",establecimientop),
+                    new Claim("PROGRAMADOR","local"),
+
                     //UnidadEjecutoraId
                     //eso falta agregar al claims
                 };
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var authProperties = new AuthenticationProperties
-                {
-                    AllowRefresh = true,
-                    IsPersistent = true
-                };
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity), authProperties);
-                _logger.LogInformation("User {Email} logged in at {Time}.", "8610", DateTime.UtcNow);
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                IsPersistent = true
+            };
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity), authProperties);
+            _logger.LogInformation("User {Email} logged in at {Time}.", "8610", DateTime.UtcNow);
 
 
-                ViewBag.USU_USUARIO = "ROLEZV";
-                ViewBag.USU_DNI = "";
-                ViewBag.LUGARTRAB_DESC = "";
-                ViewBag.USU_NOMBREUSUARIO = "";
-                return RedirectToAction(nameof(ModulosController.Index), "Modulos");
+            //ViewBag.USU_USUARIO = "ROLEZVxxxxx";
+            //ViewBag.USU_DNI = "";
+            //ViewBag.LUGARTRAB_DESC = "";
+            //ViewBag.USU_NOMBREUSUARIO = "";
+            //ViewBag.Programa = "x";
+            //var modulo = "393";//Solicitante
+            //var modulo = "395";//Evaluador
+            //var modulo = "39x";//Periodos
+            //var modulo = "39x";//Solicita ampliacion
+            //var modulo = "39x";//Evalua ampliacion
+            //var modulo = "39x";//Reportes
+            return RedirectToAction(nameof(ModulosController.Index), "Modulos");
+            //return RedirectToAction(nameof(ModulosController.Index), "Modulos");
+            
 
-             
+
 
         }
 
-        var builder = WebApplication.CreateBuilder();
-
-        builder.Services.AddRazorPages();
-        builder.Services.AddControllersWithViews();
-
-        builder.Services.AddDistributedMemoryCache();
-
-        builder.Services.AddSession(options =>
-        {
-            options.IdleTimeout = TimeSpan.FromSeconds(10);
-            options.Cookie.HttpOnly = true;
-            options.Cookie.IsEssential = true;
-        });
-
- 
 
         return View();
     }
 
-
+    private void Redireccionar(string Submodulo)
+    {
+        
+        
+    }
 
     public IActionResult Privacy()
     {
@@ -206,4 +319,3 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
-

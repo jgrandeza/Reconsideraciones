@@ -1,12 +1,20 @@
 ﻿ 
 
-<h1 class="display-6 mt-5 mb-8" style="text-align:center">
-    @ViewBag.Titulo
-</h1>
-
+ 
+<div class="container-xxl">
+    <div class="row">
+        <div class="col-md-10">
+            <h1 class="display-6 mt-5 mb-8" style="text-align:center">@ViewBag.Titulo</h1>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-warning fw-bold mt-3" href="~/Account/SalirMenu"><i class="fas fa-arrow-left me-2"></i> Atras</a>
+        </div>
+    </div>
+</div>
 
 <!--begin::Post-->
- <div class="card">
+ 
+<div class="card container-xxl">
      <div class="card-body">
      <div class="row">
          <div class="col-md-12">
@@ -26,7 +34,7 @@
     </div>
     <div id="modalPeriodo"></div>
  </div>
-
+ 
 <script >
     setTimeout(function () {
         Carga();
@@ -123,26 +131,20 @@
     }
 
     async function EliminarPeriodo(id) {
-        try {
-            const array_data = {};
-            array_data.idperiodo = id;
+        let array_data = {}; 
+        array_data.id = id;
+        let url = "@Url.Action("Eliminar", "Periodo")";
+        $.post(url, array_data)
+            .done(function (response) {
+                console.log(response);
+                if (response.isSuccess == true) {
 
-
-            const response = await RegistrarPeriodoAjax('@Url.Content("~/Periodo/EliminarPeriodo")', array_data);
-            if (response.isSuccess) {
-
-                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
-                $('#mdl_AccionPeriodo').modal('hide');
-                $('#modalPeriodo').html('');
-                setTimeout(function () {
-                    Cargar_Periodos();
-                }, 500);
-            }
-            else {
-                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
-            }
-        } catch (err) {
-
-        }
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                    Carga();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+            });
     }
 </script>
