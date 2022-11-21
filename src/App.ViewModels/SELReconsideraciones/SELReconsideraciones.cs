@@ -610,6 +610,17 @@ namespace App.ViewModels.SELReconsideraciones
         public string? asus_v_archivodescr { get; set; }
     }
 
+    public class GetPeriodo
+    {
+        public int? idperiodo { get; set; }
+        public string? periodo { get; set; }
+        public string? mes { get; set; }
+        public string? fecini { get; set; }
+        public string? fecfin { get; set; }
+        public string? escierre { get; set; }
+        public string? motivo { get; set; }
+
+    }
     public class getCostosXEVAL
     {
 

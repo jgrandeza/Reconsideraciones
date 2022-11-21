@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using App.ViewModels.SELReconsideraciones;
 using App.ViewModels.Maestros;
+using App.ViewModels.INSReconsideraciones;
 
 namespace App.Services.Services
 {
@@ -462,11 +463,90 @@ namespace App.Services.Services
             }
         }
 
-        public async Task<getCostosXEVAL> ListarCostosxEVAL(int P_I_IDATENCION)
+ 
+        public   Task<IEnumerable<GetPeriodo>> ListPeriodo()
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_I_IDPERIODO", 0, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_PERIODOS";
+
+                var result =   SqlMapper.QueryAsync<GetPeriodo>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public Task <GetPeriodo> ConsultarPeriodoxID(int id)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_I_IDPERIODO", id, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_PERIODOS";
+
+                var result = SqlMapper.QuerySingleAsync<GetPeriodo>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+
+        public async Task<Mensaje_Ins> InsertarPeriodo(GetPeriodo model, String usuario)
         {
             try
             {
                 var conn = new OracleConnection(_connectionString);
+ 
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_V_PERIODO", model.periodo!, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("P_V_MES", model.mes!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_FECINI", model.fecfin!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_FECFIN", model.fecfin!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_ESCIERRE", model.escierre!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_USUARIO", usuario, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_INS_PERIODOS";
+                //var result = await conn.ExecuteAsync(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+
+            }
+        }
+       public async Task<getCostosXEVAL> ListarCostosxEVAL(int P_I_IDATENCION)
+ 
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString); 
                 var dyParam = new OracleDynamicParameters();
                 dyParam.Add("P_I_IDATENCION", P_I_IDATENCION, OracleMappingType.Decimal, ParameterDirection.Input);
                 dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
@@ -505,5 +585,6 @@ namespace App.Services.Services
                 throw;
             }
         }
+ 
     }
 }

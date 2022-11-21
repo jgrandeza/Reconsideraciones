@@ -183,6 +183,30 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+
+        public async Task<Mensaje_Del> EliminarPeriodo(int N_PERIODO)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_N_PERIODO", N_PERIODO, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_DEL_PERIODO";
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Del>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
     }
 }
 

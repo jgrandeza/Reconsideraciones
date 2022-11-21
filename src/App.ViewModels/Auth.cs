@@ -13,5 +13,9 @@ namespace App.ViewModels
 
         public bool Archivo { get; set; }
 
+        public string Depura { get; set; }
+
     }
+
+  
 }

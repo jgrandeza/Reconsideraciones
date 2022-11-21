@@ -120,6 +120,7 @@ namespace App.Web.Controllers
         }
         public async Task<IActionResult> GetReconsideracionesEvalV(string periodo, int filtro, string fua, string eess)
         {
+            
             var V_IDEESS = eess;
 
             var anio = periodo.Substring(0, 4);

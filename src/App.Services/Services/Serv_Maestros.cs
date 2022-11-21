@@ -1,6 +1,7 @@
 ﻿using App.Services.IServices;
 using App.ViewModels;
 using App.ViewModels.Maestros;
+using App.ViewModels.SELReconsideraciones;
 using Dapper;
 using Dapper.Oracle;
 using Microsoft.Extensions.Configuration;
@@ -145,6 +146,7 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+ 
 
         public async Task<IEnumerable<getEESSXUE>> ListarESSXUE(setEESSXUE model)
         {
@@ -172,5 +174,6 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+ 
     }
 }

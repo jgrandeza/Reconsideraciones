@@ -19,6 +19,8 @@ namespace App.Services.IServices
         Task<GetDiagnosticoPorID> ListarDiagnosticoPorId(string V_C10_CODDIA);
 
         Task<GetApoDiagPorID> ListarApoDiagPorId(int IdID_FUA, string V_APO_CODAPO);
+ 
         Task<IEnumerable<getEESSXUE>> ListarESSXUE(setEESSXUE model);
+ 
     }
 }

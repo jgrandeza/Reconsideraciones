@@ -111,5 +111,4 @@ namespace App.ViewModels.Maestros
         public string EJECUTORA { get; set; }
 
     }
-
 }

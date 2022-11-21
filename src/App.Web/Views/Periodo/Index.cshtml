@@ -1,0 +1,150 @@
+﻿ 
+
+ 
+<div class="container-xxl">
+    <div class="row">
+        <div class="col-md-10">
+            <h1 class="display-6 mt-5 mb-8" style="text-align:center">@ViewBag.Titulo</h1>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-warning fw-bold mt-3" href="~/Account/SalirMenu"><i class="fas fa-arrow-left me-2"></i> Atras</a>
+        </div>
+    </div>
+</div>
+
+<!--begin::Post-->
+ 
+<div class="card container-xxl">
+     <div class="card-body">
+     <div class="row">
+         <div class="col-md-12">
+                <button type="button" id="btnAddPeriodo" onclick="CargarModalPeriodo(1,0)" class="btn btn-dark">
+                    <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                </button>
+         </div>
+     </div>
+    <div class="row">
+        <div class="col-md-12">
+             <div id="divPeriodos">
+                 
+               
+             </div>
+        </div>
+    </div>
+    </div>
+    <div id="modalPeriodo"></div>
+ </div>
+ 
+<script >
+    setTimeout(function () {
+        Carga();
+
+    }, 100);
+
+    async function Carga() {
+        await Cargar_Periodos();
+    }
+    async function Cargar_Periodos() {
+        CargarWaitMe();        
+        try {
+            const response = await $.get("@Url.Content("~/Periodo/ListPeriodo")");
+            $('#divPeriodos').html(response);
+            $('#tblPeriodos').DataTable({
+                destroy: true,
+                "ordering": false,
+                responsive: true,
+                "lengthChange": false,
+                "searching": true,
+                "language": languaje_spanol
+            });
+            TerminarWaitMe();
+        } catch {
+            console.log('Error Cargando periodos');
+            TerminarWaitMe();
+        }
+
+    }
+
+    function Conf_EliminarPeriodo(e, id) {
+        e.preventDefault();
+        Swal.fire({
+            html: '<p style="color: red;">No se podra revertir.</p>',
+            title: `ELIMINAR EL PERIODO DE RECONSIDERACIÓN?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, Eliminar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                EliminarPeriodo(id);
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+    function CargarModalPeriodo(tipo, id) {
+        $.get("@Url.Content("~/Periodo/AccionPeriodo")", { tipo: tipo, id: id })
+            .done(function (response) {
+                $('#modalPeriodo').html(response);
+                $('#mdl_AccionPeriodo').modal("show");
+            });
+        
+    }
+
+    function GetPeriodoPorId(tipo, idPeriodo) {
+        let id = idPeriodo;
+        CargarWaitMe();
+        $.get('@Url.Content("~/Periodo/ConsultarPeriodoPorId")', { id: id })
+            .done(function (response) {
+                
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    console.log(result);
+                    CargarModalPeriodo(tipo, id);
+
+                    setTimeout(function () {
+                        $('#txtPeriodo').val(result.periodo);
+                        $('#txtMes').val(result.mes);
+                        $('#txtFecIni').val(result.fecini);
+                        $('#txtFecFin').val(result.fecfin);
+                        $('#cbxIngEscierre').val(result.escierre);
+                        $('#txtMotivo').val(result.motivo);
+                        $('#txtMotivo').prop('disabled', false);
+                    }, 1000);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+
+    async function EliminarPeriodoAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    }
+
+    async function EliminarPeriodo(id) {
+        let array_data = {}; 
+        array_data.id = id;
+        let url = "@Url.Action("Eliminar", "Periodo")";
+        $.post(url, array_data)
+            .done(function (response) {
+                console.log(response);
+                if (response.isSuccess == true) {
+
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                    Carga();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+            });
+    }
+</script>
