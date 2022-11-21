@@ -63,6 +63,8 @@ namespace App.ViewModels
         public string CED_DESCRIPCION { get; set; }
         public string Foto { get; set; }
         public string Name { get; set; }
+        public string PROGRAMADOR { get; set; }
+        
     }
     public class UsuarioDto
     {

@@ -1,55 +1,32 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using App.Data;
-using App.Models;
-using App.Tools.Services;
+﻿using App.Models;
 using App.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using App.Tools;
-using Microsoft.AspNetCore.Http;
 
 namespace App.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ILogger _logger;
         private readonly Auth _auth;
-        public AccountController(ILogger<AccountController> logger, IOptions<Auth> auth)
+        private readonly UsuarioClaimsDto usuario2;
+        
+        public AccountController(IOptions<Auth> auth)
         {
-            _logger = logger;
             _auth = auth.Value;
+            
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> Logout()
+        public  async Task<IActionResult> SalirMenu()
         {
-            _logger.LogInformation("User {Name} logged out at {Time}.",
-                User.Identity.Name, DateTime.UtcNow);
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Redirect(_auth.entorno);
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> Salir_Menu()
-        {
-            _logger.LogInformation("User {Name} logged out at {Time}.",
-                User.Identity.Name, DateTime.UtcNow);
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
-
+            var usuario = await App.Tools.AutenticacionHelper.GetUsuario(HttpContext);
+            //return Redirect(_auth.entorno);
             return Redirect(_auth.entorno + "/sisAcceso/Retorno?sts=" + usuario.TOKENSALIDA);
+           // return View();
         }
-
-
     }
 }

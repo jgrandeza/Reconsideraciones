@@ -44,6 +44,7 @@
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
+ 
         <!--begin::Page-->
         <div class="page d-flex flex-row flex-column-fluid">
             <!--begin::Wrapper-->
@@ -167,6 +168,9 @@
                                     <div class="btn btn-flex align-items-center bg-hover-white bg-hover-opacity-10 py-2 px-2 px-md-3" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                                         <!--begin::Name-->
                                         <div class="d-none d-md-flex flex-column align-items-end justify-content-center me-2 me-md-4">
+                                             
+                                            <input id="programer" type="hidden" value="@ViewBag.Programador">
+                                            <input id="ruta" type="hidden" value="@ViewBag.ruta">
                                             <span class="text-white opacity-75 fs-8 fw-semibold lh-1 mb-1">@ViewBag.USU_USUARIO</span>
                                             <span class="text-white fs-8 fw-bold lh-1">@ViewBag.LUGARTRAB_DESC</span>
                                         </div>
@@ -189,6 +193,7 @@
                                                 </div>
                                                 <!--end::Avatar-->
                                                 <!--begin::Username-->
+                                             
                                                 <div class="d-flex flex-column">
                                                     <div class="fw-bold d-flex align-items-center fs-5">
                                                         @ViewBag.USU_NOMBREUSUARIO
@@ -257,6 +262,7 @@
             <!--end::Wrapper-->
         </div>
         <!--end::Page-->
+        
     </div>
     <!--end::Root-->
     <!--begin::Javascript-->
@@ -307,18 +313,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="~/js/bootstrap-datepicker.es.min.js"></script>
 
-    <script>var variable = 0;
+    <script>
+    
+    var variable = 0;
         var DIA = 0;
         var MED = 0;
         var INS = 0;
         var APO = 0;
         var SMI = 0;
         var TODO = 0;
-        var NADA = 0;</script>
-    <script>$('.form-select').select2({
-        });</script>
+        var NADA = 0;
+    </script>
+    <script>
+    $('.form-select').select2({
+        });
+        CargarFormulario();
+        function CargarFormulario() {
+            var p = $("#programer");
+            var q = $("#ruta"); 
+            if (p.val() == 'local') {
+                CargarForm(q.val());
+            }else { 
+            CargarForm(p.val() + q.val());
+            }
+            
+        }
+        </script>
     <!--end::Javascript-->
     @await RenderSectionAsync("Scripts", required: false)
+   
 </body>
 <!--end::Body-->
 </html>

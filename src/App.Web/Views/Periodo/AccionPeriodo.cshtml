@@ -1,0 +1,155 @@
+﻿<div class="modal fade" id="mdl_AccionPeriodo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_AccionPeriodolabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mdl_AccionPeriodolabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="txtId" value="@ViewBag.vbId">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <div class="form-label fw-bolder fs-4">
+                                Periodo:
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="txtPeriodo" />                                
+                            </div>
+
+                        </div>                       
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <div class="form-label fw-bolder fs-4">
+                                Mes:
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="txtMes" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <div class="form-label fw-bolder fs-4">
+                                Fecha Inicio:
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="dd/mm/yyyy" class="form-control" id="txtFecIni" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <div class="form-label fw-bolder fs-4">
+                                Fecha Fin:
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="dd/mm/yyyy" class="form-control" id="txtFecFin" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4" data-select2-id="cbxEsCierre">
+                            <label for="cbxIngEgre" class="form-label text-wrap fw-bolder fs-4">Estado</label>
+                            <select aria-label="Seleccionar" id="cbxIngEscierre" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                <option value="N">Aperturado</option>
+                                <option value="S">Cerrado</option>
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Motivo:</label>
+                            <input type="text" class="form-control form-control-solid " id="txtMotivo" disabled />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    @if (ViewBag.Tipo == "1")
+                    {
+                        <button type="button" onclick="RegistrarPeriodo();" class="btn btn-success">
+                            <i class="fas fa-save fs-4 me-2"></i>
+                            Guardar
+                        </button>
+                    }
+                    else if (ViewBag.Tipo == "2")
+                    {
+                        <button type="button" onclick="" class="btn btn-warning">
+                            <i class="fas fa-edit fs-4 me-2"></i>
+                            Actualizar
+                        </button>
+                    }
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fas fa-times fs-4 me-2"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    async function RegistrarPeriodoAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    } 
+
+    async function RegistrarPeriodo() {           
+        try {
+            const array_data = {};
+            array_data.periodo = $('#txtPeriodo').val();
+            array_data.mes = $("#txtMes").val();
+            array_data.fecini = $("#txtFecIni").val();
+            array_data.fecfin = $("#txtFecFin").val();
+            array_data.escierre = $("#cbxIngEscierre").val();
+
+            if (array_data.periodo == "" || array_data.mes == "" || array_data.fecini == "" || array_data.fecfin == "") {
+                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
+                $('#txtPeriodo').focus();
+                return false;
+            }
+        
+            const response = await RegistrarPeriodoAjax('@Url.Content("~/Periodo/InsertarPeriodo")', array_data);
+            if (response.isSuccess) {
+                
+                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
+                $('#mdl_AccionPeriodo').modal('hide');
+                $('#modalPeriodo').html('');
+                setTimeout(function () {
+                    Cargar_Periodos();
+                }, 500);
+            }
+            else {
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+            }
+        } catch (err) {
+        
+        }
+    }
+
+    
+</script>
