@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using App.Models;
 using App.Services.IServices;
 using App.Tools;
 using App.ViewModels;
 using App.ViewModels.Maestros;
+using App.ViewModels.RptReconsideraciones;
 using App.ViewModels.SolicitudRecon;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,13 +28,15 @@ namespace App.Web.Controllers
         private readonly IResumenRec _ResumenRec;
         private readonly IINSReconsideraciones _INSReconsideraciones;
         private readonly IMaestros _Maestros;
-        public SolicitudReconsideracionController(IReadSolicitudRecon ReadSolicitudRecon, IResumenRec resumenRec, 
-            IINSReconsideraciones reconsideraciones, IMaestros maestros)
+        private readonly IRptReconsideraciones _rptReconsideraciones;
+        public SolicitudReconsideracionController(IReadSolicitudRecon ReadSolicitudRecon, IResumenRec resumenRec,
+            IINSReconsideraciones reconsideraciones, IMaestros maestros, IRptReconsideraciones rptReconsideraciones)
         {
             _IReadSolicitudRecon = ReadSolicitudRecon;
             _ResumenRec = resumenRec;
             _INSReconsideraciones = reconsideraciones;
             _Maestros = maestros;
+            _rptReconsideraciones = rptReconsideraciones;
         }
 
 
@@ -49,12 +58,12 @@ namespace App.Web.Controllers
                 V_EESS = usuario.EESS_IDESTABLECIMIENTO
             };
 
-            var Filtro_EESS  = new setEESSXUE()
+            var Filtro_EESS = new setEESSXUE()
             {
-                P_V_DISA= usuario.USU_DISA,
+                P_V_DISA = usuario.USU_DISA,
                 P_V_UE = usuario.USU_UE,
                 P_V_IDEESS = usuario.EESS_IDESTABLECIMIENTO,
-                P_V_TIPO="SOL"
+                P_V_TIPO = "SOL"
             };
 
             var EESS = await _Maestros.ListarESSXUE(Filtro_EESS);
@@ -85,7 +94,7 @@ namespace App.Web.Controllers
 
                 if (PeriodoRec != null)
                 {
-                    return new JsonResult(new Response { IsSuccess = true, Result = PeriodoRec, Result2 =PeriodoProc });
+                    return new JsonResult(new Response { IsSuccess = true, Result = PeriodoRec, Result2 = PeriodoProc });
                 }
                 else
                 {
@@ -111,7 +120,7 @@ namespace App.Web.Controllers
                     V_EESS = eess
                 };
 
-                var Periodo =  await _IReadSolicitudRecon.GetPeriodosDISAEESS(Periodos); ;
+                var Periodo = await _IReadSolicitudRecon.GetPeriodosDISAEESS(Periodos); ;
 
                 if (Periodo != null)
                 {
@@ -129,9 +138,9 @@ namespace App.Web.Controllers
             }
         }
 
-        
 
-        public async Task<IActionResult> GetReconsideracionesEESSV( string periodo, int filtro, string fua, string eess)
+
+        public async Task<IActionResult> GetReconsideracionesEESSV(string periodo, int filtro, string fua, string eess)
         {
             var V_IDEESS = eess;
 
@@ -139,22 +148,24 @@ namespace App.Web.Controllers
             var mes = "";
             if (periodo.Length == 6)
             {
-                mes = "0"+periodo.ToString().Substring(5, 1);
+                mes = "0" + periodo.ToString().Substring(5, 1);
             }
             else
             {
                 mes = periodo.ToString().Substring(5, 2);
             }
-            
- 
+
+
             var dato = new setResumenReconsDto()
             {
                 V_IDEESS = V_IDEESS,
-                V_PERIODO = anio+mes,
-                V_FILTROFUA=filtro,
-                V_FUA=fua
+                V_PERIODO = anio + mes,
+                V_FILTROFUA = filtro,
+                V_FUA = fua
             };
             var resumen = await _ResumenRec.ListarResumenReconsideracion(dato);
+
+            ViewBag.exportar = dato; 
 
             return PartialView(resumen);
         }
@@ -174,7 +185,7 @@ namespace App.Web.Controllers
 
                 var AteTotal = await _INSReconsideraciones.InsertarAtencionTotal(id, usuario.Name);
 
-                if (AteTotal.OK==1)
+                if (AteTotal.OK == 1)
                 {
                     return new JsonResult(new Response { IsSuccess = true, Message = AteTotal.MSJ });
 
@@ -192,6 +203,59 @@ namespace App.Web.Controllers
                 throw;
             }
         }
+
+        public async Task<IActionResult> RptAtenciones(string periodo, string tipo, string eess)
+        {
+            var ok = 0;
+            var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+            var V_IDEESS = eess;
+            var anio = periodo.Substring(0, 4);
+            var mes = "";
+            if (periodo.Length == 6)
+            {
+                mes = "0" + periodo.ToString().Substring(5, 1);
+            }
+            else
+            {
+                mes = periodo.ToString().Substring(5, 2);
+            }
+
+
+            var dato = new SetRptAtenciones()
+            {
+                P_V_PERIODO = anio,
+                P_V_MES=mes,
+                P_V_DISA = usuario.USU_DISA,
+                P_V_UEJEC = usuario.USU_UE,
+                P_V_ESTABLECIMIENTO = V_IDEESS,
+                P_V_ESTADO="-1",
+                P_V_TIPO = tipo
+            };
+            var resumen = await _rptReconsideraciones.RptAtenciones(dato);
+
+            using (var libro = new XLWorkbook())
+            {
+
+                resumen.TableName = "Clientes";
+                var hoja = libro.Worksheets.Add(resumen);
+                hoja.ColumnsUsed().AdjustToContents();
+
+                using (var memoria = new MemoryStream())
+                {
+
+                    libro.SaveAs(memoria);
+
+                    var nombreExcel = string.Concat("Reporte ", DateTime.Now.ToString(), ".xlsx");
+
+                    return File(memoria.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", nombreExcel);
+                }
+            }
+
+            return new JsonResult(new Response { IsSuccess = true, Message = "Se genero con Exito" });
+        }
+
+
+
     }
 }
 

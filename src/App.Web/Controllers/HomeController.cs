@@ -191,7 +191,7 @@ public class HomeController : Controller
             var ejecu = "1422";
             var eessu = "0000011470";
             var odsisu = "021";
-            var usbmodulo = "1";//395,39x
+            var usbmodulo = "393";//395,39x
 
             var Filtro_DISA = new setEESSXUE()
             {
@@ -256,14 +256,13 @@ public class HomeController : Controller
                     new Claim("USU_DNI",""),
                     new Claim("USU_EMAILINSTITUCIONAL",""),
                     new Claim("V_V_USU_EMAIL",""),
-                    new Claim("LUGARTRAB_DESC",""), 
+                    new Claim("LUGARTRAB_DESC",""),
+                    new Claim("TOKENSESION",""),
+                    new Claim("TOKENSALIDA",""),
                     new Claim("EESS_IDESTABLECIMIENTO",""),
-                    new Claim("TOKENSESION","000001"),
-                    new Claim("TOKENSALIDA","000002"),
-                    new Claim("DISA_DESCRIPCION", udisap),
-                    new Claim("UE_DESCRIPCION",uejecutorap),
-                    new Claim("ESTABLECIMIENTO_DESC",establecimientop),
-                    new Claim("PROGRAMADOR","local"),
+                    new Claim("DISA_DESCRIPCION", "PRUEBA DISA"),
+                    new Claim("UE_DESCRIPCION", "PRUEBA UNIDAD EJECUTORA"),
+                    new Claim("ESTABLECIMIENTO_DESC"," ESTABLECIMIENTO PRUEBA"),
 
                     //UnidadEjecutoraId
                     //eso falta agregar al claims
