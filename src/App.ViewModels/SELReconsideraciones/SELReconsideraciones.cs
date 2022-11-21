@@ -660,5 +660,25 @@ namespace App.ViewModels.SELReconsideraciones
         public int B4 { get; set; }
     }
 
+    public class GetSolicitudAmpliacion
+    {
+        public int? IDNUMREG { get; set; }
+        public string? PERIODO { get; set; }
+        public string? MES { get; set; }
+        public string? DISA { get; set; }
+        public string? ODSIS { get; set; }
+        public string? UEJECUTORA { get; set; }
+        public string? IDEESS { get; set; }
+        public string? EESS { get; set; }
+        public int? DIASPLAZO { get; set; }
+        public string? MOTIVO { get; set; }
+        public string? ESTADO { get; set; }
+        public string? USUCREA { get; set; }
+        public string? FECCREA { get; set; }
+        public string? FECFINPLAZO { get; set; }
+        public string? USUEVALUA { get; set; }
+        public string? FECEVALUA { get; set; }
+
+    }
 }
 

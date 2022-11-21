@@ -57,6 +57,10 @@ namespace App.Services.IServices
         Task<getCostosXEVAL> ListarCostosxEVAL(int P_I_IDATENCION);
 
         Task<GetEvaluacionID> ListarEvaluacionxID(int P_I_IDATENCION);
-      
+       
+        Task<IEnumerable<GetSolicitudAmpliacion>> ListSolicitud();
+        Task<GetPeriodo> ConsultarSolicitudxID(int id);
+        Task<Mensaje_Ins> InsertarSolicitud(GetSolicitudAmpliacion datos, string name);
+
     }
 }
