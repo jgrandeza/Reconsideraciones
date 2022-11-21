@@ -44,6 +44,7 @@ builder.Services.AddTransient<IUPDReconsideraciones, Serv_UPDReconsideraciones>(
 builder.Services.AddTransient<IDELReconsideraciones, Serv_DELReconsideraciones>();
 builder.Services.AddTransient<ISELSiasis, Serv_SELSiasis>();
 builder.Services.AddTransient<IValRcRvRecosideraciones, Serv_ValRcRvRecosideraciones>();
+builder.Services.AddTransient<IRptReconsideraciones, Serv_RptReconsideraciones>();
 
 builder.Services.AddCors(o => o.AddPolicy("AllowAllOrigins", builder =>
 {
