@@ -19,13 +19,13 @@
     <!--begin::Label-->
     <div class="col-lg-8 d-flex align-items-center">
         <div class="form-check form-check-custom form-check-solid me-10">
-            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Datos digitados diferentes a los registrados en el FUA físico" type="checkbox" value="1" id="checkA" disabled/>
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="yyyDatos digitados diferentes a los registrados en el FUA físico" type="checkbox" value="1" id="checkA" disabled />
             <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Datos digitados diferentes a los registrados en el FUA físico" for="checkA">
                 (a)
             </label>
         </div>
         <div class="form-check form-check-custom form-check-solid me-10">
-            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Omisión de datos en la digitación" type="checkbox" value="2" id="checkB" disabled />
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Omisión de datos en la digitación" type="checkbox" value="2" id="checkB" disabled  />
             <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Omisión de datos en la digitación" for="checkB">
                 (b)
             </label>
@@ -43,7 +43,7 @@
             </label>
         </div>
         <div class="form-check form-check-custom form-check-solid me-10">
-            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="No conformidad con el motivo de la observación sin requerir modificación del registro en el FUA físico o el registro en el aplicativo (no incluye duplicadas)" type="checkbox" value="5" id="checkE" disabled />
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="No conformidad con el motivo de la observación sin requerir modificación del registro en el FUA físico o el registro en el aplicativo (no incluye duplicadas)" type="checkbox" value="5" id="checkE" disabled  />
             <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="No conformidad con el motivo de la observación sin requerir modificación del registro en el FUA físico o el registro en el aplicativo (no incluye duplicadas)" for="checkE">
                 (e)
             </label>
@@ -65,7 +65,7 @@
 </div>
 
 <div class="row mt-5">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="mb-4" data-select2-id="cbxTipoSustento">
             <label for="cbxTipoSustento" class="form-label text-wrap fw-bolder fs-4">Tipo Reconsideración</label>
             <select aria-label="Seleccionar" id="cbxTipoSustento" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4" disabled>
@@ -75,13 +75,18 @@
             </select>
         </div>
     </div>
-    <div class="col-md-8">
+    
+</div>
+<div class="row mt-5">
+    <div class="col-md-12">
         <div class="mb-4">
             <label class="form-label fw-bolder fs-4">Descripción</label>
-            <input type="text" class="form-control" id="txtDesSustento" value="" disabled />
+            <textarea type="text" rows="3" class="form-control" id="txtDesSustento" value="" disabled></textarea>
+      @*      <input type="text" rows="3" class="form-control" id="txtDesSustento" value="" disabled />*@
         </div>
     </div>
 </div>
+
 
 <div id="mdl_Archivos"></div>
 <hr class="mt-5" style="border:2px solid" />

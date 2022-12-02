@@ -89,7 +89,7 @@
 
                                     <div class="col-md-6">
                                         <div class="mb-4">
-                                            <label class="form-label fw-bolder">Cant. Evaluación (S/.)</label>
+                                            <label class="form-label fw-bolder">Cant. Evaluación</label>
                                             <input type="number" min="0" onkeyup="Calcular_Precio_Med()" class="form-control form-control-sm fw-bolder" id="txtCantEval" />
                                         </div>
                                     </div>
@@ -169,7 +169,7 @@
         let calculo = 0;
         let entregado=0;
         entregado = $("#txtEntregado").val();
-        costo=$('#txtPreMedUni').val();
+        costo=$('#txtPreMedUni').val(); 
         cantidad = $('#txtCantEval').val();
         if (parseInt(cantidad, 10) <= parseInt(entregado, 10)) {
             calculo = costo * cantidad;
@@ -227,7 +227,7 @@
         }
 
         if (array_plazo[2] == "") {
-            NotificacionToastr('error', 'Ingrese el motico de cambio', 'Campos requeridos');
+            NotificacionToastr('error', 'Ingrese el motivo de cambio', 'Campos requeridos');
             return false;
         }
 

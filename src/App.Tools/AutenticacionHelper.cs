@@ -33,7 +33,7 @@ namespace App.Tools
                 usuario.ID_MACROREGION = currentUser.User.Claims.FirstOrDefault(c => c.Type == "ID_MACROREGION").Value;
                 usuario.USU_DNI = currentUser.User.Claims.FirstOrDefault(c => c.Type == "USU_DNI").Value;
                 usuario.USU_EMAILINSTITUCIONAL = currentUser.User.Claims.FirstOrDefault(c => c.Type == "USU_EMAILINSTITUCIONAL").Value; 
-                usuario.V_V_USU_EMAIL = currentUser.User.Claims.FirstOrDefault(c => c.Type == "V_V_USU_EMAIL").Value;
+                //usuario.V_V_USU_EMAIL = currentUser.User.Claims.FirstOrDefault(c => c.Type == "V_V_USU_EMAIL").Value;
                 usuario.LUGARTRAB_DESC = currentUser.User.Claims.FirstOrDefault(c => c.Type == "LUGARTRAB_DESC").Value;
                 usuario.TOKENSESION = currentUser.User.Claims.FirstOrDefault(c => c.Type == "TOKENSESION").Value;
                 usuario.TOKENSALIDA = currentUser.User.Claims.FirstOrDefault(c => c.Type == "TOKENSALIDA").Value;

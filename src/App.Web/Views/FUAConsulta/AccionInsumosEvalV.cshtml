@@ -1,0 +1,290 @@
+﻿
+<div class="modal fade" id="mdl_AccionInsumosFUAV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_AccionInsumosFUAVlabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mdl_AccionInsumosFUAVlabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="txtIdIns" value="@ViewBag.IdIns">
+                <input type="hidden" id="txtPreInsUni">
+
+
+                <div class="accordion" id="accordionInsumoEval">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="PanelInsumo-headingOne">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#PanelInsumo-collapseOne" aria-expanded="true" aria-controls="PanelInsumo-collapseOne">
+                                1. Datos Generales del Insumo
+                            </button>
+                        </h2>
+                        <div id="PanelInsumo-collapseOne" class="accordion-collapse collapse show" aria-labelledby="PanelInsumo-headingOne">
+                            <div class="accordion-body">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <div class="form-label fw-bolder">
+                                                Código
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control form-control-sm" id="txtCodInsumos" disabled />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Descripción</label>
+                                            <textarea type="text" class="form-control form-control-sm form-control-solid" rows="1" id="txtDesInsumos" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Prescrita</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtPrescritoIns" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Entregada</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtEntregadoIns" disabled />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Precio (S/.)</label>
+                                            <input type="text" class="form-control form-control-solid form-control-sm" id="txtPrecioIns" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="PanelInsumo-headingTwo">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#PanelInsumo-collapseTwo" aria-expanded="false" aria-controls="PanelInsumo-collapseTwo">
+                                2. Datos para la Evaluación:
+                            </button>
+                        </h2>
+                        <div id="PanelInsumo-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="PanelInsumo-headingTwo">
+                            <div class="accordion-body">
+
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Cant. Evaluación</label>
+                                            <input type="number" min="0" onkeyup="Calcular_Precio_INS()" class="form-control form-control-sm fw-bolder" id="txtCantInsEval" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Precio de Evaluación</label>
+                                            <input type="text" style="color:darkred" class="form-control form-control-solid form-control-sm fw-bolder" id="txtPrecioInsEval" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bolder">Motivo Cambio Cantidad</label>
+                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtMotivoCambioInsCant"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="PanelInsumo-headingThree">
+                            <button class="accordion-button" style="background-color:#282e32 !important;color:lightgray !important" type="button" data-bs-toggle="collapse" data-bs-target="#PanelInsumo-collapseThree" aria-expanded="false" aria-controls="PanelInsumo-collapseThree">
+                                3. Detalle de la Reconsideración Parcial:
+                            </button>
+                        </h2>
+                        <div id="PanelInsumo-collapseThree" class="accordion-collapse collapse show" aria-labelledby="PanelInsumo-headingThree">
+                            <div class="accordion-body">
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-4">
+                                            <label class="form-label text-wrap fw-bolder">Observado por:</label>
+                                            <textarea type="text" rows="3" class="form-control form-control-sm" id="txtObsParcialInsEval" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                   
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fas fa-times fs-4 me-2"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $('#txtCodInsumos').keypress(function (event) {
+        var keycode = event.keyCode || event.which;
+        if (keycode == '13') {
+            GetInsumos_Id();
+        }
+    });
+
+    function Calcular_Precio_INS() {
+        let costo = 0;
+        let cantidad = 0;
+        let calculo = 0;
+        let entregado = 0;
+        entregado = $("#txtEntregadoIns").val();
+        costo = $('#txtPreInsUni').val();
+        cantidad = $('#txtCantInsEval').val();
+        if (parseInt(cantidad, 10) <= parseInt(entregado, 10)) {
+            calculo = costo * cantidad;
+            $('#txtPrecioInsEval').val(calculo);
+            $('#txtCantInsEval').focus();
+        } else {
+            $('#txtPrecioInsEval').val('');
+            $('#txtCantInsEval').val('');
+            NotificacionToastr('error', `La cantidad ingresada es superior a la entregada (${cantidad} > ${entregado} ).`, 'Verifique!!!');
+            $('#txtCantInsEval').focus();
+        }
+
+    }
+
+    async function GetInsumos_Id(){
+        try {
+            const array_data = {};
+            array_data.V_INS_CODINS = $('#txtCodInsumos').val();
+            if (array_data.V_INS_CODINS == ""){
+                NotificacionToastr('error', `Ingrese el codigo de Insumo.`, 'Campo requerido');
+                $('#txtCodInsumos').focus();
+                return false;
+            }
+            CargarWaitMe();
+            const { isSuccess, result } = await getData('@Url.Content("~/FUA/GetInsumosId")', array_data);
+            console.log(isSuccess, result);
+            if(isSuccess){
+
+                $('#txtDesInsumos').val(result.inS_NOMBRE);          
+            }
+            else{
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                $('#txtDesInsumos').val('');
+            }
+            TerminarWaitMe();
+        } catch (err) {
+            console.log(err);
+            TerminarWaitMe();
+        }
+    }
+
+    async function getData(ajaxurl, data_array) {
+        return $.get(ajaxurl, data_array );
+    };
+
+    function RegistrarATeInsumosRec() {
+        let array_plazo = [];
+        array_plazo[0] = $('#txtIdIns').val();
+        array_plazo[1] = $("#txtCantInsEval").val();
+        array_plazo[2] = $("#txtMotivoCambioInsCant").val();
+        console.log(Math.floor(array_plazo[1]));
+        if (Math.floor(array_plazo[1]) < 0) {
+            NotificacionToastr('error', 'Ingrese la Cantidad a Evaluar', 'Campos requeridos');
+            return false;
+        }
+
+        if (array_plazo[2] == "") {
+            NotificacionToastr('error', 'Ingrese el motivo de cambio', 'Campos requeridos');
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("N_AINS_IDNUMREG", array_plazo[0]);
+        formData.append("N_AINS_ICANTIDADAPROBADAODSIS", array_plazo[1]);
+        formData.append("V_AINS_V_MOTIVO_CAMBIO", array_plazo[2]);
+
+        $.ajax({
+            url: '@Url.Action("ActualizarInsEval", "Evaluacion")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            type: 'POST',
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                    $('#mdl_AccionInsumosFUAV').modal('hide');
+                    $('#modalInsumos').html('');
+                    Cargar_Insumos_Eval();
+                    TerminarWaitMe();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                    TerminarWaitMe();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
+    }
+
+
+    function Conf_Actualizar_Ins(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: `GUARDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, registrar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                RegistrarATeInsumosRec();
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+
+
+</script>

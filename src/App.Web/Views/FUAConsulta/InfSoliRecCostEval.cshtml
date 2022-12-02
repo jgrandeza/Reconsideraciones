@@ -1,0 +1,60 @@
+﻿@model App.ViewModels.SELReconsideraciones.getCostosXEVAL
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table align-middle border rounded table-row-dashed fs-6 g-5 display responsive" id="tbl_CostosEval" style="font-size: 10px !important">
+            <thead class="text-center" style="background-color: #0272A3; border-width: 2px; color: white; vertical-align: middle;  ">
+                <tr>
+                    <th style="text-align:center">TIPO COSTOS</th>
+                    <th style="text-align:center">SERVICIO</th>
+                    <th style="text-align:center">MEDICAMENTO</th>
+                    <th style="text-align:center">INSUMOS</th>
+                    <th style="text-align:center">PROCEDIMIENTOS</th>
+                    <th style="text-align:center">TOTAL</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+
+                    if (Model != null)
+                    {
+                            <tr>
+                                <td class="text-center">OBSERVADO</td>
+                                <td class="text-center">@Model.SERVICIO_COSTO_OBS</td>
+                                <td class="text-center">@Model.MEDICAMENTO_COSTO_OBS</td>
+                                <td class="text-center">@Model.INSUMO_COSTO_OBS</td>
+                                <td class="text-center">@Model.PROCEDIMIENTO_COSTO_OBS</td>
+                                <td class="text-center">@Model.TCOSTO_OBS</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">SOLICITADO</td>
+                                <td class="text-center">@Model.SERVICIO_COSTO_SOL</td>
+                                <td class="text-center">@Model.MEDICAMENTO_COSTO_SOL</td>
+                                <td class="text-center">@Model.INSUMO_COSTO_SOL</td>
+                                <td class="text-center">@Model.PROCEDIMIENTO_COSTO_SOL</td>
+                                <td class="text-center">@Model.TCOSTO_SOL</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">EVALUADO</td>
+                                <td class="text-center">@Model.SERVICIO_COSTO_EVAL</td>
+                                <td class="text-center">@Model.MEDICAMENTO_COSTO_EVAL</td>
+                                <td class="text-center">@Model.INSUMO_COSTO_EVAL</td>
+                                <td class="text-center">@Model.PROCEDIMIENTO_COSTO_EVAL</td>
+                                <td class="text-center">@Model.TCOSTO_EVAL</td>
+                            </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" style="text-align: center"><h5 class="text-danger">Aún no hay registros a mostrar</h5></td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

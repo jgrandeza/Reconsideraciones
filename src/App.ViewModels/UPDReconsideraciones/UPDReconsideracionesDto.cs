@@ -31,4 +31,14 @@ namespace App.ViewModels.UPDReconsideraciones
         public string V_AINS_IDUSUARIOACT { get; set; }
         public decimal N_AINS_IDNUMREG { get; set; }
     }
+    public class setPeriodoUpd
+    {
+        public int? idperiodo { get; set; }
+        public string? periodo { get; set; }
+        public string? mes { get; set; }
+        public string? fecini { get; set; }
+        public string? fecfin { get; set; }
+        public string? escierre { get; set; }
+        public string? motivo { get; set; }
+    }
 }

@@ -1,0 +1,263 @@
+﻿<div class="modal fade" id="mdl_AccionSolicitudAmpliacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdl_AccionSolicitudAmpliacionlabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#264A74">
+                <h5 class="modal-title text-white" id="mdl_AccionSolicitudAmpliacionlabel">@ViewBag.Titulo_Modal</h5>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                     aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-body"> 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4" data-select2-id="cbxIngUDR">
+                            <label for="cbxIngUDR" class="form-label text-wrap fw-bolder fs-4">UDR:</label>
+                            <select aria-label="Seleccionar" id="cbxIngUDR" onchange="CargarUE1()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                                               
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4" data-select2-id="cbxIngUeje">
+                            <label for="cbxIngUeje" class="form-label text-wrap fw-bolder fs-4">Unidad Ejecutora:</label>
+                            <select aria-label="Seleccionar" id="cbxIngUeje" onchange="CargarEESS1()" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                 
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4" data-select2-id="cbxIngEESS">
+                            <label for="cbxIngEESS" class="form-label text-wrap fw-bolder fs-4">Establecimmiento de Salud:</label>
+                            <select aria-label="Seleccionar" id="cbxIngEESS" data-hide-search="false" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                               
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="txtId" value="@ViewBag.vbId">
+                <div class="row"> 
+                    <div class="col-md-2">
+                        <div class="mb-4" data-select2-id="cbxIngPeriodo">
+                            <label for="cbxIngPeriodo" class="form-label text-wrap fw-bolder fs-4">Periodo:</label>
+                            <select aria-label="Seleccionar" id="cbxIngPeriodo" onchange="CargarMes1()"  data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                  
+                                </select>
+                            </div>
+                        </div>
+                                        
+                    <div class="col-md-2">
+                            <div class="mb-4" data-select2-id="cbxIngMes">
+                            <label for="cbxIngMes" class="form-label text-wrap fw-bolder fs-4">Mes:</label>
+                                <select aria-label="Seleccionar" id="cbxIngMes" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                
+                                </select>
+                            </div>
+                        </div>
+                    <div class="col-md-2">
+                        <div class="mb-4">
+                            <div class="form-label fw-bolder fs-4">
+                                Días plazo:
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control"  id="txtDias" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-4" data-select2-id="cbxEstado">
+                            <label for="cbxIngEgre" class="form-label text-wrap fw-bolder fs-4">Estado:</label>
+                            <select aria-label="Seleccionar" id="cbxIngEstado" disabled data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4">
+                                <option value="0">Solicitado</option>
+                                <option value="1">Aprobado</option>
+                                <option value="2">Rechazado</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <div class="form-label fw-bolder fs-4">
+                                Fec.Fin Plazo:
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="txtFecha" disabled />
+                            </div>
+
+                        </div>
+                    </div>                     
+                </div>
+                 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <label class="form-label fw-bolder fs-4">Motivo de Solicitud:</label>
+                            <textarea rows="5" class="form-control form-control-solid " id="txtMotivo" ></textarea>
+                             
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    @if (ViewBag.Tipo == "1")
+                    {
+                        <button type="button" onclick="RegistrarSolicitudAmpliacion();" class="btn btn-success">
+                            <i class="fas fa-save fs-4 me-2"></i>
+                            Guardar
+                        </button>
+                    }
+                    else if (ViewBag.Tipo == "3")
+                    {
+                        <button type="button" onclick="Conf_Actualizar(event,1);" class="btn btn-success solicitado">
+                            <i class=" far fa-check-circle fs-4 me-3"></i>
+                            Aprobar
+                        </button>
+                        <button type="button" onclick="Conf_Actualizar(event,2);" class="btn btn-dark solicitado">
+                            <i class="fas fa-ban fs-4 me-3"></i>
+                            Rechazar
+                        </button>
+                    }
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fas fa-times fs-4 me-2"></i>
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+</div>
+<script>
+  
+
+    async function RegistrarSolicitudAmpliacionAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    }
+
+    async function RegistrarSolicitudAmpliacion() {
+        try {
+            const array_data = {};
+            array_data.idnumreg = $("#txtId").val();
+            array_data.periodo = $("#cbxIngPeriodo").val();
+            array_data.mes = $("#cbxIngMes").val();
+            array_data.disa = $("#cbxIngUDR").val();
+            array_data.uejecutora = $("#cbxIngUeje").val();
+            array_data.ideess = $("#cbxIngEESS").val();
+            array_data.diasplazo = $("#txtDias").val();
+            array_data.motivo = $("#txtMotivo").val();
+
+
+            if (array_data.diasplazo == "" || array_data.motivo == "") {
+                NotificacionToastr('error', `Ingrese los campos requeridos.`, 'Campos requeridos');
+                $('#txtMotivo').focus();
+                return false;
+            }
+
+            const response = await RegistrarSolicitudAmpliacionAjax('@Url.Content("~/SolicitudAmpliacion/InsertarSolicitud")', array_data);
+            if (response.isSuccess) {
+
+                NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmacion');
+                $('#mdl_AccionSolicitudAmpliacion').modal('hide');
+                $('#modalSolicitudAmpliacion').html('');
+                setTimeout(function () {
+                    Carga();
+                }, 500);
+            }
+            else {
+                NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+            }
+        } catch (err) {
+
+        }
+    }
+
+
+    function ActualizarSolicitudAmpliacionRec(r) {
+        //r -> 1 Aprobado 2 Rechazado
+        let array_plazo = [];
+        array_plazo[0] = $('#txtId').val();
+        array_plazo[1] = r;  
+         
+
+        var formData = new FormData();
+        formData.append("IDNUMREG", array_plazo[0]);
+        formData.append("ESTADO", array_plazo[1]); 
+
+        $.ajax({
+            url: '@Url.Action("ActualizarSolicitud", "SolicitudAmpliacion")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            type: 'POST',
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                    $('#mdl_AccionSolicitudAmpliacion').modal('hide');
+                    $('#modalSolicitudAmpliacion').html('');
+                    Carga();
+                    TerminarWaitMe();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                    TerminarWaitMe();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
+    }
+
+
+    function Conf_Actualizar(e,resultado) {
+        var res ="";
+        if (resultado==1) {
+            res="Aprobar solicitud";
+        }
+        if (resultado == 2) {
+            res = "Rechazar solicitud";
+        }
+
+        e.preventDefault();
+        Swal.fire({
+            title: `GUARDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: res,
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                ActualizarSolicitudAmpliacionRec(resultado);
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+  
+
+</script>

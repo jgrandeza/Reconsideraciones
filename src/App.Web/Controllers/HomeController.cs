@@ -38,12 +38,12 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index(string token)
     {
-        Boolean bProduccion = false;
+        Boolean bProduccion = true;
         if (bProduccion == true)
         {
 
             string sToken = HttpContext.Request.Query["token"].ToString();
-            //  string sToken = "N2U02EZSUU17589LF0A7VZM11";
+            //string sToken = "OE5U47FZR217761IC921OFQ7G";
 
 
             //if (!HttpContext.User.Identity.IsAuthenticated)
@@ -93,6 +93,10 @@ public class HomeController : Controller
                     foreach (var item in y1)
                     {
                         udisa = @item.DISA;
+                        if (udisa == null)
+                        {
+                            udisa = "";
+                        }
                     }
 
                     var Filtro_UE = new setEESSXUE()
@@ -108,6 +112,10 @@ public class HomeController : Controller
                     foreach (var item in y2)
                     {
                         uejecutora = @item.EJECUTORA;
+                        if (uejecutora == null)
+                        {
+                            uejecutora = "";
+                        }
                     }
 
                     var Filtro_EESS = new setEESSXUE()
@@ -122,6 +130,10 @@ public class HomeController : Controller
                     foreach (var item in y3)
                     {
                         establecimiento = @item.ESTABLECIMIENTO;
+                        if (establecimiento == null)
+                        {
+                            establecimiento = "";
+                        }
                     }
 
 
@@ -142,14 +154,15 @@ public class HomeController : Controller
                     new Claim("ID_MACROREGION",oResultado.ID_MACROREGION),
                     new Claim("USU_DNI",oResultado.USU_DNI),
                     new Claim("USU_EMAILINSTITUCIONAL",oResultado.USU_EMAILINSTITUCIONAL),
-                    new Claim("V_V_USU_EMAIL",oResultado.V_V_USU_EMAIL),
+                    new Claim("EESS_IDESTABLECIMIENTO",oResultado.EESS_IDESTABLECIMIENTO),
                     new Claim("LUGARTRAB_DESC",oResultado.LUGARTRAB_DESC),
                     new Claim("TOKENSESION",oResultado.TOKENSESION),
                     new Claim("TOKENSALIDA",oResultado.TOKENSALIDA),
                     new Claim("DISA_DESCRIPCION", udisa),
                     new Claim("UE_DESCRIPCION",uejecutora),
-                    new Claim("ESTABLECIMIENTO_DESC",establecimiento),
+                    new Claim("ESTABLECIMIENTO_DESC",oResultado.ESTABLECIMIENTO_DESC),                   
                     new Claim("PROGRAMADOR",_auth.Depura), 
+                     //new Claim("PROGRAMADOR",""), 
                     //UnidadEjecutoraId
                     //eso falta agregar al claims
                 };
@@ -186,12 +199,13 @@ public class HomeController : Controller
         }
         else
         {
-
+            var rolu = "393";//393 solicita 395 Evalua 397 Periodo 389 SolicitudAmp 
+            var nrolu = "SOLICITANTE";//393 solicita
             var disau = "190";
             var ejecu = "1422";
-            var eessu = "0000011470";
+            var eessu = "0000011470";//0000011470
             var odsisu = "021";
-            var usbmodulo = "393";//395,39x
+            var usbmodulo = "399";//395,39x
 
             var Filtro_DISA = new setEESSXUE()
             {
@@ -243,8 +257,8 @@ public class HomeController : Controller
                     new Claim(ClaimTypes.NameIdentifier, "8610"),
                     new Claim(ClaimTypes.Name, "RLOPEZV"),
                     new Claim("USU_NOMBREUSUARIO", "LOPEZ\tVASQUEZ\tROSA MARIBEL"),
-                    new Claim("IDROL", "329"),
-                    new Claim("ROL_DESCRIPCION", "SOLICITANTE"),
+                    new Claim("IDROL", rolu),
+                    new Claim("ROL_DESCRIPCION", nrolu),
                     new Claim("USU_PPDD", ""),
                     new Claim("Foto",  "user.png"),
                     new Claim("ID_SUBMODULO", usbmodulo),//395,39x
@@ -253,20 +267,26 @@ public class HomeController : Controller
                     new Claim("EESS_CODIGOSIS",eessu),
                     new Claim("USU_ODSIS", odsisu),
                     new Claim("ID_MACROREGION",""),
-                    new Claim("USU_DNI",""),
+                    new Claim("USU_DNI","11111111"),
                     new Claim("USU_EMAILINSTITUCIONAL",""),
-                    new Claim("V_V_USU_EMAIL",""),
-                    new Claim("LUGARTRAB_DESC",""),
+                    //new Claim("V_V_USU_EMAIL",""),
+                    new Claim("LUGARTRAB_DESC","EESS"),
                     new Claim("TOKENSESION",""),
                     new Claim("TOKENSALIDA",""),
                     new Claim("EESS_IDESTABLECIMIENTO",""),
-                    new Claim("DISA_DESCRIPCION", "PRUEBA DISA"),
-                    new Claim("UE_DESCRIPCION", "PRUEBA UNIDAD EJECUTORA"),
-                    new Claim("ESTABLECIMIENTO_DESC"," ESTABLECIMIENTO PRUEBA"),
+                    new Claim("DISA_DESCRIPCION", udisap),
+                    new Claim("UE_DESCRIPCION", uejecutorap),
+                    new Claim("ESTABLECIMIENTO_DESC",establecimientop),
+                    new Claim("PROGRAMADOR",""),
 
-                    //UnidadEjecutoraId
-                    //eso falta agregar al claims
-                };
+        };
+
+
+            ViewBag.USU_USUARIO = "RLOPEZV";
+            ViewBag.USU_DNI = "11111111";
+            ViewBag.LUGARTRAB_DESC = "EESS";
+            ViewBag.USU_NOMBREUSUARIO = "LOPEZ\tVASQUEZ\tROSA MARIBEL";
+
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties
             {

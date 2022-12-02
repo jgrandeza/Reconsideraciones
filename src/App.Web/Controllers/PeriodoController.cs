@@ -7,6 +7,7 @@ using App.Tools;
 using App.ViewModels;
 using App.ViewModels.DELReconsideraciones;
 using static App.ViewModels.DELReconsideraciones.DELReconsideraciones;
+using App.ViewModels.UPDReconsideraciones;
 
 namespace App.Web.Controllers
 {
@@ -15,11 +16,14 @@ namespace App.Web.Controllers
     {
         private readonly ISELReconsideraciones _SELReconsideraciones;
         private readonly IDELReconsideraciones _DELReconsideraciones;
-        
+        private readonly IUPDReconsideraciones _UPDReconsideraciones;
+
         public PeriodoController(ISELReconsideraciones sELReconsideraciones, 
-            IDELReconsideraciones dELReconsideraciones) {
+            IDELReconsideraciones dELReconsideraciones,
+            IUPDReconsideraciones uPDReconsideraciones) {
             _SELReconsideraciones = sELReconsideraciones;
             _DELReconsideraciones = dELReconsideraciones;
+            _UPDReconsideraciones = uPDReconsideraciones;
         }
 
         public async Task<IActionResult> Index() 
@@ -34,7 +38,7 @@ namespace App.Web.Controllers
         }
 
         public async Task<IActionResult> ListPeriodo() {
-           var result = await _SELReconsideraciones.ListPeriodo();
+           var result = await _SELReconsideraciones.ListPeriodo("TODOS");
 
             return PartialView(result);
 
@@ -129,5 +133,44 @@ namespace App.Web.Controllers
             }
 
         }
+      [HttpPost]
+        public async Task<IActionResult> ActualizarPeriodo(setPeriodo model)
+        {
+            try
+            {
+                var usuario = await App.Tools.AutenticacionHelper.GetUsuario(HttpContext);
+
+
+                var periodoupd = new setPeriodo()
+                {
+                    idperiodo = model.idperiodo,
+                    escierre = model.escierre,
+                    usuario = usuario.Name,
+                    motivo = model.motivo,
+                    fecini = model.fecini,
+                    fecfin = model.fecfin
+
+                };
+
+                var result = await _UPDReconsideraciones.ActualizarPeriodo(periodoupd);
+
+                if (result.CODIGO == 0)
+                {
+                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                }
+                else
+                {
+                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { IsSuccess = false, Message = "Algo salio mal intente mas tarde." });
+            }
+
+        }
+    
     }
+
+    
 }

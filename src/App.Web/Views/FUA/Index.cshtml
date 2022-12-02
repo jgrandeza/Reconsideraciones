@@ -10,7 +10,9 @@
         <input type="hidden" id="Ate_Idnumreg" value="@ViewBag.ATE_IDNUMREG" />
         <input type="hidden" id="MatrizCant" value="@ViewBag.Matriz" />
         <input type="hidden" id="RecEstado" value="@ViewBag.RecEstado" />
-        <input type="hidden" id="Solperiodo" value="@ViewBag.periodo" />
+        <input type="hidden" id="Solperiodo" value="@ViewBag.periodo" />        
+        <input type="hidden" id="listperiodo" value="@ViewBag.PeriodoList" />
+        <input type="hidden" id="eess" value="@ViewBag.EESS" />
 
         <div class="row">
             <div class="col-md-4">
@@ -37,7 +39,7 @@
                                 </button>
                                 <button type="button" class="btn btn-md btn-light" onclick="CargarModalValMatriz()">
                                     <i class="fas fa-search  fs-4 me-2"></i>
-                                    Ver Obser 
+                                    Ver cambios permitidos 
                                 </button>
 
                                 @{
@@ -45,36 +47,36 @@
                                     {
 
 
-                                        <button type="button" class="btn btn-dark btn-md" onclick="actualizar_datos_FUA();">
-                                            <i class="fas fa-save fs-4 me-2"></i>
-                                            Guardar
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
-                                            <i class="fas fa-trash fs-4 me-2"></i>
-                                            Eliminar
-                                        </button>
-                                        <button type="button" class="btn btn-info btn-md" onclick="Conf_Validacion(event)">
-                                            <i class="fas fa-list-ol fs-4 me-2"></i>
-                                            Validar Cambios
-                                        </button>
+                                            <button type="button" class="btn btn-dark btn-md" onclick="actualizar_datos_FUA();">
+                                                <i class="fas fa-save fs-4 me-2"></i>
+                                                Guardar
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
+                                                <i class="fas fa-trash fs-4 me-2"></i>
+                                                Eliminar
+                                            </button>
+                                            <button type="button" class="btn btn-info btn-md" onclick="Conf_Validacion(event)">
+                                                <i class="fas fa-list-ol fs-4 me-2"></i>
+                                                Validar Cambios
+                                            </button>
                                         if (ViewBag.RecEstRV == 1)
                                         {
-                                            <button type="button" class="btn btn-success btn-md" onclick="CargarModalSustento()">
-                                                <i class="fas fa-upload fs-4 me-2"></i>
-                                                Registar Sustento
-                                            </button>
+                                                <button type="button" class="btn btn-success btn-md" onclick="CargarModalSustento()">
+                                                    <i class="fas fa-upload fs-4 me-2"></i>
+                                                    Registar Sustento
+                                                </button>
                                         }
                                     }
                                     else if (ViewBag.RecEstado == 2)
                                     {
-                                        <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
-                                            <i class="fas fa-trash fs-4 me-2"></i>
-                                            Eliminar
-                                        </button>
-                                        <button type="button" class="btn btn-success btn-md" onclick="CargarModalSustento()">
-                                                <i class="fas fa-upload fs-4 me-2"></i>
-                                                Visualizar Sustento
-                                        </button>
+                                            <button type="button" class="btn btn-danger btn-md" onclick="Conf_EliTotal(event)">
+                                                <i class="fas fa-trash fs-4 me-2"></i>
+                                                Eliminar
+                                            </button>
+                                            <button type="button" class="btn btn-success btn-md" onclick="CargarModalSustento()">
+                                                    <i class="fas fa-upload fs-4 me-2"></i>
+                                                    Visualizar Sustento
+                                            </button>
 
                                     }
 
@@ -259,7 +261,7 @@
             $('.select').select2();
             TerminarWaitMe();
         } catch {
-            console.log('Error Obs Total');
+            console.log('Error Cargar_Info_General');
             TerminarWaitMe();
         }
 
@@ -290,7 +292,7 @@
             TerminarWaitMe();
 
         } catch {
-            console.log('Error Obs Total');
+            console.log('Error Cargar_Diagnosticos');
             TerminarWaitMe();
         }
 
@@ -317,7 +319,7 @@
                 TerminarWaitMe();
             }
         } catch {
-            console.log('Error Obs Total');
+            console.log('Error Cargar_Medicamentos');
             TerminarWaitMe();
         }
 
@@ -344,7 +346,7 @@
                 TerminarWaitMe();
             }
         } catch {
-            console.log('Error Obs Total');
+            console.log('Error Cargar_Procedimientos');
             TerminarWaitMe();
         }
 
@@ -371,7 +373,7 @@
                 TerminarWaitMe();
             }
         } catch {
-            console.log('Error Obs Total');
+            console.log('Error Cargar_Insumos');
             TerminarWaitMe();
         }
 
@@ -398,7 +400,7 @@
                 TerminarWaitMe();
             }
         } catch {
-            console.log('Error Obs Total');
+            console.log('Error Cargar_Infantil');
             TerminarWaitMe();
         }
 
@@ -651,11 +653,18 @@
 
     function VoverAtras_Reconsideraciones(){
         ///SolicitudReconsideracion/Index
-        let valor = $("#Solperiodo").val();
-        CargarWaitMe();
-        $(".content-custom").load("@Url.Content("~/SolicitudReconsideracion/Index")",{periodo: valor}, () => {
-            TerminarWaitMe();
-        });
+        //let valor = $("#Solperiodo").val();
+        //CargarWaitMe();
+        //$(".content-custom").load("@Url.Content("~/SolicitudReconsideracion/Index")",{periodo: valor}, () => {
+        //    TerminarWaitMe();
+        //});
+
+        let _periodo = $("#listperiodo").val();
+        let _eess = $("#eess").val();
+        $(".content-custom").load("@Url.Content("~/SolicitudReconsideracion/Index")", { periodo: _periodo, establecimiento: _eess });
+        //$(".content-custom").load("@Url.Content("~/SolicitudReconsideracion/Index")", { periodo: _periodo, establecimiento: _eess }, () => {
+        //    TerminarWaitMe();
+        //});
     }
 
    async function PermitirMatrizAjax(ajaxurl, data_array) {

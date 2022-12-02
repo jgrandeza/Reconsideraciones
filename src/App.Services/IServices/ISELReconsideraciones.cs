@@ -49,7 +49,7 @@ namespace App.Services.IServices
         Task<IEnumerable<getAteSustentoArch>> ListarAteSusArchxID(int N_ASUS_IDNUMREG);
 
         //Task<GetPeriodo> ListPeriodo();
-        Task<IEnumerable<GetPeriodo>> ListPeriodo();
+        Task<IEnumerable<GetPeriodo>> ListPeriodo(string tipo);
         Task<GetPeriodo> ConsultarPeriodoxID(int id); 
         Task<Mensaje_Ins> InsertarPeriodo(GetPeriodo model, string usuario);
 
@@ -58,9 +58,9 @@ namespace App.Services.IServices
 
         Task<GetEvaluacionID> ListarEvaluacionxID(int P_I_IDATENCION);
        
-        Task<IEnumerable<GetSolicitudAmpliacion>> ListSolicitud();
-        Task<GetPeriodo> ConsultarSolicitudxID(int id);
+        Task<IEnumerable<GetSolicitudAmpliacion>> ListSolicitudAmpliacion(string usuario, string tipo);
+        Task<GetSolicitudAmpliacion> ConsultarSolicitudxID(int id);
         Task<Mensaje_Ins> InsertarSolicitud(GetSolicitudAmpliacion datos, string name);
-
+        Task<IEnumerable<GetPeriodo>> ListMesxPeriodo(string id);
     }
 }

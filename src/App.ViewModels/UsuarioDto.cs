@@ -18,7 +18,7 @@ namespace App.ViewModels
     public class UsuarioClaimsDto
     {
         public int Id { get; set; }
-        public string V_V_USU_EMAIL { get; set; }
+        //public string V_V_USU_EMAIL { get; set; }
         public string USU_USUARIO { get; set; }
         public string USU_UE { get; set; }
         public string USU_PPDD { get; set; }

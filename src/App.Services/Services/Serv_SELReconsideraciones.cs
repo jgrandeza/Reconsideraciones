@@ -315,7 +315,7 @@ namespace App.Services.Services
             {
                 var conn = new OracleConnection(_connectionString);
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("N_ATE_IDNUMREG", N_ATE_IDNUMREG, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("N_ATE_IDNUMREG", N_ATE_IDNUMREG, OracleMappingType.Int32, ParameterDirection.Input);
                 dyParam.Add("cv_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_RESUMENXID";
@@ -463,8 +463,7 @@ namespace App.Services.Services
             }
         }
 
- 
-        public   Task<IEnumerable<GetPeriodo>> ListPeriodo()
+        public Task<IEnumerable<GetPeriodo>> ListMesxPeriodo(string tipo)
         {
             try
             {
@@ -472,6 +471,33 @@ namespace App.Services.Services
                 var conn = new OracleConnection(_connectionString);
                 var dyParam = new OracleDynamicParameters();
                 dyParam.Add("P_I_IDPERIODO", 0, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("P_V_TIPO", "MES", OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_EESS", tipo, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_PERIODOS";
+
+                var result = SqlMapper.QueryAsync<GetPeriodo>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public   Task<IEnumerable<GetPeriodo>> ListPeriodo(string tipo)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_I_IDPERIODO", 0, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("P_V_TIPO", tipo, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_EESS", "", OracleMappingType.Varchar2, ParameterDirection.Input);
                 dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_PERIODOS";
@@ -495,6 +521,8 @@ namespace App.Services.Services
                 var conn = new OracleConnection(_connectionString);
                 var dyParam = new OracleDynamicParameters();
                 dyParam.Add("P_I_IDPERIODO", id, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("P_V_TIPO", "", OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_EESS", "", OracleMappingType.Varchar2, ParameterDirection.Input);
                 dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
                 var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_PERIODOS";
@@ -518,9 +546,9 @@ namespace App.Services.Services
                 var conn = new OracleConnection(_connectionString);
  
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("P_V_PERIODO", model.periodo!, OracleMappingType.Decimal, ParameterDirection.Input);
+                dyParam.Add("P_V_PERIODO", model.periodo!, OracleMappingType.Varchar2, ParameterDirection.Input);
                 dyParam.Add("P_V_MES", model.mes!, OracleMappingType.Varchar2, ParameterDirection.Input);
-                dyParam.Add("P_V_FECINI", model.fecfin!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_FECINI", model.fecini!, OracleMappingType.Varchar2, ParameterDirection.Input);
                 dyParam.Add("P_V_FECFIN", model.fecfin!, OracleMappingType.Varchar2, ParameterDirection.Input);
                 dyParam.Add("P_V_ESCIERRE", model.escierre!, OracleMappingType.Varchar2, ParameterDirection.Input);
                 dyParam.Add("P_V_USUARIO", usuario, OracleMappingType.Varchar2, ParameterDirection.Input);
@@ -585,6 +613,89 @@ namespace App.Services.Services
                 throw;
             }
         }
- 
+
+         
+        public Task<IEnumerable<GetSolicitudAmpliacion>> ListSolicitudAmpliacion(string usuario, string tipo)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_V_USUARIO", usuario, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_TIPO", tipo, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_AMPLIACION";
+
+                var result = SqlMapper.QueryAsync<GetSolicitudAmpliacion>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+
+        public Task<GetSolicitudAmpliacion> ConsultarSolicitudxID(int id)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_N_IDNUMREG", id, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_SEL_AMPLIACIONXID";
+
+                var result = SqlMapper.QuerySingleAsync<GetSolicitudAmpliacion>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public async Task<Mensaje_Ins> InsertarSolicitud(GetSolicitudAmpliacion model, string name)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+
+                var dyParam = new OracleDynamicParameters();
+
+                dyParam.Add("P_V_PERIODO", model.PERIODO!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_MES", model.MES!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_DISA", model.DISA!, OracleMappingType.Varchar2, ParameterDirection.Input); 
+                dyParam.Add("P_V_UEJECUTORA", model.UEJECUTORA!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_IDEESS", model.IDEESS!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_N_DIAS", model.DIASPLAZO!, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("P_V_MOTIVO", model.MOTIVO!, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_USUCREA", name, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_INS_SOL_AMPLIACION";
+                //var result = await conn.ExecuteAsync(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+
+            }
+        }
+
     }
 }

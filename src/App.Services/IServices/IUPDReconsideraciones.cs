@@ -25,7 +25,7 @@ namespace App.Services.IServices
         Task<Mensaje_Ins> Actualizar_CantIns_Evaluacion(setActualizarInsEval model);
 
         Task<Mensaje_Ins> ActualizarAteEvaluacion(SetInsertarEvaluacion model);
-
-
+        Task<Mensaje_Ins> ActualizarPeriodo(setPeriodo model);
+        Task<Mensaje_Ins> ActualizarSolicitudAmpliacion(setSolicitudAmpliacion solicitud);
     }
 }

@@ -171,7 +171,7 @@
                                              
                                             <input id="programer" type="hidden" value="@ViewBag.Programador">
                                             <input id="ruta" type="hidden" value="@ViewBag.ruta">
-                                            <span class="text-white opacity-75 fs-8 fw-semibold lh-1 mb-1">@ViewBag.USU_USUARIO</span>
+                                            <span class="text-white opacity-75 fs-8 fw-semibold lh-1 mb-1">@ViewBag.USU_NOMBREUSUARIO</span>
                                             <span class="text-white fs-8 fw-bold lh-1">@ViewBag.LUGARTRAB_DESC</span>
                                         </div>
                                         <!--end::Name-->
@@ -196,7 +196,7 @@
                                              
                                                 <div class="d-flex flex-column">
                                                     <div class="fw-bold d-flex align-items-center fs-5">
-                                                        @ViewBag.USU_NOMBREUSUARIO
+                                                        @ViewBag.USU_USUARIO
                                                     </div>
                                                     <a href="javascript: void(0)" class="fw-semibold text-muted text-hover-primary fs-7">@ViewBag.USU_DNI</a>
                                                 </div>
@@ -208,7 +208,10 @@
                                         <!--end::Menu separator-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
-                                            <a href="~/Account/Logout" class="menu-link px-5">Cerrar Sesión</a>
+                                            <!--<a href="~/Account/Logout" class="menu-link px-5">Cerrar Sesión</a>-->
+                                            <div class="fw-bold d-flex align-items-center fs-5">
+                                                @ViewBag.LUGARTRAB_DESC
+                                            </div>
                                         </div>
                                         <!--end::Menu item-->
                                     </div>

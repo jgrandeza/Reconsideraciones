@@ -1,4 +1,354 @@
 ﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+ 
+<div class="container-xxl">
+    <div class="row">
+        <input type="hidden" id="submodulo" value=@ViewBag.submodulo>
+        <div class="col-md-10">
+            <h1 class="display-6 mt-5 mb-8" style="text-align:center">@ViewBag.Titulo</h1>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-warning fw-bold mt-3" href="~/Account/SalirMenu"><i class="fas fa-arrow-left me-2"></i> Atras</a>
+        </div>
+    </div>
+</div>
+
+<!--begin::Post-->
+ 
+<div class="card container-xxl">
+     <div class="card-body">
+     <div class="row">
+         <div class="col-md-12">
+                <button type="button" id="btnAddSolicitud" onclick="CargarModalSolicitud(1,0)" class="btn btn-dark">
+                    <i class="fas fa-plus-circle fs-4 me-2"></i> Agregar
+                </button>
+         </div>
+     </div>
+    <div class="row">
+        <div class="col-md-12">
+             <div id="divSolicitudAmpliacion">
+                 
+               
+             </div>
+        </div>
+    </div>
+    </div>
+    <div id="modalSolicitud"></div>
+   
+ </div>
+ 
+<script >
+    
+    setTimeout(function () {
+        Carga();
+        $('.select').select2();
+    }, 100);
+
+    async function Carga() {
+        await Cargar_Solicitud();
+    }
+    async function Cargar_Solicitud() {
+        CargarWaitMe();        
+        var subm = $("#submodulo").val();
+        
+        try {
+            const response = await $.get("@Url.Content("~/SolicitudAmpliacion/ListSolicitud")", { id: subm });
+   
+            $('#divSolicitudAmpliacion').html(response);
+            $('#tblSolicitudAmpliacion').DataTable({
+                destroy: true,
+                "ordering": false,
+                responsive: true,
+                "lengthChange": false,
+                "searching": true,
+                "language": languaje_spanol
+            });
+            TerminarWaitMe();
+        } catch {
+            console.log('Error Cargando periodos');
+            TerminarWaitMe();
+        }
+
+    }
+
+
+    async function EliminarSolicitudAjax(ajaxurl, data_array) {
+        return $.post(ajaxurl, data_array);
+    }
+
+    async function EliminarSolicitud(id) {
+        let array_data = {};
+        array_data.id = id;
+        let url = "@Url.Action("Eliminar", "SolicitudAmpliacion")";
+        $.post(url, array_data)
+            .done(function (response) {
+                console.log(response);
+                if (response.isSuccess == true) {
+
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación');
+                    Carga();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Error...');
+                }
+            });
+    }
+
+    function Conf_EliminarSolicitud(e, id) {
+        e.preventDefault();
+        Swal.fire({
+            html: '<p style="color: red;">No se podra revertir.</p>',
+            title: `ELIMINAR LA SOLICITUD DE AMPLIACIÓN DE RECONSIDERACIÓN?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, Eliminar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) { 
+                 EliminarSolicitud(id);
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
+
+    function CargarUE1(){
+        let cDISA = $("#cbxIngUDR").val();
+        CargarUE("", cDISA);
+    }
+    
+    function CargarEESS1() {
+        let cUE = $("#cbxIngUeje").val();
+        CargarEESS(cUE);
+    }
+    function CargarMes1() {
+        let cPeriodo = $("#cbxIngPeriodo").val();
+        CargarMes(cPeriodo);
+    }
+
+
+
+    function CargarEESS(idue) {
+        CargarWaitMe();
+        $.get('@Url.Content("~/SolicitudAmpliacion/CargarEESS")', { id: idue })
+            .done(function (response) {
+
+                if (response.isSuccess == true) {
+
+                    let { result } = response;
+
+                    console.log(result);
+                    setTimeout(function () {
+                        $('option', '#cbxIngEESS').remove();
+                        $('#cbxIngEESS').append(new Option("--Seleccione--","" ));
+                        for (let i = 0; i < result.length; i++) {
+                            var nombre = result[i].ideess+"-";
+                            nombre = nombre + result[i].establecimiento;
+                            $('#cbxIngEESS').append(new Option(nombre, result[i].ideess));
+                        }
+
+                    }, 1000);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+     
+    function CargarUE(idue, disa) {
+        CargarWaitMe();
+        $.get('@Url.Content("~/SolicitudAmpliacion/CargarUE")', { id: idue, disa: disa })
+            .done(function (response) {
+
+                if (response.isSuccess == true) {
+
+                    let { result } = response;
+                    $('option', '#cbxIngUeje').remove();
+                    setTimeout(function () {
+                        if (result.length == 1) {
+                            for (let i = 0; i < result.length; i++) {
+                                var nombre = result[i].idejecutora + "-";
+                                nombre = nombre + result[i].ejecutora;
+                                $('#cbxIngUeje').append(new Option(nombre, result[i].idejecutora));
+                                
+                            }
+                        } else {
+                            for (let i = 0; i < result.length; i++) {
+                                var nombre = result[i].idejecutora + "-";
+                                nombre = nombre + result[i].ejecutora;
+                                $('#cbxIngUeje').append(new Option(nombre, result[i].idejecutora));
+                                
+                            }
+                            CargarEESS(result[0].idejecutora);
+                        
+                        }
+
+                    }, 1000);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+
+    function CargarMes(periodo) {
+        $.get('@Url.Content("~/SolicitudAmpliacion/CargarOtros")', { id: periodo })
+            .done(function (response) {
+
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    setTimeout(function () {
+                        $('option', '#cbxIngMes').remove();
+                        for (let i = 0; i < result.length; i++) {
+                            $('#cbxIngMes').append(new Option(result[i].mes, result[i].mes));
+
+                        }
+                    }, 1000);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+    function CargarPeriodo() {
+        CargarWaitMe();
+        $.get('@Url.Content("~/SolicitudAmpliacion/CargarOtros")', { id: "periodo" })
+            .done(function (response) {
+
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    setTimeout(function () {
+                        $('option', '#cbxIngPeriodo').remove();
+                        if (result.length == 1) {
+                            for (let i = 0; i < result.length; i++) {
+                                $('#cbxIngPeriodo').append(new Option(result[i].periodo, result[i].periodo));
+                                CargarMes(result[i].periodo);
+                            }
+                        } else {
+                            for (let i = 0; i < result.length; i++) {
+                                $('#cbxIngPeriodo').append(new Option(result[i].periodo, result[i].periodo));
+                                
+                            }
+                            CargarMes(result[0].periodo);
+                        }
+
+                    }, 1000);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+     }
+
+   
+    function CargarCombosAmpliacion() {
+        CargarWaitMe();
+        $.get('@Url.Content("~/SolicitudAmpliacion/CargarDISA")', { id: "" })
+            .done(function (response) {
+
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    setTimeout(function () {
+                        $('option', '#cbxIngUDR').remove();
+                        if (result.length == 1) {
+                            for (let i = 0; i < result.length; i++) {
+                                var nombre = result[i].iddisa + "-";
+                                nombre = nombre + result[i].disa;
+                                $('#cbxIngUDR').append(new Option(nombre, result[i].iddisa));
+                                CargarUE("", result[i].iddisa);
+                            }
+                        } else {
+                            for (let i = 0; i < result.length; i++) {
+                                $('#cbxIngUDR').append(new Option(result[i].disa, result[i].iddisa));
+
+                            }
+                        }
+
+                    }, 1000);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+        CargarPeriodo();
+        CargarMes();
+
+
+    }
+
+    function CargarModalSolicitud(tipo, id) {
+        setTimeout(function () { 
+
+        }, 100000);
+        $.get("@Url.Content("~/SolicitudAmpliacion/AccionSolicitudAmpliacion")", { tipo: tipo, id: id })
+            .done(function (response) {
+                $('#modalSolicitud').html(response);
+                $('#mdl_AccionSolicitudAmpliacion').modal("show");
+            }); 
+        if (tipo == "1") {
+            CargarCombosAmpliacion();
+        }
+       
+
+    }
+     
+    function GetSolicitudPorId(tipo, idPeriodo) {
+        let id = idPeriodo;        
+
+        CargarWaitMe();
+        $.get('@Url.Content("~/SolicitudAmpliacion/ConsultarSolicitudPorId")', { id: id })
+            .done(function (response) {
+
+                if (response.isSuccess == true) {
+                    let { result } = response;
+                    console.log(result);
+                    CargarModalSolicitud(tipo, id);
+                    setTimeout(function () { 
+                        $('#cbxIngUDR').append(new Option(result.descodsis, result.odsis));
+                        $('#cbxIngUeje').append(new Option(result.descejecutora, result.uejecutora));
+                        if (result.ideess==null) {
+                            $('#cbxIngEESS').append(new Option("Todos", "0"));
+                        }else {
+                            $('#cbxIngEESS').append(new Option(result.eess, result.ideess));
+                        }
+                       
+                        $('#cbxIngPeriodo').append(new Option(result.periodo, result.periodo));
+                        $('#cbxIngMes').append(new Option(result.mes, result.mes));
+                        $('#cbxIngEstado').val(result.estado);
+
+                        if (result.estado != "0") {
+                            $('.solicitado').remove();
+                        }
+
+                        $('#txtDias').val(result.diasplazo);
+                        $('#txtFecha').val(result.fecfinplazo);
+                        $('#txtMotivo').val(result.motivo);  
+                        $('#txtFecha').prop('disabled', true);
+                        $('#txtDias').prop('disabled', true);
+                        $('#txtMotivo').prop('disabled', true);
+                        //$('#txtMotivo').prop('disabled', false);
+                    }, 1000);
+                }
+                else {
+                    NotificacionToastr('error', `Algo salio mal intente mas tarde.`, 'Error...');
+                }
+                TerminarWaitMe();
+
+            });
+    }
+
+    </script>

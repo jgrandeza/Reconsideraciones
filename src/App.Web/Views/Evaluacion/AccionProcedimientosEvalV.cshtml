@@ -85,7 +85,7 @@
 
                                     <div class="col-md-6">
                                         <div class="mb-4">
-                                            <label class="form-label fw-bolder ">Cant. Evaluación (S/.)</label>
+                                            <label class="form-label fw-bolder ">Cant. Evaluación</label>
                                             <input type="number" onkeyup="Calcular_Precio_APO()" class="form-control form-control-sm" id="txtCantApoEval" />
                                         </div>
                                     </div>
@@ -218,7 +218,7 @@
         }
 
         if (array_plazo[2] == "") {
-            NotificacionToastr('error', 'Ingrese el motico de cambio', 'Campos requeridos');
+            NotificacionToastr('error', 'Ingrese el motivo de cambio', 'Campos requeridos');
             return false;
         }
 
