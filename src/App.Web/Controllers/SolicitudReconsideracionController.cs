@@ -41,10 +41,17 @@ namespace App.Web.Controllers
 
 
         // GET: /<controller>/
-        public async Task<IActionResult> Index(string periodo)
+        public async Task<IActionResult> Index(string periodo, string establecimiento)
         {
 
             var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+            ViewBag.usu = usuario.Name;
+            ViewBag.usuee = usuario.EESS_CODIGOSIS;
+            ViewBag.usuue = usuario.USU_UE;
+            ViewBag.usudisa = usuario.USU_DISA;
+            ViewBag.usuodsis = usuario.USU_ODSIS;
+            ViewBag.usurol = usuario.IDROL;
+            ViewBag.ususubm = usuario.ID_SUBMODULO;
 
             ViewBag.DescDisa = usuario.DISA_DESCRIPCION;
             ViewBag.DescUE = usuario.UE_DESCRIPCION;
@@ -54,15 +61,15 @@ namespace App.Web.Controllers
             var Periodos = new SetPeriodosDISAEESS()
             {
                 V_TIPO_CONSULTA = "1",
-                V_DISA = usuario.USU_DISA,
-                V_EESS = usuario.EESS_IDESTABLECIMIENTO
+                V_DISA = "SOL",//usuario.USU_DISA,
+                V_EESS = usuario.EESS_CODIGOSIS
             };
 
             var Filtro_EESS = new setEESSXUE()
             {
                 P_V_DISA = usuario.USU_DISA,
                 P_V_UE = usuario.USU_UE,
-                P_V_IDEESS = usuario.EESS_IDESTABLECIMIENTO,
+                P_V_IDEESS = usuario.EESS_CODIGOSIS,
                 P_V_TIPO = "SOL"
             };
 
@@ -80,6 +87,9 @@ namespace App.Web.Controllers
             ViewBag.EstadosRecon = EstadosRecon;
 
             ViewBag.Periodo = periodo;
+            if (periodo != null) {
+                await GetReconsideracionesEESSV(periodo, 1, "", establecimiento);
+            }
 
             return PartialView();
         }
@@ -116,7 +126,7 @@ namespace App.Web.Controllers
                 var Periodos = new SetPeriodosDISAEESS()
                 {
                     V_TIPO_CONSULTA = "1",
-                    V_DISA = usuario.USU_DISA,
+                    V_DISA = "SOL",//usuario.USU_DISA,
                     V_EESS = eess
                 };
 

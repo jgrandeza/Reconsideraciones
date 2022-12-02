@@ -36,10 +36,10 @@
                                 @{
                                     if (ViewBag.RecEstado == 5 || ViewBag.RecEstado==3 || ViewBag.RecEstado==4)
                                     {
-                                        <button type="button" class="btn btn-success btn-md" onclick="CargarModal_Evaluacion();">
-                                            <i class="fas fa-tasks fs-4 me-2"></i>
-                                            Evaluar
-                                        </button>
+                                                                    <button type="button" class="btn btn-success btn-md" onclick="CargarModal_Evaluacion();">
+                                                                        <i class="fas fa-tasks fs-4 me-2"></i>
+                                                                        Evaluar
+                                                                    </button>
                                     }
 
                                 }
@@ -91,7 +91,11 @@
                         <div id="modalDiagnostico"></div>
                         <div class="row">
                             <div class="col-sm-12">
+                                
                                 <div class="table-responsive">
+                                        <div class="lead" style="border-style:double;vertical-align:bottom;padding:10px;color:#005186;font-size:2.00rem;">
+                                            <strong>DIAGNÓSTICOS</strong>
+                                        </div>
                                     <div id="tabla_dx"></div>
                                 </div>
                             </div>
@@ -100,6 +104,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="table-responsive">
+                                    <div class="lead" style="border-style:double;vertical-align:bottom;padding:10px;color:#005186;font-size:2.00rem;">
+                                            <strong>MEDICAMENTOS</strong>
+                                        </div>
                                     <div id="tabla_Medica"></div>
                                 </div>
                             </div>
@@ -108,6 +115,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="table-responsive">
+                                    <div class="lead" style="border-style:double;vertical-align:bottom;padding:10px;color:#005186;font-size:2.00rem;">
+                                            <strong>PROCEDIMIENTOS</strong>
+                                        </div>
                                     <div id="tabla_Procedimientos"></div>
                                 </div>
                             </div>
@@ -117,6 +127,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="table-responsive">
+                                    <div class="lead" style="border-style:double;vertical-align:bottom;padding:10px;color:#005186;font-size:2.00rem;">
+                                            <strong>INSUMOS</strong>
+                                        </div>
                                     <div id="tabla_Insumos"></div>
                                 </div>
                             </div>
@@ -358,12 +371,14 @@
     }
 
     function CargarModal_Evaluacion() {
+        
         let idate = $("#Ate_Idnumreg").val();
         $.get("@Url.Content("~/Evaluacion/AccionEvaluacionV")", { id: idate })
         .done(function (response) {
             $('#modalEvaluacion').html(response);
             $('#mdl_AccionEvaluacionV').modal("show");
         });
+        
     }
 
     function CargarModalValMatriz() {
@@ -432,14 +447,14 @@
                     setTimeout(function () {                      
                         $('#txtCodMedicamento').val(result.ameD_CODMED);
                         $('#txtPrescrito').val(result.ameD_ICANTPRESCRITA);
-                        $('#txtEntregado').val(result.ameD_ICANTENTREGADA);
-                        $('#txtPreMedUni').val(result.ameD_NPO);
+                        $('#txtEntregado').val(result.ameD_ICANTENTREGADA); 
+                            $('#txtPreMedUni').val(result.ameD_IPRECIOCALCULADOSIS);
                         GetMedicamentoxMED_CODMED();
-                        let costo = result.ameD_ICANTENTREGADA * result.ameD_NPO;
+                            let costo = result.ameD_ICANTENTREGADA * result.ameD_IPRECIOCALCULADOSIS;
                         $('#txtPrecio').val(costo);
 
                         $('#txtCantEval').val(result.ameD_ICANTAPROBADAODSIS);
-                        $('#txtPrecioEval').val(result.ameD_IPRECIOCALCULADOSIS);
+                            $('#txtPrecioEval').val(result.ameD_IPRECIOCALCULADOSIS);
                         $('#txtMotivoCambioCant').val(result.ameD_V_MOTIVO_CAMBIO);
                         
                         
@@ -468,9 +483,9 @@
                         $('#txtCodProcedimiento').val(result.aapO_CODAPO);
                         $('#txtPrescritaProc').val(result.aapO_ICANTPROCED);
                         $('#txtEjecutadoProc').val(result.aapO_ICANTEJECUTADA);
-                        $('#txtPreApoUni').val(result.aapO_NPO);
+                            $('#txtPreApoUni').val(result.aapO_IPRECIOCALCULADOSIS);
                         GetProcedimientoPorId();
-                        let costo = result.aapO_ICANTEJECUTADA * result.aapO_NPO;
+                        let costo = result.aapO_ICANTEJECUTADA * result.aapO_IPRECIOCALCULADOSIS;
                         $('#txtPrecioProc').val(costo);
 
                         $('#txtCantApoEval').val(result.aapO_ICANTIDADAPROBADAODSIS);
@@ -500,9 +515,9 @@
                         $('#txtCodInsumos').val(result.ainS_CODINS);
                         $('#txtPrescritoIns').val(result.ainS_ICANTPRESCRITA);
                         $('#txtEntregadoIns').val(result.ainS_ICANTENTREGADA);
-                        $('#txtPreApoUni').val(result.ainS_NPO);
+                        $('#txtPreApoUni').val(result.ainS_IPRECIOCALCULADOSIS);
                         GetInsumos_Id();
-                        let costo = result.ainS_ICANTENTREGADA * result.ainS_NPO;
+                        let costo = result.ainS_ICANTENTREGADA * result.ainS_IPRECIOCALCULADOSIS;
                         $('#txtPrecioIns').val(costo);
 
                         $('#txtCantInsEval').val(result.ainS_ICANTIDADAPROBADAODSIS);

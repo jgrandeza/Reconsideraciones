@@ -33,13 +33,40 @@ namespace App.Services.Services
 
                 var conn = new OracleConnection(_connectionString);
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("V_TIPO_CONSULTA", model.V_TIPO_CONSULTA, OracleMappingType.Varchar2, ParameterDirection.Input);
-                dyParam.Add("V_DISA", model.V_DISA, OracleMappingType.Varchar2, ParameterDirection.Input);
-                dyParam.Add("V_EESS", model.V_EESS, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_I_IDPERIODO", 0, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("P_V_TIPO", model.V_DISA, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_EESS", model.V_EESS, OracleMappingType.Varchar2, ParameterDirection.Input);
                 dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
 
 
-                var query = "RECONSIDERACIONES.REC_PERIODOS_DISAEESS";
+                var query = "RECONSIDERACIONES.PR_REC_SEL_PERIODOS";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QueryAsync<GetPeriodosDISAEESS>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public async Task<IEnumerable<GetPeriodosDISAEESS>> GetPeriodosEVAL(SetPeriodosDISAEESS model)
+        {
+            try
+            {
+
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_I_IDPERIODO", 0, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("P_V_TIPO", model.V_DISA, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_EESS", model.V_EESS, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+
+                var query = "RECONSIDERACIONES.PR_REC_SEL_PERIODOS";
                 //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
 
                 var result = await SqlMapper.QueryAsync<GetPeriodosDISAEESS>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);

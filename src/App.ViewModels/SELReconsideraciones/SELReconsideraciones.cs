@@ -549,6 +549,8 @@ namespace App.ViewModels.SELReconsideraciones
         public int? RREC_N_ESOBSTOTAL { get; set; }
         public int? RREC_ID_ESTADOREC { get; set; }
         public int? RREC_C_ESTARV { get; set; }
+        public string? RREC_IDEESS { get; set; }
+        
     }
 
     public class GetObservacionesRcRv
@@ -592,8 +594,10 @@ namespace App.ViewModels.SELReconsideraciones
         public string? ATE_MOTIVOSOLICITUD { get; set; }
         public string? ATE_IDTIPOSUSTENTO { get; set; }
         public string? ATE_DESCRIPSUSTENTO { get; set; }
-
+        public string? USUARIOCREA { get; set; }
         
+
+
     }
 
     public class getAteSustentoArch
@@ -619,6 +623,7 @@ namespace App.ViewModels.SELReconsideraciones
         public string? fecfin { get; set; }
         public string? escierre { get; set; }
         public string? motivo { get; set; }
+        public string? usuario { get; set; }
 
     }
     public class getCostosXEVAL
@@ -644,11 +649,11 @@ namespace App.ViewModels.SELReconsideraciones
     public class GetEvaluacionID
     {
 
-        public int RREC_ID_ESTADOREC { get; set; }
-        public string RREC_V_USUEVALUA { get; set; }
-        public string RREC_V_OBSGENERAL { get; set; }
+        public int ID_ESTADOREC { get; set; }
+        public string V_USUEVALUA { get; set; }
+        public string V_OBSGENERAL { get; set; }
 
-        public string RREC_V_OBSDETALLE { get; set; }
+        public string V_OBSDETALLE { get; set; }
 
         public int A1 { get; set; }
         public int A2 { get; set; }
@@ -657,8 +662,31 @@ namespace App.ViewModels.SELReconsideraciones
         public int B1 { get; set; }
         public int B2 { get; set; }
         public int B3 { get; set; }
-        public int B4 { get; set; }
+        public int B4 { get; set; } 
     }
 
+    public class GetSolicitudAmpliacion
+    {
+        public int? IDNUMREG { get; set; }
+        public string? PERIODO { get; set; }
+        public string? MES { get; set; }
+        public string? DISA { get; set; }
+        public string? DESCODSIS { get; set; }
+        public string? ODSIS { get; set; }
+        public string? UEJECUTORA { get; set; }
+        public string? DESCEJECUTORA { get; set; }
+        public string? IDEESS { get; set; }
+        public string? EESS { get; set; }
+        public int? DIASPLAZO { get; set; }
+        public string? MOTIVO { get; set; }
+        public string? ESTADO { get; set; }
+        public string? USUCREA { get; set; }
+        public string? FECCREA { get; set; }
+        public string? FECFINPLAZO { get; set; }
+        public string? USUEVALUA { get; set; }
+        public string? FECEVALUA { get; set; }
+        public string? TIPO { get; set; }
+
+    }
 }
 

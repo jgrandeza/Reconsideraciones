@@ -296,5 +296,58 @@ namespace App.Services.Services
                 throw ex;
             }
         }
+        public async Task<Mensaje_Ins> ActualizarPeriodo(setPeriodo model)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_N_IDPERIODO", model.idperiodo, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("P_V_FECINI", model.fecini, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_FECFIN", model.fecfin, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_ESCIERRE", model.escierre, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_USUARIO", model.usuario, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("P_V_MOTIVO", model.motivo, OracleMappingType.Varchar2, ParameterDirection.Input);
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_UPD_PERIODOS";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public async Task<Mensaje_Ins> ActualizarSolicitudAmpliacion(setSolicitudAmpliacion model)
+        {
+            try
+            {
+                var conn = new OracleConnection(_connectionString);
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("P_N_IDNUMREG", model.IDNUMREG, OracleMappingType.Int32, ParameterDirection.Input);
+                dyParam.Add("P_V_RESULTADO", model.ESTADO, OracleMappingType.Varchar2, ParameterDirection.Input); 
+                dyParam.Add("P_V_USUEVALUA", model.USUEVALUA, OracleMappingType.Varchar2, ParameterDirection.Input); 
+                dyParam.Add("CV_1", string.Empty, OracleMappingType.RefCursor, ParameterDirection.Output);
+
+                var query = $"{_SchemaOracle.reconsideraciones}.PR_REC_UPD_SOL_AMPLIACION";
+                //conn.Execute(query, dyParam, commandType: CommandType.StoredProcedure);
+
+                var result = await SqlMapper.QuerySingleAsync<Mensaje_Ins>(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
     }
 }

@@ -7,7 +7,9 @@ using App.Tools;
 using App.ViewModels;
 using App.ViewModels.INSReconsideraciones;
 using App.ViewModels.Maestros;
+using App.ViewModels.RptReconsideraciones;
 using App.ViewModels.SolicitudRecon;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,36 +24,40 @@ namespace App.Web.Controllers
         private readonly IINSReconsideraciones _INSReconsideraciones;
         private readonly IUPDReconsideraciones _uPDReconsideraciones;
         private readonly IMaestros _Maestros;
+        private readonly IRptReconsideraciones _rptReconsideraciones;
         public BusqReconsideracionEvalController(IReadSolicitudRecon ReadSolicitudRecon, IResumenRec resumenRec,
-            IINSReconsideraciones reconsideraciones, IUPDReconsideraciones uPDReconsideraciones, IMaestros maestros)
+            IINSReconsideraciones reconsideraciones, IUPDReconsideraciones uPDReconsideraciones, IMaestros maestros
+            , IRptReconsideraciones rptReconsideraciones)
         {
             _IReadSolicitudRecon = ReadSolicitudRecon;
             _ResumenRec = resumenRec;
             _INSReconsideraciones = reconsideraciones;
             _uPDReconsideraciones = uPDReconsideraciones;
             _Maestros = maestros;
+            _rptReconsideraciones = rptReconsideraciones;
 
         }
 
         public async Task<IActionResult> Index()
         {
 
-            ViewBag.Titulo = "BUSQUEDA DE SOLICITUD DE RECONSIDERACIONES";
+            
 
             var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
-
+           
+            ViewBag.Titulo = "BUSQUEDA DE SOLICITUD DE RECONSIDERACIONES";
             var Periodos = new SetPeriodosDISAEESS()
             {
                 V_TIPO_CONSULTA = "1",
-                V_DISA = usuario.USU_DISA,
-                V_EESS = usuario.EESS_IDESTABLECIMIENTO
+                V_DISA = "EVAL",
+                V_EESS = usuario.EESS_CODIGOSIS
             };
 
             var Filtro = new setEESSXUE()
             {
                 P_V_DISA = usuario.USU_DISA,
                 P_V_UE = usuario.USU_UE,
-                P_V_IDEESS = usuario.EESS_IDESTABLECIMIENTO,
+                P_V_IDEESS = usuario.EESS_CODIGOSIS,
                 P_V_TIPO = "DISA"
             };
 
@@ -62,7 +68,7 @@ namespace App.Web.Controllers
             {
                 P_V_DISA = usuario.USU_DISA,
                 P_V_UE = usuario.USU_UE,
-                P_V_IDEESS = usuario.EESS_IDESTABLECIMIENTO,
+                P_V_IDEESS = usuario.EESS_CODIGOSIS,
                 P_V_TIPO = "UEJE"
             };
 
@@ -73,7 +79,7 @@ namespace App.Web.Controllers
             {
                 P_V_DISA = usuario.USU_DISA,
                 P_V_UE = usuario.USU_UE,
-                P_V_IDEESS = usuario.EESS_IDESTABLECIMIENTO,
+                P_V_IDEESS = usuario.EESS_CODIGOSIS,
                 P_V_TIPO = "EVAL"
             };
 
@@ -143,7 +149,7 @@ namespace App.Web.Controllers
                 V_FUA = fua
             };
             var resumen = await _ResumenRec.ListarResumenReconsideracion(dato);
-
+            ViewBag.exportar = dato;
             return PartialView(resumen);
         }
         public IActionResult FiltroFuaReconsEESSV()
@@ -183,7 +189,7 @@ namespace App.Web.Controllers
                 {
                     P_V_DISA = DISA,
                     P_V_UE = usuario.USU_UE,
-                    P_V_IDEESS = usuario.EESS_IDESTABLECIMIENTO,
+                    P_V_IDEESS = usuario.EESS_CODIGOSIS,
                     P_V_TIPO = "UEJE"
                 };
 
@@ -214,7 +220,7 @@ namespace App.Web.Controllers
                 {
                     P_V_DISA = DISA,
                     P_V_UE = UE,
-                    P_V_IDEESS = usuario.EESS_IDESTABLECIMIENTO,
+                    P_V_IDEESS = usuario.EESS_CODIGOSIS,
                     P_V_TIPO = "EVAL"
                 };
 
@@ -235,6 +241,57 @@ namespace App.Web.Controllers
                 throw;
             }
         }
+        public async Task<IActionResult> RptAtenciones(string periodo, string tipo, string eess)
+        {
+            var ok = 0;
+            var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+            var V_IDEESS = eess;
+            var anio = periodo.Substring(0, 4);
+            var mes = "";
+            if (periodo.Length == 6)
+            {
+                mes = "0" + periodo.ToString().Substring(5, 1);
+            }
+            else
+            {
+                mes = periodo.ToString().Substring(5, 2);
+            }
+
+
+            var dato = new SetRptAtenciones()
+            {
+                P_V_PERIODO = anio,
+                P_V_MES = mes,
+                P_V_DISA = usuario.USU_DISA,
+                P_V_UEJEC = usuario.USU_UE,
+                P_V_ESTABLECIMIENTO = V_IDEESS,
+                P_V_ESTADO = "-1",
+                P_V_TIPO = tipo
+            };
+            var resumen = await _rptReconsideraciones.RptAtenciones(dato);
+
+            using (var libro = new XLWorkbook())
+            {
+
+                resumen.TableName = "Clientes";
+                var hoja = libro.Worksheets.Add(resumen);
+                hoja.ColumnsUsed().AdjustToContents();
+
+                using (var memoria = new MemoryStream())
+                {
+
+                    libro.SaveAs(memoria);
+
+                    var nombreExcel = string.Concat("Reporte ", DateTime.Now.ToString(), ".xlsx");
+
+                    return File(memoria.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", nombreExcel);
+                }
+            }
+
+            return new JsonResult(new Response { IsSuccess = true, Message = "Se genero con Exito" });
+        }
+
+
 
     }
 }

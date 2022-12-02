@@ -92,13 +92,13 @@
 
                                     <div class="col-md-6">
                                         <div class="mb-4">
-                                            <label class="form-label fw-bolder">Cant. Evaluación (S/.)</label>
+                                            <label class="form-label fw-bolder">Cant. Evaluación</label>
                                             <input type="number" min="0" onkeyup="Calcular_Precio_INS()" class="form-control form-control-sm fw-bolder" id="txtCantInsEval" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-4">
-                                            <label class="form-label fw-bolder">Precio de Evaluación (S/.)</label>
+                                            <label class="form-label fw-bolder">Precio de Evaluación</label>
                                             <input type="text" style="color:darkred" class="form-control form-control-solid form-control-sm fw-bolder" id="txtPrecioInsEval" disabled />
                                         </div>
                                     </div>
@@ -230,7 +230,7 @@
         }
 
         if (array_plazo[2] == "") {
-            NotificacionToastr('error', 'Ingrese el motico de cambio', 'Campos requeridos');
+            NotificacionToastr('error', 'Ingrese el motivo de cambio', 'Campos requeridos');
             return false;
         }
 

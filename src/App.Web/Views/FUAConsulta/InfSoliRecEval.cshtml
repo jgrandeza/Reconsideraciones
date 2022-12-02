@@ -1,0 +1,186 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="mb-4">
+            <label class="form-label fw-bolder fs-4">Lista de Observaciones:</label>
+        </div>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-md-12">
+        <div id="tblObsSus"></div>
+    </div>
+</div>
+<div class="row mb-0 mt-3">
+    <!--begin::Label-->
+    <label class="col-lg-4 col-form-label fw-bolder fs-4">
+        Motivos de Solictud de Reconsideración:
+    </label>
+    <!--begin::Label-->
+    <!--begin::Label-->
+    <div class="col-lg-8 d-flex align-items-center">
+        <div class="form-check form-check-custom form-check-solid me-10">
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="yyyDatos digitados diferentes a los registrados en el FUA físico" type="checkbox" value="1" id="checkA" disabled />
+            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Datos digitados diferentes a los registrados en el FUA físico" for="checkA">
+                (a)
+            </label>
+        </div>
+        <div class="form-check form-check-custom form-check-solid me-10">
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Omisión de datos en la digitación" type="checkbox" value="2" id="checkB" disabled  />
+            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Omisión de datos en la digitación" for="checkB">
+                (b)
+            </label>
+        </div>
+        <div class="form-check form-check-custom form-check-solid me-10">
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Registros errados en el FUA en físico" type="checkbox" value="3" id="checkC" disabled />
+            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Registros errados en el FUA en físico" for="checkC">
+                (c)
+            </label>
+        </div>
+        <div class="form-check form-check-custom form-check-solid me-10">
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Registros incompletos en el FUA en físico" type="checkbox" value="4" id="checkD" disabled />
+            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Registros incompletos en el FUA en físico" for="checkD">
+                (d)
+            </label>
+        </div>
+        <div class="form-check form-check-custom form-check-solid me-10">
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="No conformidad con el motivo de la observación sin requerir modificación del registro en el FUA físico o el registro en el aplicativo (no incluye duplicadas)" type="checkbox" value="5" id="checkE" disabled  />
+            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="No conformidad con el motivo de la observación sin requerir modificación del registro en el FUA físico o el registro en el aplicativo (no incluye duplicadas)" for="checkE">
+                (e)
+            </label>
+        </div>
+        <div class="form-check form-check-custom form-check-solid me-10">
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="FUAS duplicadas" type="checkbox" value="6" id="checkF" disabled />
+            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="FUAS duplicadas" for="checkF">
+                (f)
+            </label>
+        </div>
+        <div class="form-check form-check-custom form-check-solid me-10">
+            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="RM-725" type="checkbox" value="7" id="checkRM" disabled />
+            <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="RM-725" for="checkRM">
+                RM-725
+            </label>
+        </div>
+    </div>
+    <!--begin::Label-->
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="mb-4" data-select2-id="cbxTipoSustento">
+            <label for="cbxTipoSustento" class="form-label text-wrap fw-bolder fs-4">Tipo Reconsideración</label>
+            <select aria-label="Seleccionar" id="cbxTipoSustento" data-hide-search="true" data-control="select2" data-placeholder="Seleccionar..." class="form-select mb-4" disabled>
+                <option selected="selected" value="L">Levantar Observación</option>
+                <option value="E">Sustentar Eliminación de Item observado Parcial</option>
+                <option value="J">Justificar Extemporaneidad</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="mb-4">
+            <label class="form-label fw-bolder fs-4">Descripción</label>
+            <input type="text" class="form-control" id="txtDesSustento" value="" disabled />
+        </div>
+    </div>
+</div>
+
+<div id="mdl_Archivos"></div>
+<hr class="mt-5" style="border:2px solid" />
+<h3 style="color: #264a74">COSTO A RECONSIDERAR: POR SER PRESTACIÓN CONSUMO,SE CONSIDERA EL COSTO DE LA TARIFA MÁS EL TOTAL DE CONSUMO.</h3>
+<div id="mdl_Costos"></div>
+<script>
+     setTimeout(function () {
+         VisualizaSus();
+         Cargar_Arch_Sus();
+         Cargar_Costos_Eval();
+         Cargar_ObsSusEval();
+    }, 500);
+
+    async function Cargar_Arch_Sus() {
+	    CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        try {
+            const response = await $.get("@Url.Content("~/FuaConsulta/InfSoliRecSusEval")", { id: id });
+            $('#mdl_Archivos').html(response);
+            TerminarWaitMe();
+        } catch {
+            console.log('Error Archiv Sus');
+            TerminarWaitMe();
+        }
+
+    }
+     async function Cargar_Costos_Eval() {
+	    CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        try {
+            const response = await $.get("@Url.Content("~/FuaConsulta/InfSoliRecCostEval")", { id: id});
+            $('#mdl_Costos').html(response);
+            TerminarWaitMe();
+        } catch {
+            console.log('Error al Cargar Costos de Evaluacion');
+            TerminarWaitMe();
+        }
+
+     }
+   async function Cargar_ObsSusEval() {
+	    CargarWaitMe();
+        let id = $("#Ate_Idnumreg").val();
+        try {
+            const response = await $.get("@Url.Content("~/FuaConsulta/ListarObsEvalV")", { id: id});
+            $('#tblObsSus').html(response);
+                TerminarWaitMe();
+        } catch {
+            console.log('Error Obs Suste');
+            TerminarWaitMe();
+        }
+
+    }
+
+    function VisualizaSus() {
+       let id = $("#Ate_Idnumreg").val();
+       CargarWaitMe();
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("SustentoEvalID")",
+            data: {id: id},
+            dataType: "json",
+            success: function (response) {
+                if (response.isSuccess == true) {
+
+                    console.log(response);
+                    console.log(response.result);
+                    setTimeout(() => {
+                        $('#cbxTipoSustento').val(response.result.atE_IDTIPOSUSTENTO);
+                        $('#txtDesSustento').val(response.result.atE_DESCRIPSUSTENTO);
+                        let dato = response.result.atE_MOTIVOSOLICITUD;
+                    if ( dato== 1) {
+                        $('#checkA').prop('checked', true);
+                    } else if (dato == 2) {
+                        $('#checkB').prop('checked', true);
+                    }
+                    else if (dato == 3) {
+                        $('#checkC').prop('checked', true);
+                    } else if (dato == 4) {
+                        $('#checkD').prop('checked', true);
+                    }
+                    else if (dato == 5) {
+                        $('#checkE').prop('checked', true);
+                    }
+                    else if (dato == 6) {
+                        $('#checkF').prop('checked', true);
+                    } else if (dato == 7) {
+                        $('#checkRM').prop('checked', true);
+                    }
+                  }, 500);
+                }
+                else {
+                    NotificacionToastr('error', 'Algo salio, intente mas tarde!', 'Oops...');
+                }
+                 TerminarWaitMe();
+            },
+            error: function (req, status, error) {
+                 TerminarWaitMe();
+            }
+        });
+
+    }
+</script>

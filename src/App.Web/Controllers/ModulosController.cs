@@ -12,15 +12,28 @@ namespace App.Web.Controllers
 
             switch (oResultado.ID_SUBMODULO)
             {
-                case "393":
+                case "391":
                     submodulo = "/SolicitudReconsideracion/Index";
                     break;
-                case "395":
+                case "394":
                     submodulo = "/BusqReconsideracionEval/Index";
                     break;
-                case "1":
+                case "395":
+                    submodulo = "/Reportes/Index";
+                    break;
+                case "396"://solicitud
+                    submodulo = "/SolicitudAmpliacion/Index";
+                    break;
+                case "397"://evaluación
+                    submodulo = "/SolicitudAmpliacion/Index";
+                    break;
+                case "398":
                     submodulo = "/Periodo/Index";
                     break;
+                case "399":
+                    submodulo = "/Consulta/Index";
+                    break;
+
                 case "":
                     break;
 
@@ -34,7 +47,7 @@ namespace App.Web.Controllers
             ViewBag.ruta = submodulo;
 
 
-            return View();
+            return PartialView();
         }
 		public async Task<IActionResult> AccionesModulos()
 		{

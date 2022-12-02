@@ -97,7 +97,7 @@
                     }
                     else if (ViewBag.Tipo == "2")
                     {
-                        <button type="button" onclick="" class="btn btn-warning">
+                        <button type="button" onclick="Conf_Actualizar(event);" class="btn btn-warning">
                             <i class="fas fa-edit fs-4 me-2"></i>
                             Actualizar
                         </button>
@@ -150,6 +150,80 @@
         
         }
     }
+   
 
+    function ActualizarPeriodoRec() {
+        let array_plazo = [];
+        array_plazo[0] = $('#txtId').val();
+        array_plazo[1] = $('#txtFecIni').val();
+        array_plazo[2] = $("#txtFecFin").val();
+        array_plazo[3] = $("#cbxIngEscierre").val();
+        array_plazo[4] = $("#txtMotivo").val();
+        console.log(Math.floor(array_plazo[1]));
+        
+
+        if (array_plazo[4] == "") {
+            NotificacionToastr('error', 'Ingrese el motivo de cambio', 'Campos requeridos');
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("IDPERIODO", array_plazo[0]);
+        formData.append("FECINI", array_plazo[1]);
+        formData.append("FECFIN", array_plazo[2]);
+        formData.append("ESCIERRE", array_plazo[3]);
+        formData.append("MOTIVO", array_plazo[4]);
+
+        $.ajax({
+            url: '@Url.Action("ActualizarPeriodo", "Periodo")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            type: 'POST',
+            success: function (response) {
+                if (response.isSuccess == true) {
+                    NotificacionToastr('success', `${response.message}`, 'Mensaje de confirmación.');
+                    $('#mdl_AccionPeriodo').modal('hide');
+                    $('#modalPeriodo').html('');
+                    Cargar_Periodos();
+                    TerminarWaitMe();
+                }
+                else {
+                    NotificacionToastr('error', `${response.message}`, 'Mensaje de confirmación.');
+                    TerminarWaitMe();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                TerminarWaitMe();
+            }
+        });
+
+    }
+
+
+    function Conf_Actualizar(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: `GUARDAR CAMBIOS?`,
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "SI, registrar Ahora!",
+            cancelButtonText: 'NO, cancelar',
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                ActualizarPeriodoRec();
+            } else if (result.isDenied) {
+                Swal.fire('', '', 'info')
+            }
+        });
+    }
     
 </script>

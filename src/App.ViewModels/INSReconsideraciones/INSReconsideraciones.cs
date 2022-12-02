@@ -122,4 +122,37 @@ namespace App.ViewModels.INSReconsideraciones
         public string P_V_CRITERIOB4 { get; set; }
     }
 
+    public class setPeriodo
+    {
+        public int idperiodo { get; set; }
+        public string periodo { get; set; }
+        public string mes { get; set; }
+        public string fecini { get; set; }
+        public string fecfin { get; set; }
+        public string escierre { get; set; }
+        public string motivo { get; set; }
+        public string usuario { get; set; }
+
+    }
+
+    public class setSolicitudAmpliacion
+    {
+        public int  IDNUMREG { get; set; }
+        public string  PERIODO { get; set; }
+        public string MES { get; set; }
+        public string DISA { get; set; }
+        public string ODSIS { get; set; }
+        public string UEJECUTORA { get; set; }
+        public string IDEESS { get; set; }
+        public string EESS { get; set; }
+        public int DIASPLAZO { get; set; }
+        public string MOTIVO { get; set; }
+        public string ESTADO { get; set; }
+        public string USUCREA { get; set; }
+        public string FECCREA { get; set; }
+        public string FECFINPLAZO { get; set; }
+        public string USUEVALUA { get; set; }
+        public string FECEVALUA { get; set; }
+
+    }
 }

@@ -9,6 +9,7 @@ using App.Tools;
 using App.ViewModels;
 using App.ViewModels.INSReconsideraciones;
 using App.ViewModels.SELReconsideraciones;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using static App.ViewModels.DELReconsideraciones.DELReconsideraciones;
@@ -79,6 +80,8 @@ namespace App.Web.Controllers
             var Resumen = await _SELReconsideraciones.ResumenRecxID(id);
             ViewBag.RecEstado = Resumen.RREC_ID_ESTADOREC;
             ViewBag.RecEstRV = Resumen.RREC_C_ESTARV;
+            @ViewBag.PeriodoList = Resumen.RREC_PERIODO + "-" + Resumen.RREC_MES;
+            @ViewBag.EESS = Resumen.RREC_IDEESS;
         }
 
         public async Task<IActionResult> InfGeneralFUAV(int id)
@@ -674,16 +677,26 @@ namespace App.Web.Controllers
         {
             try
             {
-                var result = await _dELReconsideraciones.EliminarAtencionTotal(N_ATE_IDNUMREG);
+                var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+                var aten = await _SELReconsideraciones.ListarIAtencionRecxID(N_ATE_IDNUMREG);
+                if (usuario.Name == aten.ATE_IDUSUARIOCREA)
+                {
+                    var result = await _dELReconsideraciones.EliminarAtencionTotal(N_ATE_IDNUMREG);
 
-                if (result.CODIGO == 0)
-                {
-                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                    if (result.CODIGO == 0)
+                    {
+                        return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                    }
+                    else
+                    {
+                        return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                    }
                 }
-                else
-                {
-                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                else {
+                    return new JsonResult(new { IsSuccess = false, Message = "Esta solicitud sólo puede ser eliminada por el usuario:"+ aten.ATE_IDUSUARIOCREA });
                 }
+
+                
             }
             catch (Exception)
             {
@@ -846,14 +859,14 @@ namespace App.Web.Controllers
                 }
 
                 //var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
-                var usuario = "admin";
+                var usuario = await App.Tools.AutenticacionHelper.GetUsuario(HttpContext);
                 var archivo = model.file.FileName;
 
                 var datos = new setInsertarAteArchSuste2()
                 {
                     V_asus_v_rutaarch = model.file != null ? $"uploads/Sustentos" : null,
                     V_asus_v_nombarch = model.file != null ? await ImagenesHelper.UploadFileAsync(path, model.file) : null,
-                    V_asus_v_usuariocrea=usuario,
+                    V_asus_v_usuariocrea=usuario.Name,
                     N_asus_numregate=model.N_asus_numregate,
                     V_ASUS_V_ARCHIVODESCR=archivo
 
@@ -884,25 +897,35 @@ namespace App.Web.Controllers
         {
             try
             {
-                var archivo = await _SELReconsideraciones.ListarAteSusArchxID(id);
-
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", archivo.First().asus_v_rutaarch , archivo.First().asus_v_nombarch);
-                if (System.IO.File.Exists(path))
+                var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+                var dato = await _SELReconsideraciones.ListarAteSustxID(id);
+                if (usuario.Name == dato.USUARIOCREA)
                 {
-                    System.IO.File.Delete(path);
+                    var archivo = await _SELReconsideraciones.ListarAteSusArchxID(id);
+
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", archivo.First().asus_v_rutaarch, archivo.First().asus_v_nombarch);
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+
+                    var result = await _dELReconsideraciones.EliminarSustento(id);
+
+
+                    if (result.CODIGO == 0)
+                    {
+                        return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                    }
+                    else
+                    {
+                        return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                    }
+                }
+                else {
+                    return new JsonResult(new { IsSuccess = false, Message = "Sólo el usuario que creó el sustento puede eliminar." });
                 }
 
-                var result = await _dELReconsideraciones.EliminarSustento(id);
-   
-
-                if (result.CODIGO == 0)
-                {
-                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
-                }
-                else
-                {
-                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
-                }
+                
             }
             catch (Exception ex)
             {

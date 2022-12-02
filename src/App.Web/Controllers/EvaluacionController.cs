@@ -10,8 +10,11 @@ using App.Services.IServices;
 using App.Tools;
 using App.ViewModels;
 using App.ViewModels.INSReconsideraciones;
+using App.ViewModels.RptReconsideraciones;
 using App.ViewModels.SELReconsideraciones;
 using App.ViewModels.UPDReconsideraciones;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -32,11 +35,13 @@ namespace App.Web.Controllers
         private readonly IValRcRvRecosideraciones _IvalRcRvRecosideraciones;
         private readonly IFileUploadFTP _fileUploadFTP;
         private readonly URLReadFile _uRLReadFile;
+        
 
         public EvaluacionController(DataContextApp dbContext, IAuxiliares auxiliares, IMaestros maestros,
             ISELReconsideraciones sELReconsideraciones, IUPDReconsideraciones uPDReconsideraciones,
             IINSReconsideraciones iNSReconsideraciones, IDELReconsideraciones dELReconsideraciones,
-            IValRcRvRecosideraciones valRcRvRecosideraciones, IFileUploadFTP fileUploadFTP, IOptions<URLReadFile> uRLReadFile)
+            IValRcRvRecosideraciones valRcRvRecosideraciones, IFileUploadFTP fileUploadFTP, 
+            IOptions<URLReadFile> uRLReadFile)
 
         {
             _dbContext = dbContext;
@@ -48,24 +53,18 @@ namespace App.Web.Controllers
             _iNSReconsideraciones = iNSReconsideraciones;
             _IvalRcRvRecosideraciones = valRcRvRecosideraciones;
             _fileUploadFTP = fileUploadFTP;
-            _uRLReadFile = uRLReadFile.Value;
+            _uRLReadFile = uRLReadFile.Value; 
         }
         private async Task RecEstado(int id)
         {
             var Resumen = await _SELReconsideraciones.ResumenRecxID(id);
             ViewBag.RecEstado = Resumen.RREC_ID_ESTADOREC;
             ViewBag.RecEstRV = Resumen.RREC_C_ESTARV;
+            @ViewBag.PeriodoRec = Resumen.RREC_PERIODO + "-" + Resumen.RREC_MES;
         }
 
-        public async Task<IActionResult> Index(int id)
-        {
-            ViewBag.DescDisa = "LIMA NORTE";
-            ViewBag.DescUE = "HOSPITAL CARLOS LAFRNACO LA HOZ";
-            ViewBag.DesEESS = "222222222-HOSPITALLANFRANCO";
-
-            ViewBag.PeriodoRec = "2019-1 del 01/07/2022 al 26/08/2022";
-
-            ViewBag.Titulo = "REGISTRO DE RECONSIDERACION A EVALUAR";
+        public async Task<IActionResult> Index(int id)        {
+ 
 
             await RecEstado(id);
 
@@ -144,6 +143,8 @@ namespace App.Web.Controllers
 
         public async Task<IActionResult> AccionDiagnosticoEvalV(string tipo, int id)
         {
+
+            
             if (Convert.ToInt32(tipo) == 1)
             {
                 ViewBag.Tipo = tipo;
@@ -163,6 +164,7 @@ namespace App.Web.Controllers
             var result = await _Auxiliares.ListarTipoDiagnostico();
             ViewBag.ListTipoDX = result;
             ViewBag.vbId = id;
+            
             return PartialView();
         }
 
@@ -437,7 +439,7 @@ namespace App.Web.Controllers
 
             ViewBag.Titulo_Modal = "REGISTRO DE EVALUACIÓN";
             //var result = await _SELReconsideraciones.ListarAteSustxID(idate);
-
+            await RecEstado(Id);
             return PartialView();
         }
 
@@ -454,12 +456,12 @@ namespace App.Web.Controllers
         {
             try
             {
-                var usuario = "admin";
+                var usuario = await App.Tools.AutenticacionHelper.GetUsuario(HttpContext);
                 var datos = new setActualizarMedEval()
                 {
                     N_AMED_ICANTAPROBADAODSIS = model.N_AMED_ICANTAPROBADAODSIS,
                     V_AMED_V_MOTIVO_CAMBIO = model.V_AMED_V_MOTIVO_CAMBIO,
-                    V_AMED_IDUSUARIOACT = usuario,
+                    V_AMED_IDUSUARIOACT = usuario.Name,
                     N_AMED_IDNUMREG = model.N_AMED_IDNUMREG
 
                 };
@@ -486,12 +488,12 @@ namespace App.Web.Controllers
         {
             try
             {
-                var usuario = "admin";
+                var usuario = await App.Tools.AutenticacionHelper.GetUsuario(HttpContext);
                 var datos = new setActualizarApoEval()
                 {
                     N_AAPO_ICANTAPROBADAODSIS = model.N_AAPO_ICANTAPROBADAODSIS,
                     V_AAPO_V_MOTIVO_CAMBIO = model.V_AAPO_V_MOTIVO_CAMBIO,
-                    V_AAPO_IDUSUARIOACT = usuario,
+                    V_AAPO_IDUSUARIOACT = usuario.Name,
                     N_AAPO_IDNUMREG = model.N_AAPO_IDNUMREG
 
                 };
@@ -518,12 +520,12 @@ namespace App.Web.Controllers
         {
             try
             {
-                var usuario = "admin";
+                var usuario = await App.Tools.AutenticacionHelper.GetUsuario(HttpContext);
                 var datos = new setActualizarInsEval()
                 {
                     N_AINS_ICANTIDADAPROBADAODSIS = model.N_AINS_ICANTIDADAPROBADAODSIS,
                     V_AINS_V_MOTIVO_CAMBIO = model.V_AINS_V_MOTIVO_CAMBIO,
-                    V_AINS_IDUSUARIOACT = usuario,
+                    V_AINS_IDUSUARIOACT = usuario.Name,
                     N_AINS_IDNUMREG = model.N_AINS_IDNUMREG
 
                 };
@@ -591,8 +593,9 @@ namespace App.Web.Controllers
         {
             try
             {
+               
                 var dato = await _SELReconsideraciones.ListarEvaluacionxID(id);
-
+                ViewBag.usuarioEvaluo = dato.V_USUEVALUA;
                 return new JsonResult(new { IsSuccess = true, result = dato });
 
             }
@@ -605,15 +608,25 @@ namespace App.Web.Controllers
         {
             try
             {
-                var result = await _dELReconsideraciones.EliminarEvaluacion(P_I_IDATENCION);
+                var dato = await _SELReconsideraciones.ListarEvaluacionxID(P_I_IDATENCION);
+                ViewBag.usuarioEvaluo = dato.V_USUEVALUA;
+                var usuario = await AutenticacionHelper.GetUsuario(HttpContext);
+                if (ViewBag.UsuarioEvaluo == usuario.Name)
+                {
 
-                if (result.CODIGO == 0)
-                {
-                    return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                    var result = await _dELReconsideraciones.EliminarEvaluacion(P_I_IDATENCION);
+
+                    if (result.CODIGO == 0)
+                    {
+                        return new JsonResult(new { IsSuccess = true, Message = result.MENSAJE });
+                    }
+                    else
+                    {
+                        return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                    }
                 }
-                else
-                {
-                    return new JsonResult(new { IsSuccess = false, Message = result.MENSAJE });
+                else {
+                    return new JsonResult(new { IsSuccess = false, Message = ViewBag.UsuarioEvaluo + ": Usuario no autorizado" });
                 }
             }
             catch (Exception)
@@ -621,6 +634,8 @@ namespace App.Web.Controllers
                 return new JsonResult(new { IsSuccess = false });
             }
         }
+
+        
     }
 }
 

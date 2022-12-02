@@ -3,7 +3,7 @@
     <div class="accordion mt-10" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="PanelHeader1">
-                <button class="accordion-button" style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby1" aria-expanded="true" aria-controls="PanelBoby1">
+                <button class="accordion-button" style="background-color: #eff2f5; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby1" aria-expanded="true" aria-controls="PanelBoby1">
                     1. DATOS DE LA ATENCION
                 </button>
             </h2>
@@ -63,7 +63,7 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="PanelHeader2">
-                <button class="accordion-button " style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby2" aria-expanded="false" aria-controls="PanelBoby2">
+                <button class="accordion-button " style="background-color: #eff2f5; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby2" aria-expanded="false" aria-controls="PanelBoby2">
                     2. DATOS DE LA ENTIDAD
                 </button>
             </h2>
@@ -109,7 +109,7 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="PanelHeader3">
-                <button class="accordion-button " style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby3" aria-expanded="false" aria-controls="PanelBoby3">
+                <button class="accordion-button " style="background-color: #eff2f5; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby3" aria-expanded="false" aria-controls="PanelBoby3">
                     3. DATOS DEL ASEGURADO
                 </button>
             </h2>
@@ -125,7 +125,7 @@
                                     {
                                         foreach (var item in ViewBag.LisComponente)
                                         {
-                                                                            <option value="@item.COM_IDCOMPONENTE">@item.COM_DESCRIPCION</option>
+                                                                                                    <option value="@item.COM_IDCOMPONENTE">@item.COM_DESCRIPCION</option>
                                         }
                                     } 
                                  }
@@ -164,7 +164,7 @@
                                             {
                                                 foreach (var item in ViewBag.ListTipoDocIdent)
                                                 {
-                                                                                    <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
+                                                                                                            <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
                                                 }
                                             } 
                                          }
@@ -247,7 +247,7 @@
                                             {
                                                 foreach (var item in ViewBag.ListGenero)
                                                 {
-                                                                                    <option value="@item.SEX_IDSEXO">@item.SEX_DESCRIPCION</option>
+                                                                                                            <option value="@item.SEX_IDSEXO">@item.SEX_DESCRIPCION</option>
                                                 }
                                             } 
                                          }
@@ -288,7 +288,7 @@
                                         {
                                             foreach (var item in ViewBag.ListTipoAtenc)
                                             {
-                                                              <option value="@item.TAT_CODATE">@item.TAT_NOMBRE</option>
+                                                                                      <option value="@item.TAT_CODATE">@item.TAT_NOMBRE</option>
                                             }
                                         }
                                     }
@@ -305,7 +305,7 @@
                                         {
                                             foreach (var item in ViewBag.ListModalidadAte)
                                             {
-                                                                                <option value="@item.MOD_IDMODALIDAD">@item.MOD_DESCRIPCION</option>
+                                                                                                        <option value="@item.MOD_IDMODALIDAD">@item.MOD_DESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -325,7 +325,7 @@
                                             {
                                                 foreach (var item in ViewBag.ListCondiMaterna)
                                                 {
-                                                                                    <option value="@item.CDM_IDCONDICION">@item.CDM_NOMBRE</option>
+                                                                                                            <option value="@item.CDM_IDCONDICION">@item.CDM_NOMBRE</option>
                                                 }
                                             } 
                                          }
@@ -365,7 +365,7 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="PanelHeader4">
-                <button class="accordion-button " style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby4" aria-expanded="false" aria-controls="PanelBoby4">
+                <button class="accordion-button " style="background-color: #eff2f5; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby4" aria-expanded="false" aria-controls="PanelBoby4">
                     4. DATOS DE LA ATENCIÓN
                 </button>
             </h2>
@@ -388,7 +388,7 @@
                                         {
                                             foreach (var item in ViewBag.ListLugarAte)
                                             {
-                                                                                <option value="@item.LUG_IDLUGAR">@item.LUG_DESCRIPCION</option>
+                                                                                                        <option value="@item.LUG_IDLUGAR">@item.LUG_DESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -404,7 +404,7 @@
                                         {
                                             foreach (var item in ViewBag.ListOrigenPersona)
                                             {
-                                                                                <option value="@item.OPE_IDORIGENPERSONAL">@item.OPE_DESCRIPCION</option>
+                                                                                                        <option value="@item.OPE_IDORIGENPERSONAL">@item.OPE_DESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -495,7 +495,7 @@
                                         {
                                             foreach (var item in ViewBag.ListDestinoAseg)
                                             {
-                                                <option value="@item.des_coddestino">@item.des_nombre</option>
+                                                                        <option value="@item.des_coddestino">@item.des_nombre</option>
                                             }
                                         }
                                     }
@@ -554,7 +554,7 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="PanelHeader5">
-                <button class="accordion-button " style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby5" aria-expanded="false" aria-controls="PanelBoby5">
+                <button class="accordion-button " style="background-color: #eff2f5; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby5" aria-expanded="false" aria-controls="PanelBoby5">
                     5. RESPONSABLE DE LA ATENCIÓN
                 </button>
             </h2>
@@ -570,7 +570,7 @@
                                         {
                                             foreach (var item in ViewBag.ListTipoDocIdent)
                                             {
-                                                                                <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
+                                                                                                        <option value="@item.IDE_CODDOCIDENTIDAD">@item.IDE_CDESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -607,7 +607,7 @@
                                         {
                                             foreach (var item in ViewBag.ListTipoPersonal)
                                             {
-                                                               <option value="@item.TPS_IDCODIGO">@item.TPS_DESCRIPCION</option>
+                                                                                       <option value="@item.TPS_IDCODIGO">@item.TPS_DESCRIPCION</option>
                                             }
                                         }
                                     }
@@ -631,7 +631,7 @@
                                         {
                                             foreach (var item in ViewBag.ListEspecialidad)
                                             {
-                                                                <option value="@item.ESP_IDESPECIALIDAD">@item.ESP_CNOMBRE</option>
+                                                                                        <option value="@item.ESP_IDESPECIALIDAD">@item.ESP_CNOMBRE</option>
                                             }
                                         }
                                     }
@@ -644,7 +644,7 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="PanelHeader6">
-                <button class="accordion-button " style="background-color: #f5f5f1; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby6" aria-expanded="false" aria-controls="PanelBoby6">
+                <button class="accordion-button " style="background-color: #eff2f5; border:1px solid" type="button" data-bs-toggle="collapse" data-bs-target="#PanelBoby6" aria-expanded="false" aria-controls="PanelBoby6">
                     6. OBSERVACIONES
                 </button>
             </h2>
@@ -766,12 +766,24 @@
                 EESSRefe();
 
                 $("#txtNumRef").val(data.atE_NROHOJAREFERENCIA);
-                $('#txtFechIngresoAte').datepicker('setDate', Formato_Fecha(data.atE_FECINGHOSP));
+                if(data.atE_FECINGHOSP=="0001-01-01T00:00:00"){ 
+                    $("#txtFechIngresoAte").val("");
+                }
+                else{
+                    $('#txtFechIngresoAte').datepicker('setDate', Formato_Fecha(data.atE_FECINGHOSP));
+                }
+
+                
+                if (data.atE_FECALTAHOSP == "0001-01-01T00:00:00") {
+                     $("#txtFechAltaAte").val("");
+                    //alert(data.atE_FECALTAHOSP);
+                }
+                else {
+                    $('#txtFechAltaAte').datepicker('setDate', Formato_Fecha(data.atE_FECALTAHOSP));
+                }
 
                 $("#cbxDestinoRefAte").val(data.atE_CODDESTINO);
                 $('#cbxDestinoRefAte').trigger('change');
-                $('#txtFechAltaAte').datepicker('setDate', Formato_Fecha(data.atE_FECALTAHOSP));
-
 
                 $("#txtEESSContraRef").val(data.atE_IDEESSCONTRAREFIERE);
                 EESSContrRefe();

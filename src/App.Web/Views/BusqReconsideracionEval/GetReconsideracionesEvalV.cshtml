@@ -1,6 +1,21 @@
 ﻿
 @model IEnumerable<App.ViewModels.SolicitudRecon.getResumenReconsDto>
-
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-group" role="group" aria-label="">
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-file-excel fs-4"></i>
+                    Reportes
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <li><a class="dropdown-item" href="~/BusqReconsideracionEval/RptAtenciones?periodo=@ViewBag.exportar.V_PERIODO&tipo=1&eess=@ViewBag.exportar.V_IDEESS" target="_blank">Atenciones observadas</a></li>
+                    <li><a class="dropdown-item" href="~/BusqReconsideracionEval/RptAtenciones?periodo=@ViewBag.exportar.V_PERIODO&tipo=2&eess=@ViewBag.exportar.V_IDEESS" target="_blank">Atenciones det.observación</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 <table class="table align-middle border rounded table-row-dashed fs-6 g-5 display responsive" id="tblRecEval" style="font-size: 10px !important">
     <thead class="text-center" style="background-color: #0272A3; border-width: 2px; color: white; vertical-align: middle; ">
         <tr>

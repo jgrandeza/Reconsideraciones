@@ -47,7 +47,7 @@
                             </label>
                         </div>
                         <div class="form-check form-check-custom form-check-solid me-10">
-                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Prestación presentada con el sustento respectivo en físico" type="checkbox" value="Prestación presentada con el sustento respectivo en físico" id="checkA2Eval" />
+                            <input class="form-check-input" data-bs-toggle="tooltip" data-bs-placement="top" title="Prestación presentada con el sustento respectivo en físico" type="checkbox" value="Prestación presentada con el sustento respectivo en físico" id="checkA2Eval"  />
                             <label class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Prestación presentada con el sustento respectivo en físico" for="checkA2Eval">
                                 (A2)
                             </label>
@@ -105,7 +105,7 @@
                     <div class="col-md-12">
                         <div class="mb-4">
                             <label class="form-label fw-bolder fs-4">Detalle de Cambios realizados por el Médico Supervisor durante la Evaluación:</label>
-                            <textarea type="text" rows="3" class="form-control" id="txtObsDetalleEval" value=""></textarea>
+                            <textarea type="text" rows="3" class="form-control" id="txtObsDetalleEval" disabled></textarea>
                         </div>
                     </div>
 
@@ -114,13 +114,15 @@
                 <div class="modal-footer">
 
                        @{
-                                if (ViewBag.RecEstado ==5)
+
+                        if (ViewBag.RecEstado == 5)
                                 {
                                         <button type="button" class="btn btn-success" onclick="RegistrarSustentoEval(event)">
                                             <i class="fas fa-paper-plane fs-4 me-2"></i>
                                             Guardar
                                         </button>
                                 }else{
+                            
                                         <button type="button" onclick="EliminarEvaluacion(event);" class="btn btn-warning">
                                             <i class="fas fa-save fs-4 me-2"></i>
                                             Eliminar Evaluación
@@ -412,10 +414,7 @@
             NotificacionToastr('error', 'Ingrese la Observacion General', 'Campos requeridos');
             return false;
         }
-        if (array_sustento[3] == "") {
-            NotificacionToastr('error', 'Ingrese el Detalle de la Observacion', 'Campos requeridos');
-            return false;
-        }
+         
         if (array_sustento[1] == 3) {
             if(indicador==0){
                 NotificacionToastr('error', 'Marque los Criterios que no cumple la reconsideración', 'Campos requeridos');
@@ -484,10 +483,10 @@
                     setTimeout(() => {
 
                         
-                        $("#cbxTipoSustentoEval").val(response.result.rreC_ID_ESTADOREC);
-                        $("#txtObsGeneralEval").val(response.result.rreC_V_OBSGENERAL);
-                        $("#txtObsDetalleEval").val(response.result.rreC_V_OBSDETALLE);                       
-                        
+                        $("#cbxTipoSustentoEval").val(response.result.iD_ESTADOREC);
+                        $("#txtObsGeneralEval").val(response.result.v_OBSGENERAL);
+                        $("#txtObsDetalleEval").val(response.result.v_OBSDETALLE);
+
                         let A1 = response.result.a1;
                         let A2 = response.result.a2;
                         let A3 = response.result.a3;

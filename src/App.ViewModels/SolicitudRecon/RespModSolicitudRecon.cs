@@ -17,6 +17,7 @@ namespace App.ViewModels.SolicitudRecon
     {
         public string V_TIPO_CONSULTA { get; set; }
         public string V_DISA { get; set; }
+        public string V_UE { get; set; }
         public string V_EESS { get; set; }
     }
 
